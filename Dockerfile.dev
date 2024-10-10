@@ -1,0 +1,10 @@
+FROM node:18
+
+WORKDIR /usr/src
+COPY . /usr/src/
+
+RUN yarn install
+
+EXPOSE 5173
+
+CMD [ "yarn", "dev" ]
