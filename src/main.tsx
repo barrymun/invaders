@@ -1,3 +1,4 @@
+import "i18n/config";
 import "./reset.scss";
 import "./main.scss";
 
