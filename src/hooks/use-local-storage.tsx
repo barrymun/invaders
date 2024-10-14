@@ -1,10 +1,10 @@
 import { createContext, FC, useContext, useEffect, useMemo } from "react";
 
-import { LocalStorageKeys } from "utils";
+import { LocalStorageKeys, LocalStorageValueMap } from "utils/local-storage";
 
 interface LocalStorageContextProps {
-  getItem: <T extends LocalStorageKeys>(key: string) => T | null;
-  setItem: <T extends LocalStorageKeys>(key: string, value: T) => void;
+  getItem: <K extends LocalStorageKeys>(key: K) => LocalStorageValueMap[K] | null;
+  setItem: <K extends LocalStorageKeys>(key: K, value: LocalStorageValueMap[K]) => void;
 }
 
 interface LocalStorageProviderProps {
@@ -17,12 +17,19 @@ const LocalStorageContext = createContext<LocalStorageContextProps>({
 });
 
 const LocalStorageProvider: FC<LocalStorageProviderProps> = ({ children }) => {
-  const getItem = <T extends LocalStorageKeys>(key: string): T | null => {
-    const item = localStorage.getItem(key);
-    return item ? (JSON.parse(item) as T) : null;
+  const getItem = <K extends LocalStorageKeys>(key: K): LocalStorageValueMap[K] | null => {
+    const value = localStorage.getItem(key);
+    if (value) {
+      try {
+        return JSON.parse(value) as LocalStorageValueMap[K];
+      } catch {
+        return null;
+      }
+    }
+    return null;
   };
 
-  const setItem = <T extends LocalStorageKeys>(key: string, value: T): void => {
+  const setItem = <K extends LocalStorageKeys>(key: K, value: LocalStorageValueMap[K]): void => {
     localStorage.setItem(key, JSON.stringify(value));
   };
 

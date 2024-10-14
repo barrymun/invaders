@@ -2,7 +2,9 @@ import { createContext, FC, useContext, useEffect, useMemo, useState } from "rea
 import { useTranslation } from "react-i18next";
 
 import { useLocalStorage } from "hooks";
-import { GlobalState, LocalStorageKeys } from "utils";
+import { getAllKeys, hasAllKeys } from "utils";
+import { defaultGlobalState, GlobalState } from "utils/global-state";
+import { LocalStorageKeys } from "utils/local-storage";
 
 interface GlobalStateContextProps {
   globalState: GlobalState;
@@ -14,7 +16,7 @@ interface GlobalStateProviderProps {
 }
 
 const GlobalStateContext = createContext<GlobalStateContextProps>({
-  globalState: {},
+  globalState: defaultGlobalState,
   setGlobalState: () => {},
 });
 
@@ -23,8 +25,8 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
 
   const { getItem } = useLocalStorage();
 
-  const [globalState, setGlobalState] = useState<GlobalState>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [globalState, setGlobalState] = useState<GlobalState>(defaultGlobalState);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const value = useMemo(
     () => ({
@@ -35,10 +37,13 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
   );
 
   useEffect(() => {
-    const item = getItem<LocalStorageKeys.GlobalState>("globalState");
-    console.log(item);
+    const item = getItem(LocalStorageKeys.GlobalState);
     if (item) {
-      setGlobalState(item);
+      const allKeys = getAllKeys<GlobalState>(globalState);
+      console.log(allKeys);
+      if (hasAllKeys<GlobalState>(item, allKeys)) {
+        setGlobalState(item);
+      }
     }
     setIsLoading(false);
   }, []);
