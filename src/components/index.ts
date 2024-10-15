@@ -1,2 +1,2 @@
-export * from "components/assets-tabs";
 export * from "components/layout";
+export * from "components/navbar";

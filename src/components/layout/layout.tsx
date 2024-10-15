@@ -1,17 +1,20 @@
-import "./layout.scss";
-
+import { Box } from "@mantine/core";
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
-import { AssetsTabs } from "components";
+import { Navbar } from "components";
+
+import classes from "./layout.module.scss";
 
 interface LayoutProps {}
 
 export const Layout: FC<LayoutProps> = () => {
   return (
-    <>
-      <AssetsTabs />
-      <Outlet />
-    </>
+    <Box className={classes.layout}>
+      <Navbar />
+      <Box className={classes.outletContainer}>
+        <Outlet />
+      </Box>
+    </Box>
   );
 };

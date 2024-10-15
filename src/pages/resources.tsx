@@ -1,24 +1,20 @@
-import "./resources-tab-panel.scss";
-
-import { TabPanel } from "@chakra-ui/react";
+import { Box } from "@mantine/core";
 import { FC } from "react";
 
 import { useGlobalState } from "hooks";
 
-interface ResourcesTabPanelProps {}
+interface ResourcesProps {}
 
-const ResourcesTabPanel: FC<ResourcesTabPanelProps> = () => {
+export const Resources: FC<ResourcesProps> = () => {
   const { globalState } = useGlobalState();
 
   return (
-    <TabPanel>
+    <Box>
       {Object.entries(globalState.city.resources).map(([resource, amount]) => (
         <p key={resource}>
           {resource}: {amount}
         </p>
       ))}
-    </TabPanel>
+    </Box>
   );
 };
-
-export { ResourcesTabPanel };

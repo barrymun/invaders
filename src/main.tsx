@@ -1,8 +1,9 @@
 import "i18n/config";
-import "./reset.scss";
-import "./main.scss";
+import "./_reset.scss";
+import "./_main.scss";
+import "@mantine/core/styles.css";
 
-import { ChakraProvider } from "@chakra-ui/react";
+import { MantineProvider } from "@mantine/core";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
@@ -12,12 +13,12 @@ import { router } from "router";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ChakraProvider>
+    <MantineProvider>
       <LocalStorageProvider>
         <GlobalStateProvider>
           <RouterProvider router={router} />
         </GlobalStateProvider>
       </LocalStorageProvider>
-    </ChakraProvider>
+    </MantineProvider>
   </StrictMode>
 );

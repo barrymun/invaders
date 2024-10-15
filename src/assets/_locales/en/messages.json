@@ -1,9 +1,10 @@
 {
   "home": "Home",
   "loading": "Loading...",
-  "assets-tabs": {
-    "resources": {
-      "title": "Resources"
+  "navbar": {
+    "links": {
+      "town": "Town",
+      "resources": "Resources"
     }
   }
 }
