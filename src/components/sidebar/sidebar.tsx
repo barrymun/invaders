@@ -4,21 +4,21 @@ import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
-import classes from "./navbar.module.scss";
+import classes from "./sidebar.module.scss";
 
-interface NavbarProps {}
+interface SidebarProps {}
 
-const Navbar: FC<NavbarProps> = () => {
+const Sidebar: FC<SidebarProps> = () => {
   const { t } = useTranslation();
   const location = useLocation();
 
   const data = [
-    { link: "/town", label: t("navbar.links.town"), icon: IconBuildingCastle },
-    { link: "/resources", label: t("navbar.links.resources"), icon: IconBuildingFactory },
+    { link: "/town", label: t("sidebar.links.town"), icon: IconBuildingCastle },
+    { link: "/resources", label: t("sidebar.links.resources"), icon: IconBuildingFactory },
   ];
 
   const [active, setActive] = useState<string>(
-    data.find((item) => item.link === location.pathname)?.label ?? t("navbar.links.town")
+    data.find((item) => item.link === location.pathname)?.label ?? t("sidebar.links.town")
   );
 
   const links = data.map((item) => (
@@ -37,10 +37,10 @@ const Navbar: FC<NavbarProps> = () => {
   ));
 
   return (
-    <nav className={classes.navbar}>
-      <Box className={classes.navbarMain}>
+    <nav className={classes.sidebar}>
+      <Box className={classes.sidebarMain}>
         <Group className={classes.header} justify="space-between">
-          <Code fw={700}>{t("navbar.version", { version: import.meta.env.APP_VERSION })}</Code>
+          <Code fw={700}>{t("sidebar.version", { version: import.meta.env.APP_VERSION })}</Code>
         </Group>
         {links}
       </Box>
@@ -48,4 +48,4 @@ const Navbar: FC<NavbarProps> = () => {
   );
 };
 
-export { Navbar };
+export { Sidebar };

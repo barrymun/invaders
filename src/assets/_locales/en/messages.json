@@ -1,7 +1,7 @@
 {
   "home": "Home",
   "loading": "Loading...",
-  "navbar": {
+  "sidebar": {
     "version": "v{{version}}",
     "links": {
       "town": "Town",

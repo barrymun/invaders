@@ -1,4 +1,4 @@
-.navbar {
+.sidebar {
   height: 100vh;
   width: rem(300px);
   padding: var(--mantine-spacing-md);
@@ -6,7 +6,7 @@
   flex-direction: column;
   border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 
-  .navbarMain {
+  .sidebarMain {
     flex: 1;
   }
   
