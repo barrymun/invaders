@@ -1,9 +1,12 @@
 import { GlobalState } from "utils/global-state/types";
 
+export const globalStateTimeout = 1000 * 15; // 15 seconds
+export const resouceBaseProductionRate = 10;
 export const defaultGlobalState: GlobalState = {
   player: {
     name: "",
     flag: "",
+    gold: 10000,
   },
   city: {
     name: "",
@@ -13,11 +16,40 @@ export const defaultGlobalState: GlobalState = {
     walls: {
       level: 1,
     },
-    innerCity: {
+    town: {
       buildings: [],
     },
-    outerCity: {
-      buildings: [],
+    country: {
+      buildings: [
+        {
+          level: 1,
+          type: "farm",
+        },
+        {
+          level: 1,
+          type: "sawmill",
+        },
+        {
+          level: 1,
+          type: "quarry",
+        },
+        {
+          level: 1,
+          type: "mine",
+        },
+        {
+          level: 10,
+          type: "farm",
+        },
+      ],
+    },
+    resources: {
+      food: 1000,
+      wood: 1000,
+      stone: 1000,
+      iron: 1000,
     },
   },
 };
+
+export const defaultProductionRatePerHour = 100;

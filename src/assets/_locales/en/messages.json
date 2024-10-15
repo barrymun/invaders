@@ -1,4 +1,9 @@
 {
   "home": "Home",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "assets-tabs": {
+    "resources": {
+      "title": "Resources"
+    }
+  }
 }

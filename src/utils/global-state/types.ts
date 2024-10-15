@@ -4,26 +4,33 @@ export interface Building {
   level: OneToTen;
 }
 
-export interface InnerCityBuilding extends Building {}
+export interface CityBuilding extends Building {}
 
-export interface OuterCityBuilding extends Building {
-  type: "farm" | "sawmill" | "quarry" | "mine";
+export interface CountryBuilding extends Building {
+  type: "farm" | "sawmill" | "quarry" | "mine" | null;
 }
 
 export interface GlobalState {
   player: {
     name: string;
     flag: string;
+    gold: number;
   };
   city: {
     name: string;
     townHall: Building;
     walls: Building;
-    innerCity: {
-      buildings: InnerCityBuilding[];
+    town: {
+      buildings: CityBuilding[];
     };
-    outerCity: {
-      buildings: OuterCityBuilding[];
+    country: {
+      buildings: CountryBuilding[];
+    };
+    resources: {
+      food: number;
+      wood: number;
+      stone: number;
+      iron: number;
     };
   };
 }
