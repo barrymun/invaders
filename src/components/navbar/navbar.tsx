@@ -1,5 +1,5 @@
-import { Group, Code } from "@mantine/core";
-import { IconBuildingFactory, IconBuildingCastle, IconSwitchHorizontal, IconLogout } from "@tabler/icons-react";
+import { Group, Code, Box } from "@mantine/core";
+import { IconBuildingFactory, IconBuildingCastle } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -38,24 +38,12 @@ const Navbar: FC<NavbarProps> = () => {
 
   return (
     <nav className={classes.navbar}>
-      <div className={classes.navbarMain}>
+      <Box className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
-          <Code fw={700}>v3.1.2</Code>
+          <Code fw={700}>{t("navbar.version", { version: import.meta.env.APP_VERSION })}</Code>
         </Group>
         {links}
-      </div>
-
-      <div className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
-
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
-      </div>
+      </Box>
     </nav>
   );
 };

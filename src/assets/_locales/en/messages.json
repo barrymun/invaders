@@ -2,6 +2,7 @@
   "home": "Home",
   "loading": "Loading...",
   "navbar": {
+    "version": "v{{version}}",
     "links": {
       "town": "Town",
       "resources": "Resources"

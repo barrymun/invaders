@@ -1,3 +1,4 @@
+import { Text } from "@mantine/core";
 import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -87,7 +88,7 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
   }, [globalState]);
 
   if (isLoading) {
-    return <div>{t("loading")}</div>;
+    return <Text>{t("loading")}</Text>;
   }
 
   return <GlobalStateContext.Provider value={value}>{children}</GlobalStateContext.Provider>;
