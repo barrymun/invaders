@@ -10,27 +10,29 @@ export interface CountryBuilding extends Building {
   type: "farm" | "sawmill" | "quarry" | "mine" | null;
 }
 
+export interface City {
+  name: string;
+  townHall: Building;
+  walls: Building;
+  town: {
+    buildings: CityBuilding[];
+  };
+  country: {
+    buildings: CountryBuilding[];
+  };
+  resources: {
+    food: number;
+    wood: number;
+    stone: number;
+    iron: number;
+  };
+}
+
 export interface GlobalState {
   player: {
     name: string;
     flag: string;
     gold: number;
   };
-  city: {
-    name: string;
-    townHall: Building;
-    walls: Building;
-    town: {
-      buildings: CityBuilding[];
-    };
-    country: {
-      buildings: CountryBuilding[];
-    };
-    resources: {
-      food: number;
-      wood: number;
-      stone: number;
-      iron: number;
-    };
-  };
+  cities: City[];
 }

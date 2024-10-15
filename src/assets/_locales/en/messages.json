@@ -7,5 +7,9 @@
       "town": "Town",
       "resources": "Resources"
     }
+  },
+  "resources": {
+    "resource": "Resource",
+    "amount": "Amount"
   }
 }

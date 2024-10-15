@@ -8,48 +8,88 @@ export const defaultGlobalState: GlobalState = {
     flag: "",
     gold: 10000,
   },
-  city: {
-    name: "",
-    townHall: {
-      level: 1,
+  cities: [
+    {
+      name: "City 1",
+      townHall: {
+        level: 1,
+      },
+      walls: {
+        level: 1,
+      },
+      town: {
+        buildings: [],
+      },
+      country: {
+        buildings: [
+          {
+            level: 1,
+            type: "farm",
+          },
+          {
+            level: 1,
+            type: "sawmill",
+          },
+          {
+            level: 1,
+            type: "quarry",
+          },
+          {
+            level: 1,
+            type: "mine",
+          },
+          {
+            level: 10,
+            type: "farm",
+          },
+        ],
+      },
+      resources: {
+        food: 1000,
+        wood: 1000,
+        stone: 1000,
+        iron: 1000,
+      },
     },
-    walls: {
-      level: 1,
+    {
+      name: "City 2",
+      townHall: {
+        level: 1,
+      },
+      walls: {
+        level: 1,
+      },
+      town: {
+        buildings: [],
+      },
+      country: {
+        buildings: [
+          {
+            level: 1,
+            type: "farm",
+          },
+          {
+            level: 10,
+            type: "sawmill",
+          },
+          {
+            level: 10,
+            type: "sawmill",
+          },
+          {
+            level: 10,
+            type: "sawmill",
+          },
+        ],
+      },
+      resources: {
+        food: 1000,
+        wood: 1000,
+        stone: 1000,
+        iron: 1000,
+      },
     },
-    town: {
-      buildings: [],
-    },
-    country: {
-      buildings: [
-        {
-          level: 1,
-          type: "farm",
-        },
-        {
-          level: 1,
-          type: "sawmill",
-        },
-        {
-          level: 1,
-          type: "quarry",
-        },
-        {
-          level: 1,
-          type: "mine",
-        },
-        {
-          level: 10,
-          type: "farm",
-        },
-      ],
-    },
-    resources: {
-      food: 1000,
-      wood: 1000,
-      stone: 1000,
-      iron: 1000,
-    },
-  },
+  ],
 };
 
 export const defaultProductionRatePerHour = 100;

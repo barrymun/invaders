@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { useLocalStorage } from "hooks";
 import { getAllKeys, hasAllKeys } from "utils";
-import { calculateResourceUpdates, defaultGlobalState, GlobalState, globalStateTimeout } from "utils/global-state";
+import { calculateCityResourceUpdates, defaultGlobalState, GlobalState, globalStateTimeout } from "utils/global-state";
 import { LocalStorageKeys } from "utils/local-storage";
 
 interface GlobalStateContextProps {
@@ -38,15 +38,10 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
   );
 
   const handleUpdateResources = useCallback(() => {
-    const newResources = calculateResourceUpdates(globalState);
+    const newCities = calculateCityResourceUpdates(globalState);
     setGlobalState((prev) => ({
       ...prev,
-      city: {
-        ...prev.city,
-        resources: {
-          ...newResources,
-        },
-      },
+      cities: newCities,
     }));
   }, [globalState]);
 
