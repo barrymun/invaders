@@ -1,7 +1,7 @@
 import { GlobalState } from "utils/global-state/types";
 
 export const globalStateTimeout = 1000 * 15; // 15 seconds
-export const resouceBaseProductionRate = 10;
+export const resourceBaseProductionRate = 10;
 export const defaultGlobalState: GlobalState = {
   player: {
     name: "",

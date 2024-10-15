@@ -1,4 +1,4 @@
-import { resouceBaseProductionRate } from "./consts";
+import { resourceBaseProductionRate } from "./consts";
 import { CountryBuilding, GlobalState } from "./types";
 
 function calculateCountryBuildingProductionRate({
@@ -10,7 +10,7 @@ function calculateCountryBuildingProductionRate({
 }): number {
   return currentState.city.country.buildings
     .filter((b) => b.type === type)
-    .map((b) => b.level * b.level * resouceBaseProductionRate)
+    .map((b) => b.level * b.level * resourceBaseProductionRate)
     .reduce((acc, level) => acc + level, 0);
 }
 
