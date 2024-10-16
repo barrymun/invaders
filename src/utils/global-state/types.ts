@@ -10,7 +10,7 @@ export interface CountryBuilding extends Building {
   type: "farm" | "sawmill" | "quarry" | "mine" | null;
 }
 
-export type ResourceType = "food" | "wood" | "stone" | "iron";
+export type ResourceType = "food" | "lumber" | "stone" | "iron";
 
 export type Resources = {
   [key in ResourceType]: number;

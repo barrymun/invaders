@@ -21,7 +21,7 @@ export function calculateCityResourceUpdates(currentState: GlobalState): City[] 
         ...city,
         resources: {
           food: city.resources.food + farmBonus,
-          wood: city.resources.wood + sawmillBonus,
+          lumber: city.resources.lumber + sawmillBonus,
           stone: city.resources.stone + quarryBonus,
           iron: city.resources.iron + mineBonus,
         },

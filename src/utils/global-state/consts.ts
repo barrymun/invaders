@@ -46,7 +46,7 @@ export const defaultGlobalState: GlobalState = {
       },
       resources: {
         food: 1000,
-        wood: 1000,
+        lumber: 1000,
         stone: 1000,
         iron: 1000,
       },
@@ -98,7 +98,7 @@ export const defaultGlobalState: GlobalState = {
       },
       resources: {
         food: 1000,
-        wood: 1000,
+        lumber: 1000,
         stone: 1000,
         iron: 1000,
       },

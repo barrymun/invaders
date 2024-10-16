@@ -10,7 +10,7 @@ import classes from "./resources.module.scss";
 
 const resourceImageMap: Record<ResourceType, React.ReactNode> = {
   food: <IconMeat />,
-  wood: <IconWood />,
+  lumber: <IconWood />,
   stone: <IconWall />,
   iron: <IconDiamond />,
 };
