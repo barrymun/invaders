@@ -29,7 +29,6 @@ const NavbarSelect: FC<NavbarSelectProps> = () => {
 
   const { globalState } = useGlobalState();
   const { selectedCity, selectedIndex, handleSetSelectedCity } = useSelectedCity();
-  console.log(selectedIndex);
 
   const selectedOption = useMemo(() => ({ label: selectedCity.name }), [selectedCity]);
 

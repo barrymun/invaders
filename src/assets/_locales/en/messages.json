@@ -14,7 +14,12 @@
     "version": "v{{version}}",
     "links": {
       "town": "Town",
-      "resources": "Resources"
+      "resources": "Resources",
+      "troops": "Troops"
     }
+  },
+  "troops": {
+    "troop": "Troop",
+    "amount": "Amount"
   }
 }

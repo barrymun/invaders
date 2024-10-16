@@ -4,10 +4,11 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useGlobalState } from "hooks";
+import { ResourceType } from "utils/global-state";
 
 import classes from "./resources.module.scss";
 
-const resourceImageMap: Record<string, React.ReactNode> = {
+const resourceImageMap: Record<ResourceType, React.ReactNode> = {
   food: <IconMeat />,
   wood: <IconWood />,
   stone: <IconWall />,
@@ -17,7 +18,7 @@ const resourceImageMap: Record<string, React.ReactNode> = {
 interface ResourcesProps {}
 
 const Resources: FC<ResourcesProps> = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("translation", { keyPrefix: "resources" });
   const { globalState } = useGlobalState();
 
   return (
@@ -32,14 +33,14 @@ const Resources: FC<ResourcesProps> = () => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th />
-                  <Table.Th>{t("resources.resource")}</Table.Th>
-                  <Table.Th>{t("resources.amount")}</Table.Th>
+                  <Table.Th>{t("resource")}</Table.Th>
+                  <Table.Th>{t("amount")}</Table.Th>
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
-                {Object.entries(city.resources).map(([resource, amount]) => (
-                  <Table.Tr key={resource}>
-                    <Table.Td>{resourceImageMap[resource]}</Table.Td>
+                {Object.entries(city.resources).map(([resource, amount], index) => (
+                  <Table.Tr key={index}>
+                    <Table.Td>{resourceImageMap[resource as ResourceType]}</Table.Td>
                     <Table.Td>{resource}</Table.Td>
                     <Table.Td>{amount}</Table.Td>
                   </Table.Tr>

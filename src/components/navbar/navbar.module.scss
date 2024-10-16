@@ -1,5 +1,5 @@
 .navbar {
-  height: calc(var(--navbar-height) - 2* var(--mantine-radius-sm));
+  height: calc(var(--navbar-height));
   padding: var(--mantine-spacing-sm);
   border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   display: flex;

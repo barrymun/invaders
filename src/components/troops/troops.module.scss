@@ -1,0 +1,9 @@
+.troops {
+  display: flex;
+  gap: var(--mantine-spacing-md);
+  flex-wrap: wrap;
+
+  .troop {
+    width: 250px;
+  }
+}
