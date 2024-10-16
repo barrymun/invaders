@@ -3,8 +3,11 @@ import { createContext, FC, useContext, useEffect, useMemo, useState } from "rea
 import { useGlobalState } from "hooks";
 import { City } from "utils/global-state";
 
+const defaultIndex = 0;
+
 interface SelectedCityContextProps {
   selectedCity: City;
+  selectedIndex: number;
   handleSetSelectedCity: (index: number) => void;
 }
 
@@ -14,13 +17,12 @@ interface SelectedCityProviderProps {
 
 const SelectedCityContext = createContext<SelectedCityContextProps>({
   selectedCity: {} as City,
+  selectedIndex: defaultIndex,
   handleSetSelectedCity: (_: number) => {},
 });
 
 const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
   const { globalState } = useGlobalState();
-
-  const defaultIndex = 0;
 
   const [selectedIndex, setSelectedIndex] = useState<number>(defaultIndex);
   const [selectedCity, setSelectedCity] = useState<City>(globalState.cities[defaultIndex]);
@@ -32,9 +34,10 @@ const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
   const value = useMemo(
     () => ({
       selectedCity,
+      selectedIndex,
       handleSetSelectedCity,
     }),
-    [selectedCity, handleSetSelectedCity]
+    [selectedCity, selectedIndex, handleSetSelectedCity]
   );
 
   useEffect(() => {

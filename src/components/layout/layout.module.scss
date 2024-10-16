@@ -3,6 +3,8 @@
 
   .outletContainer {
     width: 100%;
+    height: calc(100vh - var(--navbar-height));
     padding: var(--mantine-spacing-md);
+    overflow-y: auto;
   }
 }

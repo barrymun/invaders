@@ -1,15 +1,20 @@
 {
   "home": "Home",
   "loading": "Loading...",
+  "navbar": {
+    "city-select": {
+      "placeholder": "Choose your city"
+    }
+  },
+  "resources": {
+    "resource": "Resource",
+    "amount": "Amount"
+  },
   "sidebar": {
     "version": "v{{version}}",
     "links": {
       "town": "Town",
       "resources": "Resources"
     }
-  },
-  "resources": {
-    "resource": "Resource",
-    "amount": "Amount"
   }
 }

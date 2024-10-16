@@ -1,6 +1,7 @@
 import "i18n/config";
 import "./_reset.scss";
 import "@mantine/core/styles.css";
+import "./_variables.scss";
 import "./_main.scss";
 
 import { MantineProvider } from "@mantine/core";
