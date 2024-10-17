@@ -18,7 +18,7 @@ export const Town: FC<TownProps> = () => {
   const [buildModalOpened, { open: openBuildModal, close: closeBuildModal }] = useDisclosure(false);
   const [_infoModalOpened, { open: openInfoModal, close: _closeInfoModal }] = useDisclosure(false);
 
-  const { selectedCity, selectedIndex } = useSelectedCity();
+  const { selectedCity, selectedCityIndex } = useSelectedCity();
 
   const [selectedBuildingIndex, setSelectedBuildingIndex] = useState<number | null>(null);
   const [selectedBuildingType, setSelectedBuildingType] = useState<TownBuilding["type"] | null>(null);
@@ -43,7 +43,7 @@ export const Town: FC<TownProps> = () => {
   useEffect(() => {
     setSelectedBuildingIndex(null);
     setSelectedBuildingType(null);
-  }, [selectedIndex]);
+  }, [selectedCityIndex]);
 
   return (
     <>

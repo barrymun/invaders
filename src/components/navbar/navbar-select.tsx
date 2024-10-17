@@ -28,21 +28,21 @@ const NavbarSelect: FC<NavbarSelectProps> = () => {
   });
 
   const { globalState } = useGlobalState();
-  const { selectedCity, selectedIndex, handleSetSelectedCity } = useSelectedCity();
+  const { selectedCity, selectedCityIndex, handleSetSelectedCity } = useSelectedCity();
 
   const selectedOption = useMemo(() => ({ label: selectedCity.name }), [selectedCity]);
 
   const options = useMemo(
     () =>
       globalState.cities.map((city, index) => (
-        <Combobox.Option key={index} value={index.toString()} active={index === selectedIndex}>
+        <Combobox.Option key={index} value={index.toString()} active={index === selectedCityIndex}>
           <Group gap="xs">
-            {index === selectedIndex && <CheckIcon size={12} />}
+            {index === selectedCityIndex && <CheckIcon size={12} />}
             <SelectOption {...{ label: city.name }} />
           </Group>
         </Combobox.Option>
       )),
-    [globalState.cities, selectedIndex]
+    [globalState.cities, selectedCityIndex]
   );
 
   const handleChange = (value: number) => {

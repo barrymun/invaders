@@ -47,7 +47,7 @@ export type TroopType =
   | "cavalry"
   | "cataphract"
   | "transporter"
-  | "ram"
+  | "batteringRam"
   | "ballista"
   | "catapult";
 

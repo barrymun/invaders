@@ -23,7 +23,7 @@ const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
 
   const { opened, close, selectedBuildingIndex, selectedBuildingType, setSelectedBuildingType } = props;
 
-  const { selectedCity, selectedIndex } = useSelectedCity();
+  const { selectedCity, selectedCityIndex } = useSelectedCity();
   const { setGlobalState } = useGlobalState();
 
   const handleSelectBuildingType = (index: number) => () => {
@@ -57,22 +57,22 @@ const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
     setGlobalState((prev) => ({
       ...prev,
       cities: [
-        ...prev.cities.slice(0, selectedIndex),
+        ...prev.cities.slice(0, selectedCityIndex),
         {
-          ...prev.cities[selectedIndex],
+          ...prev.cities[selectedCityIndex],
           town: {
-            ...prev.cities[selectedIndex].town,
+            ...prev.cities[selectedCityIndex].town,
             buildings: [
-              ...prev.cities[selectedIndex].town.buildings.slice(0, selectedBuildingIndex),
+              ...prev.cities[selectedCityIndex].town.buildings.slice(0, selectedBuildingIndex),
               {
                 type: selectedBuildingType,
                 level: 1,
               },
-              ...prev.cities[selectedIndex].town.buildings.slice(selectedBuildingIndex + 1),
+              ...prev.cities[selectedCityIndex].town.buildings.slice(selectedBuildingIndex + 1),
             ] as FixedLengthArray<TownBuilding | null, 32>,
           },
         },
-        ...prev.cities.slice(selectedIndex + 1),
+        ...prev.cities.slice(selectedCityIndex + 1),
       ],
     }));
     close();

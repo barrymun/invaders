@@ -1,40 +1,26 @@
 import { Table, Card, Box, Text } from "@mantine/core";
-import {
-  IconArcheryArrow,
-  IconAxe,
-  IconBackhoe,
-  IconBow,
-  IconBulldozer,
-  IconHorse,
-  IconHorseToy,
-  IconPick,
-  IconSleigh,
-  IconSpy,
-  IconSword,
-  IconTrident,
-} from "@tabler/icons-react";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useGlobalState } from "hooks";
-import { TroopType } from "utils/global-state";
+import { troopEmojiMap, TroopType } from "utils/global-state";
 
 import classes from "./troops.module.scss";
 
-const troopImageMap: Record<TroopType, React.ReactNode> = {
-  worker: <IconPick />,
-  warrior: <IconAxe />,
-  scout: <IconSpy />, // or brand-redhat
-  swordsman: <IconSword />,
-  pikeman: <IconTrident />,
-  archer: <IconBow />,
-  cavalry: <IconHorse />,
-  cataphract: <IconHorseToy />,
-  transporter: <IconSleigh />,
-  ram: <IconBulldozer />,
-  ballista: <IconArcheryArrow />,
-  catapult: <IconBackhoe />,
-};
+// const troopImageMap: Record<TroopType, React.ReactNode> = {
+//   worker: <IconPick />,
+//   warrior: <IconAxe />,
+//   scout: <IconSpy />, // or brand-redhat
+//   swordsman: <IconSword />,
+//   pikeman: <IconTrident />,
+//   archer: <IconBow />,
+//   cavalry: <IconHorse />,
+//   cataphract: <IconHorseToy />,
+//   transporter: <IconSleigh />,
+//   batteringRam: <IconBulldozer />,
+//   ballista: <IconArcheryArrow />,
+//   catapult: <IconBackhoe />,
+// };
 
 interface TroopsProps {}
 
@@ -61,7 +47,7 @@ const Troops: FC<TroopsProps> = () => {
               <Table.Tbody>
                 {Object.entries(city.troops).map(([troop, amount], index) => (
                   <Table.Tr key={index}>
-                    <Table.Td>{troopImageMap[troop as TroopType]}</Table.Td>
+                    <Table.Td>{troopEmojiMap[troop as TroopType]}</Table.Td>
                     <Table.Td>{troop}</Table.Td>
                     <Table.Td>{amount}</Table.Td>
                   </Table.Tr>

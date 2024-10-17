@@ -4,7 +4,7 @@ import "@mantine/core/styles.css";
 import "./_variables.scss";
 import "./_main.scss";
 
-import { MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
@@ -12,9 +12,11 @@ import { RouterProvider } from "react-router-dom";
 import { GlobalStateProvider, LocalStorageProvider, SelectedCityProvider } from "hooks";
 import { router } from "router";
 
+const mantineTheme = createTheme({});
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <MantineProvider>
+    <MantineProvider theme={mantineTheme}>
       <LocalStorageProvider>
         <GlobalStateProvider>
           <SelectedCityProvider>

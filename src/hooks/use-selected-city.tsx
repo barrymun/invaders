@@ -7,7 +7,7 @@ const defaultIndex = 0;
 
 interface SelectedCityContextProps {
   selectedCity: City;
-  selectedIndex: number;
+  selectedCityIndex: number;
   handleSetSelectedCity: (index: number) => void;
 }
 
@@ -17,14 +17,14 @@ interface SelectedCityProviderProps {
 
 const SelectedCityContext = createContext<SelectedCityContextProps>({
   selectedCity: {} as City,
-  selectedIndex: defaultIndex,
+  selectedCityIndex: defaultIndex,
   handleSetSelectedCity: (_: number) => {},
 });
 
 const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
   const { globalState } = useGlobalState();
 
-  const [selectedIndex, setSelectedIndex] = useState<number>(defaultIndex);
+  const [selectedCityIndex, setSelectedIndex] = useState<number>(defaultIndex);
   const [selectedCity, setSelectedCity] = useState<City>(globalState.cities[defaultIndex]);
 
   const handleSetSelectedCity = (index: number) => {
@@ -34,15 +34,15 @@ const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
   const value = useMemo(
     () => ({
       selectedCity,
-      selectedIndex,
+      selectedCityIndex,
       handleSetSelectedCity,
     }),
-    [selectedCity, selectedIndex, handleSetSelectedCity]
+    [selectedCity, selectedCityIndex, handleSetSelectedCity]
   );
 
   useEffect(() => {
-    setSelectedCity(globalState.cities[selectedIndex]);
-  }, [globalState, selectedIndex]);
+    setSelectedCity(globalState.cities[selectedCityIndex]);
+  }, [globalState, selectedCityIndex]);
 
   return <SelectedCityContext.Provider value={value}>{children}</SelectedCityContext.Provider>;
 };

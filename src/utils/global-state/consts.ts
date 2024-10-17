@@ -1,5 +1,5 @@
 import { FixedLengthArray } from "utils";
-import { GlobalState, TownBuilding } from "utils/global-state";
+import { GlobalState, ResourceType, TownBuilding, TroopType } from "utils/global-state";
 
 export const globalStateTimeout = 1000 * 15; // 15 seconds
 
@@ -10,6 +10,30 @@ export const maxTownBuildings = 32;
 export const defaultProductionRatePerHour = 100;
 
 export const maxNonCottageNonBarracksBuildings = 1;
+
+export const goldEmoji = "💰";
+
+export const resourceEmojiMap: Record<ResourceType, string> = {
+  food: "🌾",
+  lumber: "🪵",
+  stone: "🪨",
+  iron: "🪙",
+};
+
+export const troopEmojiMap: Record<TroopType, string> = {
+  worker: "⛏️",
+  warrior: "🪓",
+  scout: "🥷",
+  swordsman: "🗡️",
+  pikeman: "🔱",
+  archer: "🏹",
+  cavalry: "🐎",
+  cataphract: "🛡️",
+  transporter: "🫏",
+  batteringRam: "💣",
+  ballista: "🎯",
+  catapult: "💥",
+};
 
 export const townHallEmoji = "🏛️";
 
@@ -89,7 +113,7 @@ export const defaultGlobalState: GlobalState = {
         cavalry: 10,
         cataphract: 10,
         transporter: 10,
-        ram: 10,
+        batteringRam: 10,
         ballista: 10,
         catapult: 10,
       },
@@ -141,7 +165,7 @@ export const defaultGlobalState: GlobalState = {
         cavalry: 10,
         cataphract: 10,
         transporter: 10,
-        ram: 10,
+        batteringRam: 10,
         ballista: 10,
         catapult: 10,
       },
