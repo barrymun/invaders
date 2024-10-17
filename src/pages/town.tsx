@@ -1,9 +1,9 @@
 import { FC } from "react";
-// import { useTranslation } from "react-i18next";
+
+import { Town as TownComponent } from "components";
 
 interface TownProps {}
 
 export const Town: FC<TownProps> = () => {
-  // const { t } = useTranslation();
-  return <div>Town</div>;
+  return <TownComponent />;
 };

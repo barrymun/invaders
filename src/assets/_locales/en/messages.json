@@ -2,7 +2,7 @@
   "home": "Home",
   "loading": "Loading...",
   "navbar": {
-    "city-select": {
+    "citySelect": {
       "placeholder": "Choose your city"
     }
   },
@@ -16,6 +16,34 @@
       "town": "Town",
       "resources": "Resources",
       "troops": "Troops"
+    }
+  },
+  "town": {
+    "townHall": "Town Hall",
+    "walls": "Walls",
+    "build": {
+      "openModal": "Build",
+      "emptyLandPlot": "Land",
+      "modal": {
+        "title": "Build",
+        "cityBuildings": {
+          "barracks": "Barracks",
+          "cottage": "Cottage",
+          "inn": "Inn",
+          "diningHall": "Dining Hall",
+          "market": "Market",
+          "academy": "Academy",
+          "rallySpot": "Rally Spot",
+          "forge": "Forge",
+          "workshop": "Workshop",
+          "reliefStation": "Relief Station",
+          "beaconTower": "Beacon Tower"
+        },
+        "confirmBuild": "Build"
+      }
+    },
+    "info": {
+      "openModal": "Info"
     }
   },
   "troops": {

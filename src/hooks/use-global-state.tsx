@@ -45,6 +45,14 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
     }));
   }, [globalState]);
 
+  const handleBeforeUnload = useCallback(
+    (_event: BeforeUnloadEvent) => {
+      console.log("Saving global state on unmount...");
+      setItem(LocalStorageKeys.GlobalState, globalState);
+    },
+    [globalState]
+  );
+
   useEffect(() => {
     const item = getItem(LocalStorageKeys.GlobalState);
     if (item) {
@@ -56,6 +64,18 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
     }
     setIsLoading(false);
   }, []);
+
+  /**
+   * calculate resource updates given an interval
+   */
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      handleUpdateResources();
+    }, globalStateTimeout);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [globalState]);
 
   /**
    * save global state to local storage given an interval
@@ -71,14 +91,12 @@ const GlobalStateProvider: FC<GlobalStateProviderProps> = ({ children }) => {
   }, [globalState]);
 
   /**
-   * calculate resource updates given an interval
+   * save global state to local storage before unload
    */
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      handleUpdateResources();
-    }, globalStateTimeout);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
-      clearInterval(intervalId);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [globalState]);
 

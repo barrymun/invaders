@@ -72,7 +72,7 @@ const NavbarSelect: FC<NavbarSelectProps> = () => {
             {selectedOption ? (
               <SelectOption {...selectedOption} />
             ) : (
-              <Input.Placeholder>{t("navbar.city-select.placeholder")}</Input.Placeholder>
+              <Input.Placeholder>{t("navbar.citySelect.placeholder")}</Input.Placeholder>
             )}
           </InputBase>
         </Combobox.Target>

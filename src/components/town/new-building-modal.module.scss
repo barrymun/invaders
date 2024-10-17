@@ -1,0 +1,26 @@
+.townModal {
+  .modalBuildings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mantine-spacing-md);
+
+    .modalBuilding {
+      width: 200px;
+      border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+      border-radius: var(--mantine-radius-sm);
+    }
+
+    .modalBuildingDisabled {
+      opacity: 0.5;
+    }
+
+    .modalBuildingSelected {
+      border-color: var(--mantine-color-primary);
+    }
+
+    .modalBuilding:hover {
+      cursor: pointer;
+      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    }
+  }
+}

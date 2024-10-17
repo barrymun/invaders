@@ -1,0 +1,15 @@
+.town {
+  .townHall, .walls {
+    width: 270px;
+
+    .townHallCard, .wallsCard {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .largeTitle {
+        font-size: 60px;
+      }
+    }
+  }
+}

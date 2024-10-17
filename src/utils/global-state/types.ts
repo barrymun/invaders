@@ -1,13 +1,34 @@
-import { OneToTen } from "utils/types";
+import { FixedLengthArray, OneToTen } from "utils/types";
 
 export interface Building {
   level: OneToTen;
 }
 
-export interface CityBuilding extends Building {}
+/**
+ * all building can be built only once except for barracks
+ * and cottages which can be built multiple times
+ */
+export interface TownBuilding extends Building {
+  type:
+    | "inn" // recruit heroes
+    | "diningHall" // store heroes
+    | "market" // trade resources
+    | "academy" // research
+    | "rallySpot" // how many troops & waves can be sent
+    | "forge" // improves speed at which troops are trained
+    | "workshop" // improve hero gear
+    | "reliefStation" // how fast resources are moved between cities
+    | "beaconTower" // improved scouting information
+    // v2
+    // | "embassy"
+    // | "warehouse"
+    // | "stable"
+    | "barracks" // train troops
+    | "cottage"; // store workers which are used for resource production
+}
 
 export interface CountryBuilding extends Building {
-  type: "farm" | "sawmill" | "quarry" | "mine" | null;
+  type: "farm" | "sawmill" | "quarry" | "mine";
 }
 
 export type ResourceType = "food" | "lumber" | "stone" | "iron";
@@ -39,10 +60,10 @@ export interface City {
   townHall: Building;
   walls: Building;
   town: {
-    buildings: CityBuilding[];
+    buildings: FixedLengthArray<TownBuilding | null, 32>;
   };
   country: {
-    buildings: CountryBuilding[];
+    buildings: (CountryBuilding | null)[];
   };
   resources: Resources;
   troops: Troops;
