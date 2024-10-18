@@ -1,27 +1,24 @@
-import { Box, Card, Divider, Group, Text, Title } from "@mantine/core";
+import { Box, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 import { Building } from "components";
-import { NewTownBuildingModal, TownBuildingInfoModal } from "components/building";
+import { CountyBuildingInfoModal, NewCountyBuildingModal } from "components/building";
 import { BuildingModalProvider, useSelectedCity } from "hooks";
-import { TownBuilding, townHallEmoji, wallsEmoji } from "utils/global-state";
+import { CountyBuilding } from "utils/global-state";
 
-import classes from "./town.module.scss";
+import classes from "./county.module.scss";
 
-interface TownProps {}
+interface CountyProps {}
 
-export const Town: FC<TownProps> = () => {
-  const { t } = useTranslation("translation", { keyPrefix: "town" });
-
+const County: FC<CountyProps> = () => {
   const [buildModalOpened, { open: openBuildModal, close: closeBuildModal }] = useDisclosure(false);
   const [infoModalOpened, { open: openInfoModal, close: closeInfoModal }] = useDisclosure(false);
 
   const { selectedCity, selectedCityIndex } = useSelectedCity();
 
   const [selectedBuildingIndex, setSelectedBuildingIndex] = useState<number | null>(null);
-  const [selectedBuildingType, setSelectedBuildingType] = useState<TownBuilding["type"] | null>(null);
+  const [selectedBuildingType, setSelectedBuildingType] = useState<CountyBuilding["type"] | null>(null);
 
   const handleOpenBuildModal = (index: number) => () => {
     setSelectedBuildingIndex(index);
@@ -47,28 +44,11 @@ export const Town: FC<TownProps> = () => {
 
   return (
     <>
-      <Box className={classes.town}>
+      <Box className={classes.county}>
         <Group>
-          <Box className={classes.townHall}>
-            <Card className={classes.townHallCard}>
-              <Title className={classes.largeTitle}>{townHallEmoji}</Title>
-              <Text>{t("townHall")}</Text>
-              <Text>{selectedCity.townHall.level}</Text>
-            </Card>
-          </Box>
-          <Box className={classes.walls}>
-            <Card className={classes.wallsCard}>
-              <Title className={classes.largeTitle}>{wallsEmoji}</Title>
-              <Text>{t("walls")}</Text>
-              <Text>{selectedCity.walls.level}</Text>
-            </Card>
-          </Box>
-        </Group>
-        <Divider my="md" />
-        <Group>
-          {selectedCity.town.buildings.map((building, index) => (
+          {selectedCity.county.buildings.map((building, index) => (
             <Building
-              cityAreaType="town"
+              cityAreaType="county"
               key={index}
               building={building}
               handleBuild={handleOpenBuildModal(index)}
@@ -79,24 +59,26 @@ export const Town: FC<TownProps> = () => {
       </Box>
 
       <BuildingModalProvider
-        cityAreaType="town"
+        cityAreaType="county"
         opened={buildModalOpened}
         selectedBuildingIndex={selectedBuildingIndex}
         selectedBuildingType={selectedBuildingType}
         close={closeBuildModal}
       >
-        <NewTownBuildingModal setSelectedBuildingType={setSelectedBuildingType} />
+        <NewCountyBuildingModal setSelectedBuildingType={setSelectedBuildingType} />
       </BuildingModalProvider>
 
       <BuildingModalProvider
-        cityAreaType="town"
+        cityAreaType="county"
         opened={infoModalOpened}
         selectedBuildingIndex={selectedBuildingIndex}
         selectedBuildingType={selectedBuildingType}
         close={closeInfoModal}
       >
-        <TownBuildingInfoModal setSelectedBuildingType={setSelectedBuildingType} />
+        <CountyBuildingInfoModal setSelectedBuildingType={setSelectedBuildingType} />
       </BuildingModalProvider>
     </>
   );
 };
+
+export { County };

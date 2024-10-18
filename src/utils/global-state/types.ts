@@ -1,4 +1,6 @@
-import { FixedLengthArray, OneToTen } from "utils/types";
+import { FixedLengthArray, OneToTen } from "utils";
+
+import { maxCountyBuildings, maxTownBuildings } from "./consts";
 
 export interface Building {
   level: OneToTen;
@@ -27,7 +29,7 @@ export interface TownBuilding extends Building {
     | "cottage"; // store workers which are used for resource production
 }
 
-export interface CountryBuilding extends Building {
+export interface CountyBuilding extends Building {
   type: "farm" | "sawmill" | "quarry" | "mine";
 }
 
@@ -60,10 +62,10 @@ export interface City {
   townHall: Building;
   walls: Building;
   town: {
-    buildings: FixedLengthArray<TownBuilding | null, 32>;
+    buildings: FixedLengthArray<TownBuilding | null, typeof maxTownBuildings>;
   };
-  country: {
-    buildings: (CountryBuilding | null)[];
+  county: {
+    buildings: FixedLengthArray<CountyBuilding | null, typeof maxCountyBuildings>;
   };
   resources: Resources;
   troops: Troops;

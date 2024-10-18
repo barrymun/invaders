@@ -1,8 +1,8 @@
 import { maxNonCottageNonBarracksBuildings, resourceBaseProductionRate } from "./consts";
-import { City, CountryBuilding, GlobalState, TownBuilding } from "./types";
+import { City, CountyBuilding, GlobalState, TownBuilding } from "./types";
 
-function calculateCountryBuildingProductionRate({ city, type }: { city: City; type: CountryBuilding["type"] }): number {
-  return city.country.buildings
+function calculateCountyBuildingProductionRate({ city, type }: { city: City; type: CountyBuilding["type"] }): number {
+  return city.county.buildings
     .filter((b) => b !== null && b.type === type)
     .map((b) => (b ? b.level * b.level * resourceBaseProductionRate : 0))
     .reduce((acc, level) => acc + level, 0);
@@ -11,10 +11,10 @@ function calculateCountryBuildingProductionRate({ city, type }: { city: City; ty
 export function calculateCityResourceUpdates(currentState: GlobalState): City[] {
   let res: City[] = [];
   for (const city of currentState.cities) {
-    const farmBonus = calculateCountryBuildingProductionRate({ city, type: "farm" });
-    const sawmillBonus = calculateCountryBuildingProductionRate({ city, type: "sawmill" });
-    const quarryBonus = calculateCountryBuildingProductionRate({ city, type: "quarry" });
-    const mineBonus = calculateCountryBuildingProductionRate({ city, type: "mine" });
+    const farmBonus = calculateCountyBuildingProductionRate({ city, type: "farm" });
+    const sawmillBonus = calculateCountyBuildingProductionRate({ city, type: "sawmill" });
+    const quarryBonus = calculateCountyBuildingProductionRate({ city, type: "quarry" });
+    const mineBonus = calculateCountyBuildingProductionRate({ city, type: "mine" });
     res = [
       ...res,
       {
@@ -49,4 +49,19 @@ export function canBuildTownBuilding({
     return true;
   }
   return buildings.filter((b) => b?.type === proposedBuildingType).length < maxNonCottageNonBarracksBuildings;
+}
+
+export function canBuildCountyBuilding({
+  buildings,
+  buildingIndex,
+}: {
+  buildings: (CountyBuilding | null)[];
+  buildingIndex: number;
+}): boolean {
+  // cannot build on top of existing building
+  if (buildings[buildingIndex] !== null) {
+    return false;
+  }
+  // no restrictions on number of county buildings
+  return true;
 }

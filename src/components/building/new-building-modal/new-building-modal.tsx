@@ -3,55 +3,38 @@ import classNames from "classnames";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useGlobalState, useSelectedCity } from "hooks";
-import { FixedLengthArray } from "utils";
-import { buildingEmojiMap, canBuildTownBuilding, TownBuilding } from "utils/global-state";
+import { useGlobalState, useBuildingModal, useSelectedCity } from "hooks";
+import { townBuildingEmojiMap, TownBuilding, City, CountyBuilding, countyBuildingEmojiMap } from "utils/global-state";
 
 import classes from "./new-building-modal.module.scss";
 
+interface CanBuildNewBuildingProps {
+  buildingIndex: number;
+  proposedBuildingType: TownBuilding["type"] | CountyBuilding["type"];
+}
+
 interface NewBuildingModalProps {
-  opened: boolean;
-  close: () => void;
-  selectedBuildingIndex: number | null;
-  setSelectedBuildingIndex: (index: number | null) => void;
-  selectedBuildingType: TownBuilding["type"] | null;
-  setSelectedBuildingType: (type: TownBuilding["type"] | null) => void;
+  canBuildFn: (props: CanBuildNewBuildingProps) => boolean;
+  handleSelectBuildingType: (index: number) => () => void;
 }
 
 const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
-  const { t } = useTranslation("translation", { keyPrefix: "town" });
+  const { canBuildFn, handleSelectBuildingType } = props;
 
-  const { opened, close, selectedBuildingIndex, selectedBuildingType, setSelectedBuildingType } = props;
+  const { cityAreaType, opened, selectedBuildingIndex, selectedBuildingType, close } = useBuildingModal();
 
-  const { selectedCity, selectedCityIndex } = useSelectedCity();
+  const { t } = useTranslation("translation", { keyPrefix: cityAreaType });
+
   const { setGlobalState } = useGlobalState();
+  const { selectedCityIndex } = useSelectedCity();
 
-  const handleSelectBuildingType = (index: number) => () => {
-    if (selectedBuildingIndex === null) {
-      return;
-    }
-    const proposedBuildingType = Object.keys(buildingEmojiMap)[index] as TownBuilding["type"];
-    const canBuild = canBuildTownBuilding({
-      buildings: selectedCity.town.buildings,
-      buildingIndex: selectedBuildingIndex,
-      proposedBuildingType,
-    });
-    if (!canBuild) {
-      return;
-    }
-    setSelectedBuildingType(proposedBuildingType);
-  };
+  const buildingEmojiMap = cityAreaType === "town" ? townBuildingEmojiMap : countyBuildingEmojiMap;
 
   const handleConfirmBuild = () => {
     if (selectedBuildingIndex === null || selectedBuildingType === null) {
       return;
     }
-    const canBuild = canBuildTownBuilding({
-      buildings: selectedCity.town.buildings,
-      buildingIndex: selectedBuildingIndex,
-      proposedBuildingType: selectedBuildingType,
-    });
-    if (!canBuild) {
+    if (!canBuildFn({ buildingIndex: selectedBuildingIndex, proposedBuildingType: selectedBuildingType })) {
       return;
     }
     setGlobalState((prev) => ({
@@ -60,16 +43,16 @@ const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
         ...prev.cities.slice(0, selectedCityIndex),
         {
           ...prev.cities[selectedCityIndex],
-          town: {
-            ...prev.cities[selectedCityIndex].town,
+          [cityAreaType]: {
+            ...prev.cities[selectedCityIndex][cityAreaType],
             buildings: [
-              ...prev.cities[selectedCityIndex].town.buildings.slice(0, selectedBuildingIndex),
+              ...prev.cities[selectedCityIndex][cityAreaType].buildings.slice(0, selectedBuildingIndex),
               {
                 type: selectedBuildingType,
                 level: 1,
               },
-              ...prev.cities[selectedCityIndex].town.buildings.slice(selectedBuildingIndex + 1),
-            ] as FixedLengthArray<TownBuilding | null, 32>,
+              ...prev.cities[selectedCityIndex][cityAreaType].buildings.slice(selectedBuildingIndex + 1),
+            ] as City[typeof cityAreaType]["buildings"],
           },
         },
         ...prev.cities.slice(selectedCityIndex + 1),
@@ -85,15 +68,15 @@ const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
       title={t("build.modal.title")}
       centered
       size="xl"
-      className={classes.townModal}
+      className={classes.newBuildingModal}
     >
       <Modal.Body>
         <Box className={classes.modalBuildings}>
-          {selectedBuildingIndex &&
+          {selectedBuildingIndex !== null &&
             Object.entries(buildingEmojiMap).map(([type, emoji], index) => {
-              const buildingType = type as TownBuilding["type"];
-              const canBuild = canBuildTownBuilding({
-                buildings: selectedCity.town.buildings,
+              const buildingType =
+                cityAreaType === "town" ? (type as TownBuilding["type"]) : (type as CountyBuilding["type"]);
+              const canBuild = canBuildFn({
                 buildingIndex: selectedBuildingIndex,
                 proposedBuildingType: buildingType,
               });
@@ -108,7 +91,7 @@ const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
                 >
                   <Group>
                     <Title>{emoji}</Title>
-                    <Text>{t(`build.modal.cityBuildings.${buildingType}`)}</Text>
+                    <Text>{t(`build.modal.buildings.${buildingType}`)}</Text>
                   </Group>
                 </Card>
               );
@@ -126,3 +109,4 @@ const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
 };
 
 export { NewBuildingModal };
+export { type CanBuildNewBuildingProps };

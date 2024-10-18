@@ -1,11 +1,13 @@
 import { FixedLengthArray } from "utils";
-import { GlobalState, ResourceType, TownBuilding, TroopType } from "utils/global-state";
+import { CountyBuilding, GlobalState, ResourceType, TownBuilding, TroopType } from "utils/global-state";
 
 export const globalStateTimeout = 1000 * 15; // 15 seconds
 
 export const resourceBaseProductionRate = 10;
 
 export const maxTownBuildings = 32;
+
+export const maxCountyBuildings = 40;
 
 export const defaultProductionRatePerHour = 100;
 
@@ -39,9 +41,9 @@ export const townHallEmoji = "🏛️";
 
 export const wallsEmoji = "🏰";
 
-export const emptyLandPlotEmoji = "🌲";
+export const emptyTownLandEmoji = "🌲";
 
-export const buildingEmojiMap: Record<TownBuilding["type"], string> = {
+export const townBuildingEmojiMap: Record<TownBuilding["type"], string> = {
   barracks: "⚔️",
   cottage: "🏡",
   inn: "🏨",
@@ -53,6 +55,15 @@ export const buildingEmojiMap: Record<TownBuilding["type"], string> = {
   workshop: "🧰",
   reliefStation: "🚚",
   beaconTower: "🔭",
+};
+
+export const emptyCountyLandEmoji = "🌳";
+
+export const countyBuildingEmojiMap: Record<CountyBuilding["type"], string> = {
+  farm: "🚜",
+  sawmill: "🪚",
+  quarry: "🏗️",
+  mine: "🏭",
 };
 
 export const defaultGlobalState: GlobalState = {
@@ -71,31 +82,16 @@ export const defaultGlobalState: GlobalState = {
         level: 1,
       },
       town: {
-        buildings: new Array(maxTownBuildings).fill(null) as FixedLengthArray<TownBuilding | null, 32>,
+        buildings: new Array(maxTownBuildings).fill(null) as FixedLengthArray<
+          TownBuilding | null,
+          typeof maxTownBuildings
+        >,
       },
-      country: {
-        buildings: [
-          {
-            level: 1,
-            type: "farm",
-          },
-          {
-            level: 1,
-            type: "sawmill",
-          },
-          {
-            level: 1,
-            type: "quarry",
-          },
-          {
-            level: 1,
-            type: "mine",
-          },
-          {
-            level: 10,
-            type: "farm",
-          },
-        ],
+      county: {
+        buildings: new Array(maxCountyBuildings).fill(null) as FixedLengthArray<
+          CountyBuilding | null,
+          typeof maxCountyBuildings
+        >,
       },
       resources: {
         food: 1000,
@@ -127,27 +123,16 @@ export const defaultGlobalState: GlobalState = {
         level: 1,
       },
       town: {
-        buildings: new Array(maxTownBuildings).fill(null) as FixedLengthArray<TownBuilding | null, 32>,
+        buildings: new Array(maxTownBuildings).fill(null) as FixedLengthArray<
+          TownBuilding | null,
+          typeof maxTownBuildings
+        >,
       },
-      country: {
-        buildings: [
-          {
-            level: 1,
-            type: "farm",
-          },
-          {
-            level: 10,
-            type: "sawmill",
-          },
-          {
-            level: 10,
-            type: "sawmill",
-          },
-          {
-            level: 10,
-            type: "sawmill",
-          },
-        ],
+      county: {
+        buildings: new Array(maxCountyBuildings).fill(null) as FixedLengthArray<
+          CountyBuilding | null,
+          typeof maxCountyBuildings
+        >,
       },
       resources: {
         food: 1000,

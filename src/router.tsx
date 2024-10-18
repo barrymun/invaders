@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { Layout } from "components";
+import { County } from "pages/county";
 import { Home } from "pages/home";
 import { Resources } from "pages/resources";
 import { Town } from "pages/town";
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: "/town",
         element: <Town />,
+      },
+      {
+        path: "/county",
+        element: <County />,
       },
       {
         path: "/resources",

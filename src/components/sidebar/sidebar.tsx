@@ -1,5 +1,5 @@
 import { Group, Code, Box } from "@mantine/core";
-import { IconBuildingFactory, IconBuildingCastle, IconSwords } from "@tabler/icons-react";
+import { IconBuildingFactory, IconBuildingCastle, IconSwords, IconShovelPitchforks } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -14,6 +14,7 @@ const Sidebar: FC<SidebarProps> = () => {
 
   const data = [
     { link: "/town", label: t("sidebar.links.town"), icon: IconBuildingCastle },
+    { link: "/county", label: t("sidebar.links.county"), icon: IconShovelPitchforks },
     { link: "/resources", label: t("sidebar.links.resources"), icon: IconBuildingFactory },
     { link: "/troops", label: t("sidebar.links.troops"), icon: IconSwords },
   ];
