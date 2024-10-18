@@ -1,5 +1,7 @@
+import { countries, getCountryCode, ICountry } from "countries-list";
+
 import { FixedLengthArray } from "utils";
-import { CountyBuilding, GlobalState, ResourceType, TownBuilding, TroopType } from "utils/global-state";
+import { CountyBuilding, getFlagEmoji, GlobalState, ResourceType, TownBuilding, TroopType } from "utils/global-state";
 
 export const globalStateTimeout = 1000 * 15; // 15 seconds
 
@@ -66,10 +68,31 @@ export const countyBuildingEmojiMap: Record<CountyBuilding["type"], string> = {
   mine: "🏭",
 };
 
+export const defaultCountryName = "Unaffiliated";
+
+export const defaultCountryFlag = "🏳️";
+
+export const defaultCountry: ICountry = {
+  capital: "",
+  continent: "EU",
+  currency: [],
+  languages: [],
+  name: defaultCountryName,
+  native: defaultCountryName,
+  phone: [],
+};
+
+export const defaultCountryData = { defaultCountry, ...countries };
+
+export const defaultCountrySelectData = Object.values(defaultCountryData).map((c) => ({
+  value: c.name,
+  label: `${c.name} ${getFlagEmoji(getCountryCode(c.name) || null)}`,
+}));
+
 export const defaultGlobalState: GlobalState = {
   player: {
     name: "",
-    flag: "",
+    country: defaultCountry,
     gold: 10000,
   },
   cities: [

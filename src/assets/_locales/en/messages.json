@@ -16,7 +16,16 @@
       "town": "Town",
       "county": "County",
       "resources": "Resources",
-      "troops": "Troops"
+      "troops": "Troops",
+      "settings": "Settings"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "form": {
+      "countrySelect": "Choose your country",
+      "save": "Save",
+      "reset": "Reset"
     }
   },
   "county": {

@@ -1,3 +1,5 @@
+import { ICountry } from "countries-list";
+
 import { FixedLengthArray, OneToTen } from "utils";
 
 import { maxCountyBuildings, maxTownBuildings } from "./consts";
@@ -74,7 +76,7 @@ export interface City {
 export interface GlobalState {
   player: {
     name: string;
-    flag: string;
+    country: ICountry;
     gold: number;
   };
   cities: City[];

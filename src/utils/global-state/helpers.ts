@@ -1,4 +1,4 @@
-import { maxNonCottageNonBarracksBuildings, resourceBaseProductionRate } from "./consts";
+import { defaultCountryFlag, maxNonCottageNonBarracksBuildings, resourceBaseProductionRate } from "./consts";
 import { City, CountyBuilding, GlobalState, TownBuilding } from "./types";
 
 function calculateCountyBuildingProductionRate({ city, type }: { city: City; type: CountyBuilding["type"] }): number {
@@ -64,4 +64,15 @@ export function canBuildCountyBuilding({
   }
   // no restrictions on number of county buildings
   return true;
+}
+
+export function getFlagEmoji(countryCode: string | null) {
+  if (!countryCode) {
+    return defaultCountryFlag;
+  }
+  const codePoints = countryCode
+    .toUpperCase()
+    .split("")
+    .map((char) => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
 }
