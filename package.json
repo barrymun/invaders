@@ -12,6 +12,7 @@
     "cspell": "cspell --config cspell.json \"**/*.{ts,tsx,js,jsx,json,html}\"",
     "preview": "vite preview",
     "prepare": "husky",
+    "visualize": "vite-bundle-visualizer",
     "docker-dev-up": "docker-compose -f docker-compose-dev.yaml up -d --build",
     "docker-up": "docker-compose up -d --build",
     "docker-down": "docker-compose down",
@@ -64,6 +65,7 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.9",
+    "vite-bundle-visualizer": "^1.2.1",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.1.3"
   }

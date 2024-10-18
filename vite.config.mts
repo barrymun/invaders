@@ -27,4 +27,19 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-hook-form': ['react-hook-form'],
+          'yup': ['yup'],
+          'react-i18next': ['react-i18next'],
+          'countries-list': ['countries-list'],
+          'react': ['react'],
+          'react-dom': ['react-dom'],
+          'mantine': ['@mantine/core'],
+        },
+      },
+    },
+  },
 });
