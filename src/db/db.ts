@@ -1,5 +1,7 @@
 import Dexie, { type EntityTable } from "dexie";
 
+import { getAllKeys, hasAllKeys } from "utils";
+
 import { defaultCity, defaultPlayer } from "./consts";
 import { City, CountyBuilding, Player, TownBuilding } from "./models";
 
@@ -35,8 +37,21 @@ export async function isDatabaseInitialized(): Promise<boolean> {
 }
 
 export async function initDatabase() {
-  if (!(await isDatabaseInitialized())) {
-    const playerId = await db.table("players").add(defaultPlayer);
-    await db.table("cities").add({ ...defaultCity, playerId });
+  const dbInitializedSuccessfully = await isDatabaseInitialized();
+  if (dbInitializedSuccessfully) {
+    return;
   }
+
+  const allPlayerKeys = getAllKeys<Omit<Player, "id">>(defaultPlayer);
+  if (!hasAllKeys<Omit<Player, "id">>(defaultPlayer, allPlayerKeys)) {
+    throw new Error("Default player object is missing keys");
+  }
+  const playerId = await db.table("players").add(defaultPlayer);
+
+  const cityObject = { ...defaultCity, playerId: playerId as number } satisfies Omit<City, "id">;
+  const allCityKeys = getAllKeys<Omit<City, "id">>(cityObject);
+  if (!hasAllKeys<Omit<City, "id">>(cityObject, allCityKeys)) {
+    throw new Error("Default city object is missing keys");
+  }
+  await db.table("cities").add(cityObject);
 }
