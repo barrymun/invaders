@@ -1,11 +1,12 @@
 import { Box, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 
 import { Building } from "components";
 import { CountyBuildingInfoModal, NewCountyBuildingModal } from "components/building";
+import { CountyBuilding, maxCountyBuildings } from "db";
 import { BuildingModalProvider, useSelectedCity } from "hooks";
-import { CountyBuilding } from "utils/global-state";
+import { FixedLengthArray } from "utils";
 
 import classes from "./county.module.scss";
 
@@ -15,10 +16,18 @@ const County: FC<CountyProps> = () => {
   const [buildModalOpened, { open: openBuildModal, close: closeBuildModal }] = useDisclosure(false);
   const [infoModalOpened, { open: openInfoModal, close: closeInfoModal }] = useDisclosure(false);
 
-  const { selectedCity, selectedCityIndex } = useSelectedCity();
+  const { selectedCity, countyBuildings } = useSelectedCity();
 
   const [selectedBuildingIndex, setSelectedBuildingIndex] = useState<number | null>(null);
   const [selectedBuildingType, setSelectedBuildingType] = useState<CountyBuilding["type"] | null>(null);
+
+  const mergedCountyBuildings = useMemo(
+    () =>
+      (
+        new Array(maxCountyBuildings).fill(null) as FixedLengthArray<CountyBuilding | null, typeof maxCountyBuildings>
+      ).map((_, index) => countyBuildings.find((b) => b.index === index) ?? null),
+    [countyBuildings]
+  );
 
   const handleOpenBuildModal = (index: number) => () => {
     setSelectedBuildingIndex(index);
@@ -40,13 +49,13 @@ const County: FC<CountyProps> = () => {
   useEffect(() => {
     setSelectedBuildingIndex(null);
     setSelectedBuildingType(null);
-  }, [selectedCityIndex]);
+  }, [selectedCity]);
 
   return (
     <>
       <Box className={classes.county}>
         <Group>
-          {selectedCity.county.buildings.map((building, index) => (
+          {mergedCountyBuildings.map((building, index) => (
             <Building
               cityAreaType="county"
               key={index}

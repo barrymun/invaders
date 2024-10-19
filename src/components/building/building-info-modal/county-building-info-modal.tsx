@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { CountyBuilding } from "utils/global-state";
+import { CountyBuilding } from "db";
 
 import { BuildingInfoModal } from "./building-info-modal";
 

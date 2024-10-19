@@ -1,14 +1,16 @@
-import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
+import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 
-import { useGlobalState } from "hooks";
-import { City } from "utils/global-state";
+import { City, CountyBuilding, db, TownBuilding } from "db";
+import { useCities, usePlayer } from "hooks";
 
 const defaultIndex = 0;
 
 interface SelectedCityContextProps {
   selectedCity: City;
-  selectedCityIndex: number;
-  handleSetSelectedCity: (index: number) => void;
+  townBuildings: TownBuilding[];
+  countyBuildings: CountyBuilding[];
+  setSelectedCity: Dispatch<SetStateAction<City>>;
 }
 
 interface SelectedCityProviderProps {
@@ -17,32 +19,39 @@ interface SelectedCityProviderProps {
 
 const SelectedCityContext = createContext<SelectedCityContextProps>({
   selectedCity: {} as City,
-  selectedCityIndex: defaultIndex,
-  handleSetSelectedCity: (_: number) => {},
+  townBuildings: [],
+  countyBuildings: [],
+  setSelectedCity: () => {},
 });
 
 const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
-  const { globalState } = useGlobalState();
+  const { player } = usePlayer();
+  const { cities } = useCities();
 
-  const [selectedCityIndex, setSelectedIndex] = useState<number>(defaultIndex);
-  const [selectedCity, setSelectedCity] = useState<City>(globalState.cities[defaultIndex]);
+  const townBuildings =
+    useLiveQuery(() => db.townBuildings.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
 
-  const handleSetSelectedCity = (index: number) => {
-    setSelectedIndex(index);
-  };
+  const countyBuildings =
+    useLiveQuery(() => db.countyBuildings.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
+
+  const [selectedCity, setSelectedCity] = useState<City>(cities[defaultIndex]);
 
   const value = useMemo(
     () => ({
       selectedCity,
-      selectedCityIndex,
-      handleSetSelectedCity,
+      townBuildings,
+      countyBuildings,
+      setSelectedCity,
     }),
-    [selectedCity, selectedCityIndex, handleSetSelectedCity]
+    [selectedCity, townBuildings, countyBuildings, setSelectedCity]
   );
 
+  /**
+   * ensure that the selected city is always in sync with the cities array
+   */
   useEffect(() => {
-    setSelectedCity(globalState.cities[selectedCityIndex]);
-  }, [globalState, selectedCityIndex]);
+    setSelectedCity(cities.find((city) => city.id === selectedCity.id) ?? cities[defaultIndex]);
+  }, [cities]);
 
   return <SelectedCityContext.Provider value={value}>{children}</SelectedCityContext.Provider>;
 };

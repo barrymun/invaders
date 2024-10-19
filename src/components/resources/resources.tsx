@@ -2,8 +2,8 @@ import { Table, Card, Box, Text } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useGlobalState } from "hooks";
-import { resourceEmojiMap, ResourceType } from "utils/global-state";
+import { resourceEmojiMap, ResourceType } from "db";
+import { useCities } from "hooks";
 
 import classes from "./resources.module.scss";
 
@@ -18,11 +18,12 @@ interface ResourcesProps {}
 
 const Resources: FC<ResourcesProps> = () => {
   const { t } = useTranslation("translation", { keyPrefix: "resources" });
-  const { globalState } = useGlobalState();
+
+  const { cities } = useCities();
 
   return (
     <Box className={classes.resources}>
-      {globalState.cities.map((city, index) => (
+      {cities.map((city, index) => (
         <Box key={index} className={classes.resource}>
           <Card>
             <Box>

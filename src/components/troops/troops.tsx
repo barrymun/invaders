@@ -2,8 +2,8 @@ import { Table, Card, Box, Text } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useGlobalState } from "hooks";
-import { troopEmojiMap, TroopType } from "utils/global-state";
+import { troopEmojiMap, TroopType } from "db";
+import { useCities } from "hooks";
 
 import classes from "./troops.module.scss";
 
@@ -26,11 +26,12 @@ interface TroopsProps {}
 
 const Troops: FC<TroopsProps> = () => {
   const { t } = useTranslation("translation", { keyPrefix: "troops" });
-  const { globalState } = useGlobalState();
+
+  const { cities } = useCities();
 
   return (
     <Box className={classes.troops}>
-      {globalState.cities.map((city, index) => (
+      {cities.map((city, index) => (
         <Box key={index} className={classes.troop}>
           <Card>
             <Box>

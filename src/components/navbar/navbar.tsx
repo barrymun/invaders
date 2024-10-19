@@ -3,15 +3,15 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { FC } from "react";
 
 import { NavbarSelect } from "components";
-import { useGlobalState, useSelectedCity } from "hooks";
-import { goldEmoji, resourceEmojiMap, ResourceType } from "utils/global-state";
+import { goldEmoji, resourceEmojiMap, ResourceType } from "db";
+import { usePlayer, useSelectedCity } from "hooks";
 
 import classes from "./navbar.module.scss";
 
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = () => {
-  const { globalState } = useGlobalState();
+  const { player } = usePlayer();
   const { selectedCity } = useSelectedCity();
 
   return (
@@ -21,7 +21,7 @@ const Navbar: FC<NavbarProps> = () => {
           <Card padding="xs">
             <Group gap="xs">
               <Text>{goldEmoji}</Text>
-              <Text>{abbreviateNumber(globalState.player.gold, 1, { padding: false })}</Text>
+              <Text>{abbreviateNumber(player.gold, 1, { padding: false })}</Text>
             </Group>
           </Card>
           <Card padding="xs">

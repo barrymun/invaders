@@ -7,15 +7,9 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 import { SelectController } from "components";
+import { defaultCountry, defaultCountrySelectData, defaultCountryFlag, defaultCountryData, getFlagEmoji, db } from "db";
 import { SettingsForm } from "forms";
-import { useGlobalState } from "hooks";
-import {
-  defaultCountry,
-  defaultCountrySelectData,
-  defaultCountryFlag,
-  defaultCountryData,
-  getFlagEmoji,
-} from "utils/global-state";
+import { usePlayer } from "hooks";
 
 import classes from "./settings.module.scss";
 
@@ -24,7 +18,7 @@ interface SettingsProps {}
 const Settings: FC<SettingsProps> = () => {
   const { t } = useTranslation("translation", { keyPrefix: "settings" });
 
-  const { globalState, setGlobalState } = useGlobalState();
+  const { player } = usePlayer();
 
   const [flag, setFlag] = useState<string>(defaultCountryFlag);
 
@@ -34,7 +28,7 @@ const Settings: FC<SettingsProps> = () => {
 
   const formMethods = useForm<SettingsForm>({
     values: {
-      countryName: globalState.player.country.name,
+      countryName: player.country.name,
     },
     resolver: yupResolver(validationSchema),
   });
@@ -50,17 +44,17 @@ const Settings: FC<SettingsProps> = () => {
     reset();
   };
 
-  const handleSave = () => {
-    setGlobalState((prev) => ({
-      ...prev,
-      player: {
-        ...prev.player,
+  const handleSave = async () => {
+    try {
+      await db.players.update(player.id, {
         country:
           Object.values(defaultCountryData).find((country) => country.name === getValues("countryName")) ??
           defaultCountry,
-      },
-    }));
-    reset({ countryName: getValues("countryName") });
+      });
+      reset({ countryName: getValues("countryName") });
+    } catch (_err) {
+      // no op
+    }
   };
 
   useEffect(() => {

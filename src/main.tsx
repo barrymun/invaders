@@ -9,7 +9,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
-import { GlobalStateProvider, LocalStorageProvider, SelectedCityProvider } from "hooks";
+import { PlayerProvider, LocalStorageProvider, SelectedCityProvider, CitiesProvider } from "hooks";
 import { router } from "router";
 
 const mantineTheme = createTheme({});
@@ -18,11 +18,13 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <MantineProvider theme={mantineTheme}>
       <LocalStorageProvider>
-        <GlobalStateProvider>
-          <SelectedCityProvider>
-            <RouterProvider router={router} />
-          </SelectedCityProvider>
-        </GlobalStateProvider>
+        <PlayerProvider>
+          <CitiesProvider>
+            <SelectedCityProvider>
+              <RouterProvider router={router} />
+            </SelectedCityProvider>
+          </CitiesProvider>
+        </PlayerProvider>
       </LocalStorageProvider>
     </MantineProvider>
   </StrictMode>

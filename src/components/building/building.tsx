@@ -9,7 +9,7 @@ import {
   CountyBuilding,
   emptyCountyLandEmoji,
   countyBuildingEmojiMap,
-} from "utils/global-state";
+} from "db";
 
 import classes from "./building.module.scss";
 

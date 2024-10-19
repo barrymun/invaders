@@ -1,7 +1,8 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useMemo } from "react";
 
-import { useBuildingModal, useSelectedCity } from "hooks";
-import { townBuildingEmojiMap, canBuildTownBuilding, TownBuilding } from "utils/global-state";
+import { townBuildingEmojiMap, canBuildTownBuilding, TownBuilding, maxTownBuildings, db } from "db";
+import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
+import { FixedLengthArray, NumberRangeHelper } from "utils";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
 
@@ -12,18 +13,27 @@ interface NewTownBuildingModalProps {
 const NewTownBuildingModal: FC<NewTownBuildingModalProps> = (props) => {
   const { setSelectedBuildingType } = props;
 
-  const { selectedCity } = useSelectedCity();
-  const { selectedBuildingIndex } = useBuildingModal();
+  const { player } = usePlayer();
+  const { selectedCity, townBuildings } = useSelectedCity();
+  const { selectedBuildingIndex, selectedBuildingType, close } = useBuildingModal();
+
+  const mergedTownBuildings = useMemo(
+    () =>
+      (new Array(maxTownBuildings).fill(null) as FixedLengthArray<TownBuilding | null, typeof maxTownBuildings>).map(
+        (_, index) => townBuildings.find((b) => b.index === index) ?? null
+      ),
+    [townBuildings]
+  );
 
   const canBuildFn = useCallback(
     ({ buildingIndex, proposedBuildingType }: CanBuildNewBuildingProps) => {
       return canBuildTownBuilding({
-        buildings: selectedCity.town.buildings,
+        buildings: mergedTownBuildings,
         buildingIndex,
         proposedBuildingType: proposedBuildingType as TownBuilding["type"],
       });
     },
-    [selectedCity]
+    [mergedTownBuildings]
   );
 
   const handleSelectBuildingType = (index: number) => () => {
@@ -37,7 +47,32 @@ const NewTownBuildingModal: FC<NewTownBuildingModalProps> = (props) => {
     setSelectedBuildingType(proposedBuildingType);
   };
 
-  return <NewBuildingModal canBuildFn={canBuildFn} handleSelectBuildingType={handleSelectBuildingType} />;
+  const handleConfirmBuild = async () => {
+    if (selectedBuildingIndex === null || selectedBuildingType === null) {
+      return;
+    }
+
+    if (!canBuildFn({ buildingIndex: selectedBuildingIndex, proposedBuildingType: selectedBuildingType })) {
+      return;
+    }
+
+    await db.townBuildings.add({
+      playerId: player.id,
+      cityId: selectedCity.id,
+      level: 1,
+      type: selectedBuildingType as TownBuilding["type"],
+      index: selectedBuildingIndex as NumberRangeHelper<typeof maxTownBuildings>,
+    });
+    close();
+  };
+
+  return (
+    <NewBuildingModal
+      canBuildFn={canBuildFn}
+      handleSelectBuildingType={handleSelectBuildingType}
+      handleConfirmBuild={handleConfirmBuild}
+    />
+  );
 };
 
 export { NewTownBuildingModal };

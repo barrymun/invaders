@@ -1,12 +1,13 @@
 import { Box, Card, Divider, Group, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Building } from "components";
 import { NewTownBuildingModal, TownBuildingInfoModal } from "components/building";
+import { maxTownBuildings, TownBuilding, townHallEmoji, wallsEmoji } from "db";
 import { BuildingModalProvider, useSelectedCity } from "hooks";
-import { TownBuilding, townHallEmoji, wallsEmoji } from "utils/global-state";
+import { FixedLengthArray } from "utils";
 
 import classes from "./town.module.scss";
 
@@ -18,10 +19,18 @@ export const Town: FC<TownProps> = () => {
   const [buildModalOpened, { open: openBuildModal, close: closeBuildModal }] = useDisclosure(false);
   const [infoModalOpened, { open: openInfoModal, close: closeInfoModal }] = useDisclosure(false);
 
-  const { selectedCity, selectedCityIndex } = useSelectedCity();
+  const { selectedCity, townBuildings } = useSelectedCity();
 
   const [selectedBuildingIndex, setSelectedBuildingIndex] = useState<number | null>(null);
   const [selectedBuildingType, setSelectedBuildingType] = useState<TownBuilding["type"] | null>(null);
+
+  const mergedTownBuildings = useMemo(
+    () =>
+      (new Array(maxTownBuildings).fill(null) as FixedLengthArray<TownBuilding | null, typeof maxTownBuildings>).map(
+        (_, index) => townBuildings.find((b) => b.index === index) ?? null
+      ),
+    [townBuildings]
+  );
 
   const handleOpenBuildModal = (index: number) => () => {
     setSelectedBuildingIndex(index);
@@ -43,7 +52,7 @@ export const Town: FC<TownProps> = () => {
   useEffect(() => {
     setSelectedBuildingIndex(null);
     setSelectedBuildingType(null);
-  }, [selectedCityIndex]);
+  }, [selectedCity]);
 
   return (
     <>
@@ -66,7 +75,7 @@ export const Town: FC<TownProps> = () => {
         </Group>
         <Divider my="md" />
         <Group>
-          {selectedCity.town.buildings.map((building, index) => (
+          {mergedTownBuildings.map((building, index) => (
             <Building
               cityAreaType="town"
               key={index}

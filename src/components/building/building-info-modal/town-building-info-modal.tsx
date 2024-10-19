@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { TownBuilding } from "utils/global-state";
+import { TownBuilding } from "db";
 
 import { BuildingInfoModal } from "./building-info-modal";
 

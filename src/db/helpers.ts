@@ -1,20 +1,28 @@
 import { defaultCountryFlag, maxNonCottageNonBarracksBuildings, resourceBaseProductionRate } from "./consts";
-import { City, CountyBuilding, GlobalState, TownBuilding } from "./types";
+import { db } from "./db";
+import { City, CountyBuilding, TownBuilding } from "./models";
 
-function calculateCountyBuildingProductionRate({ city, type }: { city: City; type: CountyBuilding["type"] }): number {
-  return city.county.buildings
-    .filter((b) => b !== null && b.type === type)
+async function calculateCountyBuildingProductionRate({
+  city,
+  type,
+}: {
+  city: City;
+  type: CountyBuilding["type"];
+}): Promise<number> {
+  const countyBuildings = await db.countyBuildings.where({ cityId: city.id }).toArray();
+  return countyBuildings
+    .filter((b) => b.type === type)
     .map((b) => (b ? b.level * b.level * resourceBaseProductionRate : 0))
     .reduce((acc, level) => acc + level, 0);
 }
 
-export function calculateCityResourceUpdates(currentState: GlobalState): City[] {
+export async function updateCitiesResources(cities: City[]) {
   let res: City[] = [];
-  for (const city of currentState.cities) {
-    const farmBonus = calculateCountyBuildingProductionRate({ city, type: "farm" });
-    const sawmillBonus = calculateCountyBuildingProductionRate({ city, type: "sawmill" });
-    const quarryBonus = calculateCountyBuildingProductionRate({ city, type: "quarry" });
-    const mineBonus = calculateCountyBuildingProductionRate({ city, type: "mine" });
+  for (const city of cities) {
+    const farmBonus = await calculateCountyBuildingProductionRate({ city, type: "farm" });
+    const sawmillBonus = await calculateCountyBuildingProductionRate({ city, type: "sawmill" });
+    const quarryBonus = await calculateCountyBuildingProductionRate({ city, type: "quarry" });
+    const mineBonus = await calculateCountyBuildingProductionRate({ city, type: "mine" });
     res = [
       ...res,
       {
@@ -28,7 +36,7 @@ export function calculateCityResourceUpdates(currentState: GlobalState): City[] 
       },
     ];
   }
-  return res;
+  await db.cities.bulkPut(res);
 }
 
 export function canBuildTownBuilding({

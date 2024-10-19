@@ -1,10 +1,17 @@
 import { ICountry } from "countries-list";
 
-import { FixedLengthArray, OneToTen } from "utils";
+import { NumberRangeHelper, OneToTen } from "utils";
 
-import { maxCountyBuildings, maxTownBuildings } from "./consts";
+import { maxCities, maxCountyBuildings, maxTownBuildings } from "./consts";
+import { Resources, Troops } from "./types";
 
-export interface Building {
+interface DatabaseRequiredFields {
+  id: number;
+}
+
+export interface Building extends DatabaseRequiredFields {
+  playerId: number;
+  cityId: number;
   level: OneToTen;
 }
 
@@ -29,55 +36,26 @@ export interface TownBuilding extends Building {
     // | "stable"
     | "barracks" // train troops
     | "cottage"; // store workers which are used for resource production
+  index: NumberRangeHelper<typeof maxTownBuildings>;
 }
 
 export interface CountyBuilding extends Building {
   type: "farm" | "sawmill" | "quarry" | "mine";
+  index: NumberRangeHelper<typeof maxCountyBuildings>;
 }
 
-export type ResourceType = "food" | "lumber" | "stone" | "iron";
-
-export type Resources = {
-  [key in ResourceType]: number;
-};
-
-export type TroopType =
-  | "worker"
-  | "warrior"
-  | "scout"
-  | "swordsman"
-  | "pikeman"
-  | "archer"
-  | "cavalry"
-  | "cataphract"
-  | "transporter"
-  | "batteringRam"
-  | "ballista"
-  | "catapult";
-
-export type Troops = {
-  [key in TroopType]: number;
-};
-
-export interface City {
+export interface City extends DatabaseRequiredFields {
+  playerId: number;
+  index: NumberRangeHelper<typeof maxCities>;
   name: string;
-  townHall: Building;
-  walls: Building;
-  town: {
-    buildings: FixedLengthArray<TownBuilding | null, typeof maxTownBuildings>;
-  };
-  county: {
-    buildings: FixedLengthArray<CountyBuilding | null, typeof maxCountyBuildings>;
-  };
+  townHall: Pick<Building, "level">;
+  walls: Pick<Building, "level">;
   resources: Resources;
   troops: Troops;
 }
 
-export interface GlobalState {
-  player: {
-    name: string;
-    country: ICountry;
-    gold: number;
-  };
-  cities: City[];
+export interface Player extends DatabaseRequiredFields {
+  name: string;
+  country: ICountry;
+  gold: number;
 }

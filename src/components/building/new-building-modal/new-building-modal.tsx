@@ -3,8 +3,8 @@ import classNames from "classnames";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useGlobalState, useBuildingModal, useSelectedCity } from "hooks";
-import { townBuildingEmojiMap, TownBuilding, City, CountyBuilding, countyBuildingEmojiMap } from "utils/global-state";
+import { townBuildingEmojiMap, TownBuilding, CountyBuilding, countyBuildingEmojiMap } from "db";
+import { useBuildingModal } from "hooks";
 
 import classes from "./new-building-modal.module.scss";
 
@@ -16,50 +16,17 @@ interface CanBuildNewBuildingProps {
 interface NewBuildingModalProps {
   canBuildFn: (props: CanBuildNewBuildingProps) => boolean;
   handleSelectBuildingType: (index: number) => () => void;
+  handleConfirmBuild: () => Promise<void>;
 }
 
 const NewBuildingModal: FC<NewBuildingModalProps> = (props) => {
-  const { canBuildFn, handleSelectBuildingType } = props;
+  const { canBuildFn, handleSelectBuildingType, handleConfirmBuild } = props;
 
   const { cityAreaType, opened, selectedBuildingIndex, selectedBuildingType, close } = useBuildingModal();
 
   const { t } = useTranslation("translation", { keyPrefix: cityAreaType });
 
-  const { setGlobalState } = useGlobalState();
-  const { selectedCityIndex } = useSelectedCity();
-
   const buildingEmojiMap = cityAreaType === "town" ? townBuildingEmojiMap : countyBuildingEmojiMap;
-
-  const handleConfirmBuild = () => {
-    if (selectedBuildingIndex === null || selectedBuildingType === null) {
-      return;
-    }
-    if (!canBuildFn({ buildingIndex: selectedBuildingIndex, proposedBuildingType: selectedBuildingType })) {
-      return;
-    }
-    setGlobalState((prev) => ({
-      ...prev,
-      cities: [
-        ...prev.cities.slice(0, selectedCityIndex),
-        {
-          ...prev.cities[selectedCityIndex],
-          [cityAreaType]: {
-            ...prev.cities[selectedCityIndex][cityAreaType],
-            buildings: [
-              ...prev.cities[selectedCityIndex][cityAreaType].buildings.slice(0, selectedBuildingIndex),
-              {
-                type: selectedBuildingType,
-                level: 1,
-              },
-              ...prev.cities[selectedCityIndex][cityAreaType].buildings.slice(selectedBuildingIndex + 1),
-            ] as City[typeof cityAreaType]["buildings"],
-          },
-        },
-        ...prev.cities.slice(selectedCityIndex + 1),
-      ],
-    }));
-    close();
-  };
 
   return (
     <Modal

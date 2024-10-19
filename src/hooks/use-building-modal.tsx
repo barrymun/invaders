@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useMemo } from "react";
 
-import { CountyBuilding, TownBuilding } from "utils/global-state";
+import { CountyBuilding, TownBuilding } from "db";
 
 interface BuildingModalContextProviderProps {
   cityAreaType: "town" | "county";

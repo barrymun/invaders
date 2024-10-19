@@ -1,3 +1,3 @@
 export enum LocalStorageKeys {
-  GlobalState = "globalState",
+  Test = "test",
 }

@@ -2,7 +2,7 @@ import { Box, CheckIcon, Combobox, Group, Input, InputBase, Text, useCombobox } 
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useGlobalState, useSelectedCity } from "hooks";
+import { useCities, useSelectedCity } from "hooks";
 
 import classes from "./navbar-select.module.scss";
 
@@ -27,26 +27,29 @@ const NavbarSelect: FC<NavbarSelectProps> = () => {
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  const { globalState } = useGlobalState();
-  const { selectedCity, selectedCityIndex, handleSetSelectedCity } = useSelectedCity();
+  const { cities } = useCities();
+  const { selectedCity, setSelectedCity } = useSelectedCity();
 
   const selectedOption = useMemo(() => ({ label: selectedCity.name }), [selectedCity]);
 
   const options = useMemo(
     () =>
-      globalState.cities.map((city, index) => (
-        <Combobox.Option key={index} value={index.toString()} active={index === selectedCityIndex}>
+      cities.map((city, index) => (
+        <Combobox.Option key={index} value={city.id.toString()} active={city.id === selectedCity.id}>
           <Group gap="xs">
-            {index === selectedCityIndex && <CheckIcon size={12} />}
+            {city.id === selectedCity.id && <CheckIcon size={12} />}
             <SelectOption {...{ label: city.name }} />
           </Group>
         </Combobox.Option>
       )),
-    [globalState.cities, selectedCityIndex]
+    [cities]
   );
 
-  const handleChange = (value: number) => {
-    handleSetSelectedCity(value);
+  const handleChange = (cityId: number) => {
+    const newSelectedCity = cities.find((city) => city.id === cityId);
+    if (newSelectedCity) {
+      setSelectedCity(newSelectedCity);
+    }
   };
 
   return (
