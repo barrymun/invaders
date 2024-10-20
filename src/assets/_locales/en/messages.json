@@ -23,6 +23,7 @@
   "settings": {
     "title": "Settings",
     "form": {
+      "name": "Name",
       "countrySelect": "Choose your country",
       "save": "Save",
       "reset": "Reset"

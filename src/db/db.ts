@@ -5,8 +5,6 @@ import { getAllKeys, hasAllKeys } from "utils";
 import { defaultCity, defaultPlayer } from "./consts";
 import { City, CountyBuilding, Player, TownBuilding } from "./models";
 
-const schemaVersion = 1;
-
 class GameDatabase extends Dexie {
   players: EntityTable<Player, "id">;
   cities: EntityTable<City, "id">;
@@ -16,7 +14,7 @@ class GameDatabase extends Dexie {
   constructor() {
     super("GameDatabase");
     // Schema declaration: (any updates to the schema should increment the schema version)
-    this.version(schemaVersion).stores({
+    this.version(1).stores({
       players: "++id",
       cities: "++id, playerId",
       townBuildings: "++id, playerId, cityId, [playerId+cityId]",

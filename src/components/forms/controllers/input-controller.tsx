@@ -1,20 +1,18 @@
-import { Box, Select, SelectProps } from "@mantine/core";
+import { InputWrapperProps, Input, Box } from "@mantine/core";
 import { Controller, FieldValues, UseControllerProps, UseFormReturn } from "react-hook-form";
 
 import { FormError } from "components";
 
-interface SelectControllerProps<T extends FieldValues>
+interface InputControllerProps<T extends FieldValues>
   extends UseControllerProps<T>,
-    Omit<SelectProps, "name" | "defaultValue"> {
+    Omit<InputWrapperProps, "defaultValue"> {
   formMethods: UseFormReturn<T>;
 }
 
-const SelectController = <T extends FieldValues>(props: SelectControllerProps<T>) => {
+const InputController = <T extends FieldValues>(props: InputControllerProps<T>) => {
   const {
     name,
-    data,
     label,
-    searchable,
     formMethods: {
       control,
       watch,
@@ -30,7 +28,9 @@ const SelectController = <T extends FieldValues>(props: SelectControllerProps<T>
       control={control}
       render={({ field: { onChange } }) => (
         <Box>
-          <Select label={label} onChange={onChange} value={value} data={data} searchable={searchable} />
+          <Input.Wrapper label={label}>
+            <Input value={value} onChange={onChange} />
+          </Input.Wrapper>
           <FormError name={name} errors={errors} />
         </Box>
       )}
@@ -38,4 +38,4 @@ const SelectController = <T extends FieldValues>(props: SelectControllerProps<T>
   );
 };
 
-export { SelectController };
+export { InputController };

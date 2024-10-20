@@ -4,7 +4,7 @@ import { getFlagEmoji } from "./helpers";
 import { City, CountyBuilding, Player, TownBuilding } from "./models";
 import { ResourceType, TroopType } from "./types";
 
-export const resourceUpdateTimeout = 1000 * 15; // 15 seconds
+export const playerNameMaxLength = 20;
 
 export const minCities = 1;
 
@@ -19,6 +19,8 @@ export const defaultProductionRatePerHour = 100;
 export const maxNonCottageNonBarracksBuildings = 1;
 
 export const goldEmoji = "💰";
+
+export const resourceUpdateTimeout = 1000 * 15; // 15 seconds
 
 export const resourceBaseProductionRate = 10;
 

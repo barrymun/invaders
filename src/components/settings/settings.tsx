@@ -6,8 +6,16 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
-import { SelectController } from "components";
-import { defaultCountry, defaultCountrySelectData, defaultCountryFlag, defaultCountryData, getFlagEmoji, db } from "db";
+import { InputController, SelectController } from "components";
+import {
+  defaultCountry,
+  defaultCountrySelectData,
+  defaultCountryFlag,
+  defaultCountryData,
+  getFlagEmoji,
+  db,
+  playerNameMaxLength,
+} from "db";
 import { SettingsForm } from "forms";
 import { usePlayer } from "hooks";
 
@@ -23,11 +31,13 @@ const Settings: FC<SettingsProps> = () => {
   const [flag, setFlag] = useState<string>(defaultCountryFlag);
 
   const validationSchema = Yup.object().shape({
+    name: Yup.string().required().max(playerNameMaxLength),
     countryName: Yup.string().required(),
   });
 
   const formMethods = useForm<SettingsForm>({
     values: {
+      name: player.name,
       countryName: player.country.name,
     },
     resolver: yupResolver(validationSchema),
@@ -47,11 +57,12 @@ const Settings: FC<SettingsProps> = () => {
   const handleSave = async () => {
     try {
       await db.players.update(player.id, {
+        name: getValues("name"),
         country:
           Object.values(defaultCountryData).find((country) => country.name === getValues("countryName")) ??
           defaultCountry,
       });
-      reset({ countryName: getValues("countryName") });
+      reset({ name: getValues("name"), countryName: getValues("countryName") });
     } catch (_err) {
       // no op
     }
@@ -71,7 +82,14 @@ const Settings: FC<SettingsProps> = () => {
     <Box className={classes.settings}>
       <form onSubmit={handleSubmit(handleSave)}>
         <Card padding="xs">
-          <Text size="xl">{t("title")}</Text>
+          <Card.Section withBorder inheritPadding py="xs">
+            <Text size="xl">{t("title")}</Text>
+          </Card.Section>
+
+          <Group gap="xs">
+            <InputController name="name" formMethods={formMethods} label={t("form.name")} />
+          </Group>
+
           <Box className={classes.flag}>{flag}</Box>
           <Group gap="xs">
             <SelectController
