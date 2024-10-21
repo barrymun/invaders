@@ -38,6 +38,7 @@ export default defineConfig({
           'react': ['react'],
           'react-dom': ['react-dom'],
           'mantine': ['@mantine/core'],
+          'faker': ['@faker-js/faker'],
         },
       },
     },
