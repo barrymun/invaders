@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo } from "react";
 
 import { townBuildingEmojiMap, canBuildTownBuilding, TownBuilding, maxTownBuildings, db } from "db";
 import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
-import { FixedLengthArray, NumberRangeHelper } from "utils";
+import { FixedLengthArray, ZeroToNumberRange } from "utils";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
 
@@ -61,7 +61,7 @@ const NewTownBuildingModal: FC<NewTownBuildingModalProps> = (props) => {
       cityId: selectedCity.id,
       level: 1,
       type: selectedBuildingType as TownBuilding["type"],
-      index: selectedBuildingIndex as NumberRangeHelper<typeof maxTownBuildings>,
+      index: selectedBuildingIndex as ZeroToNumberRange<typeof maxTownBuildings>,
     });
     close();
   };

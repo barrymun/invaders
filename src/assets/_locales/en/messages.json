@@ -78,7 +78,14 @@
     "info": {
       "openModal": "Info",
       "modal": {
-        "title": "Town Info"
+        "title": "Town Info",
+        "inn": {
+          "name": "Name",
+          "level": "Level",
+          "politics": "Politics",
+          "intelligence": "Intelligence",
+          "attack": "Attack"
+        }
       }
     }
   },

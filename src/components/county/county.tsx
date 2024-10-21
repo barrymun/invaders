@@ -34,10 +34,13 @@ const County: FC<CountyProps> = () => {
     openBuildModal();
   };
 
-  const handleOpenInfoModal = (index: number) => () => {
-    setSelectedBuildingIndex(index);
-    openInfoModal();
-  };
+  const handleOpenInfoModal =
+    ({ index, type }: { index: number; type: CountyBuilding["type"] | null }) =>
+    () => {
+      setSelectedBuildingIndex(index);
+      setSelectedBuildingType(type);
+      openInfoModal();
+    };
 
   useEffect(() => {
     if (!buildModalOpened) {
@@ -47,9 +50,16 @@ const County: FC<CountyProps> = () => {
   }, [buildModalOpened]);
 
   useEffect(() => {
+    if (!infoModalOpened) {
+      setSelectedBuildingIndex(null);
+      setSelectedBuildingType(null);
+    }
+  }, [infoModalOpened]);
+
+  useEffect(() => {
     setSelectedBuildingIndex(null);
     setSelectedBuildingType(null);
-  }, [selectedCity]);
+  }, [selectedCity.id]);
 
   return (
     <>
@@ -61,7 +71,7 @@ const County: FC<CountyProps> = () => {
               key={index}
               building={building}
               handleBuild={handleOpenBuildModal(index)}
-              handleInfo={handleOpenInfoModal(index)}
+              handleInfo={handleOpenInfoModal({ index, type: building ? building.type : null })}
             />
           ))}
         </Group>
@@ -84,7 +94,7 @@ const County: FC<CountyProps> = () => {
         selectedBuildingType={selectedBuildingType}
         close={closeInfoModal}
       >
-        <CountyBuildingInfoModal setSelectedBuildingType={setSelectedBuildingType} />
+        <CountyBuildingInfoModal />
       </BuildingModalProvider>
     </>
   );

@@ -3,27 +3,34 @@ import Dexie, { type EntityTable } from "dexie";
 import { getAllKeys, hasAllKeys } from "utils";
 
 import { defaultCity, defaultPlayer } from "./consts";
-import { City, CountyBuilding, Player, TownBuilding } from "./models";
+import { City, CountyBuilding, Hero, Player, TownBuilding } from "./models";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 class GameDatabase extends Dexie {
   players: EntityTable<Player, "id">;
   cities: EntityTable<City, "id">;
   townBuildings: EntityTable<TownBuilding, "id">;
   countyBuildings: EntityTable<CountyBuilding, "id">;
+  heroes: EntityTable<Hero, "id">;
 
   constructor() {
     super("GameDatabase");
+
     // Schema declaration: (any updates to the schema should increment the schema version)
     this.version(1).stores({
       players: "++id",
       cities: "++id, playerId",
       townBuildings: "++id, playerId, cityId, [playerId+cityId]",
       countyBuildings: "++id, playerId, cityId, [playerId+cityId]",
+      heroes: "++id, playerId, cityId, [playerId+cityId]",
     });
+
     this.players = this.table("players");
     this.cities = this.table("cities");
     this.townBuildings = this.table("townBuildings");
     this.countyBuildings = this.table("countyBuildings");
+    this.heroes = this.table("heroes");
   }
 }
 

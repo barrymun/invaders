@@ -1,12 +1,23 @@
 import { ICountry } from "countries-list";
 
-import { NumberRangeHelper, OneToTen } from "utils";
+import { ZeroToNumberRange, OneToTen, OneToOneHundred } from "utils";
 
 import { maxCities, maxCountyBuildings, maxTownBuildings } from "./consts";
 import { Resources, Troops } from "./types";
 
 interface DatabaseRequiredFields {
   id: number;
+}
+
+export interface Hero extends DatabaseRequiredFields {
+  playerId: number;
+  cityId: number;
+  name: string;
+  level: OneToOneHundred;
+  experience: number;
+  politics: number;
+  intelligence: number;
+  attack: number;
 }
 
 export interface Building extends DatabaseRequiredFields {
@@ -36,17 +47,17 @@ export interface TownBuilding extends Building {
     // | "stable"
     | "barracks" // train troops
     | "cottage"; // store workers which are used for resource production
-  index: NumberRangeHelper<typeof maxTownBuildings>;
+  index: ZeroToNumberRange<typeof maxTownBuildings>;
 }
 
 export interface CountyBuilding extends Building {
   type: "farm" | "sawmill" | "quarry" | "mine";
-  index: NumberRangeHelper<typeof maxCountyBuildings>;
+  index: ZeroToNumberRange<typeof maxCountyBuildings>;
 }
 
 export interface City extends DatabaseRequiredFields {
   playerId: number;
-  index: NumberRangeHelper<typeof maxCities>;
+  index: ZeroToNumberRange<typeof maxCities>;
   name: string;
   townHall: Pick<Building, "level">;
   walls: Pick<Building, "level">;

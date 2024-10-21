@@ -46,7 +46,7 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/no-empty-object-type": "off",
       "semi": ["error", "always"],
-      "import/order": ["error",{
+      "import/order": ["error", {
         "groups": [
           "builtin",
           "external",

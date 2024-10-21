@@ -5,13 +5,23 @@ import { useTranslation } from "react-i18next";
 import { useBuildingModal } from "hooks";
 
 import classes from "./building-info-modal.module.scss";
+import { Inn } from "./inn";
 
 interface BuildingInfoModalProps {}
 
 const BuildingInfoModal: FC<BuildingInfoModalProps> = () => {
-  const { cityAreaType, opened, close } = useBuildingModal();
+  const { cityAreaType, opened, selectedBuildingType, close } = useBuildingModal();
 
   const { t } = useTranslation("translation", { keyPrefix: cityAreaType });
+
+  const getModalBody = () => {
+    switch (selectedBuildingType) {
+      case "inn":
+        return <Inn />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <Modal
@@ -22,7 +32,7 @@ const BuildingInfoModal: FC<BuildingInfoModalProps> = () => {
       size="xl"
       className={classes.newBuildingModal}
     >
-      <Modal.Body>INFO</Modal.Body>
+      <Modal.Body>{getModalBody()}</Modal.Body>
     </Modal>
   );
 };

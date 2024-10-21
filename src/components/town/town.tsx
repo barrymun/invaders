@@ -37,10 +37,13 @@ export const Town: FC<TownProps> = () => {
     openBuildModal();
   };
 
-  const handleOpenInfoModal = (index: number) => () => {
-    setSelectedBuildingIndex(index);
-    openInfoModal();
-  };
+  const handleOpenInfoModal =
+    ({ index, type }: { index: number; type: TownBuilding["type"] | null }) =>
+    () => {
+      setSelectedBuildingIndex(index);
+      setSelectedBuildingType(type);
+      openInfoModal();
+    };
 
   useEffect(() => {
     if (!buildModalOpened) {
@@ -50,9 +53,16 @@ export const Town: FC<TownProps> = () => {
   }, [buildModalOpened]);
 
   useEffect(() => {
+    if (!infoModalOpened) {
+      setSelectedBuildingIndex(null);
+      setSelectedBuildingType(null);
+    }
+  }, [infoModalOpened]);
+
+  useEffect(() => {
     setSelectedBuildingIndex(null);
     setSelectedBuildingType(null);
-  }, [selectedCity]);
+  }, [selectedCity.id]);
 
   return (
     <>
@@ -81,7 +91,7 @@ export const Town: FC<TownProps> = () => {
               key={index}
               building={building}
               handleBuild={handleOpenBuildModal(index)}
-              handleInfo={handleOpenInfoModal(index)}
+              handleInfo={handleOpenInfoModal({ index, type: building ? building.type : null })}
             />
           ))}
         </Group>
@@ -104,7 +114,7 @@ export const Town: FC<TownProps> = () => {
         selectedBuildingType={selectedBuildingType}
         close={closeInfoModal}
       >
-        <TownBuildingInfoModal setSelectedBuildingType={setSelectedBuildingType} />
+        <TownBuildingInfoModal />
       </BuildingModalProvider>
     </>
   );

@@ -1,12 +1,8 @@
 import { FC } from "react";
 
-import { TownBuilding } from "db";
-
 import { BuildingInfoModal } from "./building-info-modal";
 
-interface TownBuildingInfoModalProps {
-  setSelectedBuildingType: (type: TownBuilding["type"]) => void;
-}
+interface TownBuildingInfoModalProps {}
 
 const TownBuildingInfoModal: FC<TownBuildingInfoModalProps> = () => {
   return <BuildingInfoModal />;

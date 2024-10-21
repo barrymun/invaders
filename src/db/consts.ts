@@ -132,3 +132,13 @@ export const defaultPlayer: Omit<Player, "id"> = {
   country: defaultCountry,
   gold: 10000,
 };
+
+export const maxHeroCount = 10;
+
+export const minHeroLevel = 1;
+
+export const maxHeroLevel = 100;
+
+export const minHeroStat = 10;
+
+export const maxHeroStat = 100;

@@ -9,7 +9,7 @@ import {
   maxTownBuildings,
 } from "db";
 import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
-import { FixedLengthArray, NumberRangeHelper } from "utils";
+import { FixedLengthArray, ZeroToNumberRange } from "utils";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
 
@@ -67,7 +67,7 @@ const NewCountyBuildingModal: FC<NewCountyBuildingModalProps> = (props) => {
       cityId: selectedCity.id,
       level: 1,
       type: selectedBuildingType as CountyBuilding["type"],
-      index: selectedBuildingIndex as NumberRangeHelper<typeof maxTownBuildings>,
+      index: selectedBuildingIndex as ZeroToNumberRange<typeof maxTownBuildings>,
     });
     close();
   };
