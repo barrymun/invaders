@@ -1,17 +1,28 @@
-import { Box, Table } from "@mantine/core";
-import { FC } from "react";
+import { Box, Button, Table } from "@mantine/core";
+import { useLiveQuery } from "dexie-react-hooks";
+import { FC, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useSelectedCity } from "hooks";
+import { canRecruitHero, db, generateRandomHeroes, HirableHero, recruitHero } from "db";
+import { usePlayer, useSelectedCity } from "hooks";
 
 interface InnProps {}
 
 const Inn: FC<InnProps> = () => {
   const { t } = useTranslation("translation", { keyPrefix: "town.info.modal.inn" });
 
-  const { heroesForHire } = useSelectedCity();
+  const { player } = usePlayer();
+  const { heroes, selectedCity, townBuildings } = useSelectedCity();
 
-  const tableRows = heroesForHire.map((hero, index) => {
+  const hireableHeroes = useLiveQuery(() => db.hireableHeroes.toArray()) ?? [];
+
+  const canRecruit = useMemo(() => canRecruitHero({ townBuildings, heroes }), [townBuildings, heroes]);
+
+  const handleRecruitment = (hireableHero: HirableHero) => async () => {
+    await recruitHero({ townBuildings, heroes, hireableHero, playerId: player.id, cityId: selectedCity.id });
+  };
+
+  const tableRows = hireableHeroes.map((hero, index) => {
     return (
       <Table.Tr key={index}>
         <Table.Td>{hero.name}</Table.Td>
@@ -19,9 +30,22 @@ const Inn: FC<InnProps> = () => {
         <Table.Td>{hero.politics}</Table.Td>
         <Table.Td>{hero.intelligence}</Table.Td>
         <Table.Td>{hero.attack}</Table.Td>
+        <Table.Td>
+          <Button size="compact-sm" variant="outline" disabled={!canRecruit} onClick={handleRecruitment(hero)}>
+            {t("recruit")}
+          </Button>
+        </Table.Td>
       </Table.Tr>
     );
   });
+
+  useEffect(() => {
+    generateRandomHeroes({
+      inn: townBuildings.find((b) => b.type === "inn"),
+      playerId: player.id,
+      cityId: selectedCity.id,
+    });
+  }, [townBuildings, player, selectedCity]);
 
   return (
     <Box>
@@ -33,6 +57,7 @@ const Inn: FC<InnProps> = () => {
             <Table.Th>{t("politics")}</Table.Th>
             <Table.Th>{t("intelligence")}</Table.Th>
             <Table.Th>{t("attack")}</Table.Th>
+            <Table.Th />
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{tableRows}</Table.Tbody>

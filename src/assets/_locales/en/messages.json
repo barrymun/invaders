@@ -84,6 +84,14 @@
           "level": "Level",
           "politics": "Politics",
           "intelligence": "Intelligence",
+          "attack": "Attack",
+          "recruit": "Recruit"
+        },
+        "diningHall": {
+          "name": "Name",
+          "level": "Level",
+          "politics": "Politics",
+          "intelligence": "Intelligence",
           "attack": "Attack"
         }
       }

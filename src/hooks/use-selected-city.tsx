@@ -1,7 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 
-import { City, CountyBuilding, db, generateRandomHeroes, TownBuilding } from "db";
+import { City, CountyBuilding, db, Hero, TownBuilding } from "db";
 import { useCities, usePlayer } from "hooks";
 
 const defaultIndex = 0;
@@ -10,7 +10,7 @@ interface SelectedCityContextProps {
   selectedCity: City;
   townBuildings: TownBuilding[];
   countyBuildings: CountyBuilding[];
-  heroesForHire: ReturnType<typeof generateRandomHeroes>;
+  heroes: Hero[];
   setSelectedCity: Dispatch<SetStateAction<City>>;
 }
 
@@ -22,7 +22,7 @@ const SelectedCityContext = createContext<SelectedCityContextProps>({
   selectedCity: {} as City,
   townBuildings: [],
   countyBuildings: [],
-  heroesForHire: [],
+  heroes: [],
   setSelectedCity: () => {},
 });
 
@@ -38,20 +38,17 @@ const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
   const countyBuildings =
     useLiveQuery(() => db.countyBuildings.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
 
-  const diningHall = townBuildings.find((b) => b.type === "diningHall");
-  const inn = townBuildings.find((b) => b.type === "inn");
-  // TODO: make a heroesForHire map that persists when selectedCity changes
-  const heroesForHire = useMemo(() => generateRandomHeroes({ diningHall, inn }), [diningHall, inn]);
+  const heroes = useLiveQuery(() => db.heroes.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
 
   const value = useMemo(
     () => ({
       selectedCity,
       townBuildings,
       countyBuildings,
-      heroesForHire,
+      heroes,
       setSelectedCity,
     }),
-    [selectedCity, townBuildings, countyBuildings, heroesForHire, setSelectedCity]
+    [selectedCity, townBuildings, countyBuildings, heroes, setSelectedCity]
   );
 
   /**

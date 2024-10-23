@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useBuildingModal } from "hooks";
 
 import classes from "./building-info-modal.module.scss";
+import { DiningHall } from "./dining-hall";
 import { Inn } from "./inn";
 
 interface BuildingInfoModalProps {}
@@ -18,6 +19,8 @@ const BuildingInfoModal: FC<BuildingInfoModalProps> = () => {
     switch (selectedBuildingType) {
       case "inn":
         return <Inn />;
+      case "diningHall":
+        return <DiningHall />;
       default:
         return null;
     }

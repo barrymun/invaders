@@ -11,7 +11,10 @@ import {
   resourceBaseProductionRate,
 } from "./consts";
 import { db } from "./db";
-import { City, CountyBuilding, Hero, TownBuilding } from "./models";
+import { City, CountyBuilding, Hero, HirableHero, TownBuilding } from "./models";
+
+let isGeneratingRandomHeroesLock = false;
+let isRecruitingHeroLock = false;
 
 async function calculateCountyBuildingProductionRate({
   city,
@@ -104,7 +107,7 @@ function generateRandomHeroStat(): number {
  * if a hero is level 1 generate stats for politics, intelligence, and attack between a min and max
  * any higher than level 1 should do the same, but then 1 for each level to all of these stats
  */
-function generateRandomHero(inn: TownBuilding): Omit<Hero, "id" | "playerId" | "cityId"> {
+function generateRandomHero(inn: TownBuilding): Omit<HirableHero, "id" | "playerId" | "cityId"> {
   const minHeroLevel = (inn.level - 1) * 10 + 1;
   const maxHeroLevel = inn.level * 10;
   const heroLevel = (Math.floor(Math.random() * (maxHeroLevel - minHeroLevel + 1)) + minHeroLevel) as OneToOneHundred;
@@ -124,26 +127,34 @@ function generateRandomHero(inn: TownBuilding): Omit<Hero, "id" | "playerId" | "
   };
 }
 
-export function generateRandomHeroes({
-  diningHall,
+export async function generateRandomHeroes({
   inn,
+  playerId,
+  cityId,
 }: {
-  diningHall: TownBuilding | undefined;
   inn: TownBuilding | undefined;
-}): Omit<Hero, "id" | "playerId" | "cityId">[] {
-  if (!diningHall) {
-    return [];
-  }
-
+  playerId: number;
+  cityId: number;
+}) {
   if (!inn) {
     return [];
   }
 
-  let heroes: Omit<Hero, "id" | "playerId" | "cityId">[] = [];
-  for (let i = 0; i < diningHall.level; i++) {
-    heroes = [...heroes, generateRandomHero(inn)];
+  // prevent multiple calls to this function from running at the same time
+  if (isGeneratingRandomHeroesLock) {
+    return;
   }
-  return heroes;
+  isGeneratingRandomHeroesLock = true;
+
+  // get the count of hireable heroes and keep hiring until we reach the level of the inn
+  let hireableHeroCount = await db.hireableHeroes.where({ playerId, cityId }).count();
+  const currentInnLevel = inn.level;
+  while (hireableHeroCount < currentInnLevel) {
+    const partialHeroData = generateRandomHero(inn);
+    await db.hireableHeroes.add({ ...partialHeroData, playerId, cityId });
+    hireableHeroCount += 1;
+  }
+  isGeneratingRandomHeroesLock = false;
 }
 
 export function canRecruitHero({ townBuildings, heroes }: { townBuildings: TownBuilding[]; heroes: Hero[] }): boolean {
@@ -155,4 +166,36 @@ export function canRecruitHero({ townBuildings, heroes }: { townBuildings: TownB
     return false;
   }
   return diningHall.level > heroes.length;
+}
+
+export async function recruitHero({
+  townBuildings,
+  heroes,
+  hireableHero,
+}: {
+  townBuildings: TownBuilding[];
+  heroes: Hero[];
+  hireableHero: HirableHero;
+  playerId: number;
+  cityId: number;
+}): Promise<boolean> {
+  if (!canRecruitHero({ townBuildings, heroes })) {
+    return false;
+  }
+
+  if (isRecruitingHeroLock) {
+    return false;
+  }
+  isRecruitingHeroLock = true;
+
+  await db.heroes.add(hireableHero);
+  await db.hireableHeroes.delete(hireableHero.id);
+  await generateRandomHeroes({
+    inn: townBuildings.find((b) => b.type === "inn"),
+    playerId: hireableHero.playerId,
+    cityId: hireableHero.cityId,
+  });
+
+  isRecruitingHeroLock = false;
+  return true;
 }

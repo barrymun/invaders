@@ -20,6 +20,8 @@ export interface Hero extends DatabaseRequiredFields {
   attack: number;
 }
 
+export interface HirableHero extends Hero {}
+
 export interface Building extends DatabaseRequiredFields {
   playerId: number;
   cityId: number;

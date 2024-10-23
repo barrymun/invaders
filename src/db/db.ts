@@ -3,7 +3,7 @@ import Dexie, { type EntityTable } from "dexie";
 import { getAllKeys, hasAllKeys } from "utils";
 
 import { defaultCity, defaultPlayer } from "./consts";
-import { City, CountyBuilding, Hero, Player, TownBuilding } from "./models";
+import { City, CountyBuilding, Hero, HirableHero, Player, TownBuilding } from "./models";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -13,6 +13,7 @@ class GameDatabase extends Dexie {
   townBuildings: EntityTable<TownBuilding, "id">;
   countyBuildings: EntityTable<CountyBuilding, "id">;
   heroes: EntityTable<Hero, "id">;
+  hireableHeroes: EntityTable<HirableHero, "id">;
 
   constructor() {
     super("GameDatabase");
@@ -24,6 +25,7 @@ class GameDatabase extends Dexie {
       townBuildings: "++id, playerId, cityId, [playerId+cityId]",
       countyBuildings: "++id, playerId, cityId, [playerId+cityId]",
       heroes: "++id, playerId, cityId, [playerId+cityId]",
+      hireableHeroes: "++id, playerId, cityId, [playerId+cityId]",
     });
 
     this.players = this.table("players");
@@ -31,6 +33,7 @@ class GameDatabase extends Dexie {
     this.townBuildings = this.table("townBuildings");
     this.countyBuildings = this.table("countyBuildings");
     this.heroes = this.table("heroes");
+    this.hireableHeroes = this.table("hireableHeroes");
   }
 }
 
