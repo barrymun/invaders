@@ -7,6 +7,7 @@ import {
   IconSettings,
   IconProps,
   Icon,
+  IconUserShield,
 } from "@tabler/icons-react";
 import { FC, ForwardRefExoticComponent, RefAttributes, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -51,6 +52,7 @@ const Sidebar: FC<SidebarProps> = () => {
     { link: "/county", label: t("sidebar.links.county"), icon: IconShovelPitchforks },
     { link: "/resources", label: t("sidebar.links.resources"), icon: IconBuildingFactory },
     { link: "/troops", label: t("sidebar.links.troops"), icon: IconSwords },
+    { link: "/hero-gear", label: t("sidebar.links.hero-gear"), icon: IconUserShield },
   ];
 
   const footerLinksData: SidebarLinkDataProps[] = [

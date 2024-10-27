@@ -17,7 +17,8 @@
       "county": "County",
       "resources": "Resources",
       "troops": "Troops",
-      "settings": "Settings"
+      "settings": "Settings",
+      "hero-gear": "Hero Gear"
     }
   },
   "settings": {
@@ -100,5 +101,23 @@
   "troops": {
     "troop": "Troop",
     "amount": "Amount"
+  },
+  "hero-gear": {
+    "gear-items": {
+      "weaponry": "Weaponry",
+      "mountTraining": "Mount Training",
+      "charm": "Charm",
+      "helmet": "Helmet",
+      "chestArmor": "Chest Armor",
+      "gauntlets": "Gauntlets",
+      "legsArmor": "Legs Armor",
+      "shield": "Shield",
+      "necklace": "Necklace",
+      "ring": "Ring",
+      "spaulders": "Spaulders",
+      "backArmor": "Back Armor",
+      "belt": "Belt",
+      "boots": "Boots"
+    }
   }
 }

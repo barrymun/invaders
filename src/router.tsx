@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 // TODO: lazy load pages
 import { Layout } from "components";
 import { County } from "pages/county";
+import { HeroGear } from "pages/hero-gear";
 import { Home } from "pages/home";
 import { Resources } from "pages/resources";
 import { Settings } from "pages/settings";
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/hero-gear",
+        element: <HeroGear />,
       },
     ],
   },

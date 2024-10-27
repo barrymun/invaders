@@ -2,8 +2,10 @@ import Dexie, { type EntityTable } from "dexie";
 
 import { getAllKeys, hasAllKeys } from "utils";
 
-import { defaultCity, defaultPlayer } from "./consts";
-import { City, CountyBuilding, Hero, HirableHero, Player, TownBuilding } from "./models";
+import { defaultCity, defaultHeroGear, defaultPlayer } from "./consts";
+import { City, CountyBuilding, Hero, HeroGear, HirableHero, Player, TownBuilding } from "./models";
+
+let isInitializingDatabaseLock = false;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -14,6 +16,7 @@ class GameDatabase extends Dexie {
   countyBuildings: EntityTable<CountyBuilding, "id">;
   heroes: EntityTable<Hero, "id">;
   hireableHeroes: EntityTable<HirableHero, "id">;
+  heroGear: EntityTable<HeroGear, "id">;
 
   constructor() {
     super("GameDatabase");
@@ -26,6 +29,7 @@ class GameDatabase extends Dexie {
       countyBuildings: "++id, playerId, cityId, [playerId+cityId]",
       heroes: "++id, playerId, cityId, [playerId+cityId]",
       hireableHeroes: "++id, playerId, cityId, [playerId+cityId]",
+      heroGear: "++id, playerId",
     });
 
     this.players = this.table("players");
@@ -34,6 +38,7 @@ class GameDatabase extends Dexie {
     this.countyBuildings = this.table("countyBuildings");
     this.heroes = this.table("heroes");
     this.hireableHeroes = this.table("hireableHeroes");
+    this.heroGear = this.table("heroGear");
   }
 }
 
@@ -45,6 +50,11 @@ export async function isDatabaseInitialized(): Promise<boolean> {
 }
 
 export async function initDatabase() {
+  if (isInitializingDatabaseLock) {
+    return;
+  }
+  isInitializingDatabaseLock = true;
+
   const dbInitializedSuccessfully = await isDatabaseInitialized();
   if (dbInitializedSuccessfully) {
     return;
@@ -54,12 +64,21 @@ export async function initDatabase() {
   if (!hasAllKeys<Omit<Player, "id">>(defaultPlayer, allPlayerKeys)) {
     throw new Error("Default player object is missing keys");
   }
-  const playerId = await db.table("players").add(defaultPlayer);
+  const playerId = (await db.table("players").add(defaultPlayer)) as number;
 
-  const cityObject = { ...defaultCity, playerId: playerId as number } satisfies Omit<City, "id">;
+  const cityObject = { ...defaultCity, playerId } satisfies Omit<City, "id">;
   const allCityKeys = getAllKeys<Omit<City, "id">>(cityObject);
   if (!hasAllKeys<Omit<City, "id">>(cityObject, allCityKeys)) {
     throw new Error("Default city object is missing keys");
   }
   await db.table("cities").add(cityObject);
+
+  const heroGearObject = { ...defaultHeroGear, playerId } satisfies Omit<HeroGear, "id">;
+  const allHeroGearKeys = getAllKeys<Omit<HeroGear, "id">>(heroGearObject);
+  if (!hasAllKeys<Omit<HeroGear, "id">>(heroGearObject, allHeroGearKeys)) {
+    throw new Error("Default hero gear object is missing keys");
+  }
+  await db.table("heroGear").add(heroGearObject);
+
+  isInitializingDatabaseLock = false;
 }

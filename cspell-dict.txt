@@ -2,3 +2,5 @@ tabler
 languagedetector
 cataphract
 dexie
+colour
+spaulders

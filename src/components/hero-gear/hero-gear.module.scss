@@ -1,0 +1,22 @@
+.gearItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-md);
+
+  .gearItem {
+    width: 300px;
+    border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    border-radius: var(--mantine-radius-sm);
+    padding: var(--mantine-spacing-md);
+
+    .gearItemIcon {
+      display: flex;
+      justify-content: center;
+      padding: var(--mantine-spacing-lg);
+    }
+
+    .gearItemName {
+      text-align: center;
+    }
+  }
+}

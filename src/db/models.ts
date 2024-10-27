@@ -1,6 +1,6 @@
 import { ICountry } from "countries-list";
 
-import { ZeroToNumberRange, OneToTen, OneToOneHundred } from "utils";
+import { ZeroToNumberRange, OneToTen, OneToOneHundred, OneToFifteen } from "utils";
 
 import { maxCities, maxCountyBuildings, maxTownBuildings } from "./consts";
 import { Resources, Troops } from "./types";
@@ -21,6 +21,38 @@ export interface Hero extends DatabaseRequiredFields {
 }
 
 export interface HirableHero extends Hero {}
+
+export interface HeroGear extends DatabaseRequiredFields {
+  playerId: number;
+  weaponryLevel: OneToTen;
+  weaponryStarLevel: OneToFifteen;
+  mountTrainingLevel: OneToTen;
+  mountTrainingStarLevel: OneToFifteen;
+  charmLevel: OneToTen;
+  charmStarLevel: OneToFifteen;
+  helmetLevel: OneToTen;
+  helmetStarLevel: OneToFifteen;
+  chestArmorLevel: OneToTen;
+  chestArmorStarLevel: OneToFifteen;
+  gauntletsLevel: OneToTen;
+  gauntletsStarLevel: OneToFifteen;
+  legsArmorLevel: OneToTen;
+  legsArmorStarLevel: OneToFifteen;
+  shieldLevel: OneToTen;
+  shieldStarLevel: OneToFifteen;
+  necklaceLevel: OneToTen;
+  necklaceStarLevel: OneToFifteen;
+  ringLevel: OneToTen;
+  ringStarLevel: OneToFifteen;
+  spauldersLevel: OneToTen;
+  spauldersStarLevel: OneToFifteen;
+  backArmorLevel: OneToTen;
+  backArmorStarLevel: OneToFifteen;
+  beltLevel: OneToTen;
+  beltStarLevel: OneToFifteen;
+  bootsLevel: OneToTen;
+  bootsStarLevel: OneToFifteen;
+}
 
 export interface Building extends DatabaseRequiredFields {
   playerId: number;

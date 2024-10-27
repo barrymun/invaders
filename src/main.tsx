@@ -9,7 +9,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
-import { PlayerProvider, LocalStorageProvider, SelectedCityProvider, CitiesProvider } from "hooks";
+import { PlayerProvider, LocalStorageProvider, SelectedCityProvider, CitiesProvider, HeroGearProvider } from "hooks";
 import { router } from "router";
 
 const mantineTheme = createTheme({});
@@ -19,11 +19,13 @@ createRoot(document.getElementById("root")!).render(
     <MantineProvider theme={mantineTheme}>
       <LocalStorageProvider>
         <PlayerProvider>
-          <CitiesProvider>
-            <SelectedCityProvider>
-              <RouterProvider router={router} />
-            </SelectedCityProvider>
-          </CitiesProvider>
+          <HeroGearProvider>
+            <CitiesProvider>
+              <SelectedCityProvider>
+                <RouterProvider router={router} />
+              </SelectedCityProvider>
+            </CitiesProvider>
+          </HeroGearProvider>
         </PlayerProvider>
       </LocalStorageProvider>
     </MantineProvider>

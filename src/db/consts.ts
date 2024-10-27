@@ -1,7 +1,7 @@
 import { countries, getCountryCode, ICountry } from "countries-list";
 
 import { getFlagEmoji } from "./helpers";
-import { City, CountyBuilding, Player, TownBuilding } from "./models";
+import { City, CountyBuilding, HeroGear, Player, TownBuilding } from "./models";
 import { ResourceType, TroopType } from "./types";
 
 export const playerNameMaxLength = 20;
@@ -142,3 +142,34 @@ export const maxHeroLevel = 100;
 export const minHeroStat = 10;
 
 export const maxHeroStat = 100;
+
+export const defaultHeroGear: Omit<HeroGear, "id" | "playerId"> = {
+  weaponryLevel: 1,
+  weaponryStarLevel: 1,
+  mountTrainingLevel: 1,
+  mountTrainingStarLevel: 1,
+  charmLevel: 1,
+  charmStarLevel: 1,
+  helmetLevel: 1,
+  helmetStarLevel: 1,
+  chestArmorLevel: 1,
+  chestArmorStarLevel: 1,
+  gauntletsLevel: 1,
+  gauntletsStarLevel: 1,
+  legsArmorLevel: 1,
+  legsArmorStarLevel: 1,
+  shieldLevel: 1,
+  shieldStarLevel: 1,
+  necklaceLevel: 1,
+  necklaceStarLevel: 1,
+  ringLevel: 1,
+  ringStarLevel: 1,
+  spauldersLevel: 1,
+  spauldersStarLevel: 1,
+  backArmorLevel: 1,
+  backArmorStarLevel: 1,
+  beltLevel: 1,
+  beltStarLevel: 1,
+  bootsLevel: 1,
+  bootsStarLevel: 1,
+};
