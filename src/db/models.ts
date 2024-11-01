@@ -3,6 +3,7 @@ import { ICountry } from "countries-list";
 import { ZeroToNumberRange, OneToTen, OneToOneHundred, OneToFifteen } from "utils";
 
 import { maxCities, maxCountyBuildings, maxTownBuildings } from "./consts";
+import { TileType } from "./enums";
 import { Resources, Troops } from "./types";
 
 interface DatabaseRequiredFields {
@@ -89,18 +90,47 @@ export interface CountyBuilding extends Building {
   index: ZeroToNumberRange<typeof maxCountyBuildings>;
 }
 
-export interface City extends DatabaseRequiredFields {
-  playerId: number;
-  index: ZeroToNumberRange<typeof maxCities>;
+export interface Flat extends DatabaseRequiredFields {
+  resources: Resources;
+  troops: Troops;
+}
+
+export interface Lake extends Flat {
+  level: OneToTen;
+} // extra food
+
+export interface Forest extends Flat {
+  level: OneToTen;
+} // extra lumber
+
+export interface Desert extends Flat {
+  level: OneToTen;
+} // extra stone
+
+export interface Mountain extends Flat {
+  level: OneToTen;
+} // extra iron
+
+export interface NPC extends Flat {
   name: string;
   townHall: Pick<Building, "level">;
   walls: Pick<Building, "level">;
-  resources: Resources;
-  troops: Troops;
+}
+
+export interface City extends NPC {
+  playerId: number;
+  index: ZeroToNumberRange<typeof maxCities>;
 }
 
 export interface Player extends DatabaseRequiredFields {
   name: string;
   country: ICountry;
   gold: number;
+}
+
+export interface WorldMap extends DatabaseRequiredFields {
+  x: OneToFifteen;
+  y: OneToFifteen;
+  tileType: TileType;
+  tileId: number; // points to the id of the tile type
 }

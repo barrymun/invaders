@@ -13,13 +13,15 @@ import {
   defaultCountryFlag,
   defaultCountryData,
   getFlagEmoji,
-  db,
   playerNameMaxLength,
+  getDb,
 } from "db";
 import { SettingsForm } from "forms";
 import { usePlayer } from "hooks";
 
 import classes from "./settings.module.scss";
+
+const db = getDb();
 
 interface SettingsProps {}
 

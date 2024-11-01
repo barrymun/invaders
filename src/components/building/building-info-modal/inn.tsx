@@ -3,8 +3,10 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { FC, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { canRecruitHero, db, generateRandomHeroes, HirableHero, recruitHero } from "db";
+import { canRecruitHero, generateRandomHeroes, getDb, HirableHero, recruitHero } from "db";
 import { usePlayer, useSelectedCity } from "hooks";
+
+const db = getDb();
 
 interface InnProps {}
 

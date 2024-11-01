@@ -3,9 +3,11 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { db, defaultHeroGear, HeroGear } from "db";
+import { defaultHeroGear, getDb, HeroGear } from "db";
 
 import { usePlayer } from "./use-player";
+
+const db = getDb();
 
 interface HeroGearContextProps extends HeroGear {}
 

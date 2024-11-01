@@ -10,8 +10,10 @@ import {
   minHeroStat,
   resourceBaseProductionRate,
 } from "./consts";
-import { db } from "./db";
+import { getDb } from "./db";
 import { City, CountyBuilding, Hero, HirableHero, TownBuilding } from "./models";
+
+const db = getDb();
 
 let isGeneratingRandomHeroesLock = false;
 let isRecruitingHeroLock = false;

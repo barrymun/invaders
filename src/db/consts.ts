@@ -4,6 +4,8 @@ import { getFlagEmoji } from "./helpers";
 import { City, CountyBuilding, HeroGear, Player, TownBuilding } from "./models";
 import { ResourceType, TroopType } from "./types";
 
+export const worldMapSize = 15; // number of tiles on the x and y axis
+
 export const playerNameMaxLength = 20;
 
 export const minCities = 1;
