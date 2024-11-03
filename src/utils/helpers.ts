@@ -40,6 +40,11 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 export async function generateWorldMap() {
+  if ((await db.worldMap.count()) > 0) {
+    console.info("World map already generated!");
+    return;
+  }
+
   if (isGeneratingWorldMapLock) {
     return;
   }
