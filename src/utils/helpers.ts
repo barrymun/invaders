@@ -54,8 +54,8 @@ export async function generateWorldMap() {
 
   // create and shuffle coordinates for a worldMapSize x worldMapSize grid
   const coordinates: { x: number; y: number }[] = [];
-  for (let x = 1; x <= worldMapSize; x++) {
-    for (let y = 1; y <= worldMapSize; y++) {
+  for (let x = 0; x < worldMapSize; x++) {
+    for (let y = 0; y < worldMapSize; y++) {
       coordinates.push({ x, y });
     }
   }
@@ -178,7 +178,14 @@ export async function generateWorldMap() {
     });
   }
 
-  await db.worldMap.bulkAdd(worldMapData);
+  const sortedWorldMapData = worldMapData.sort((a, b) => {
+    if (a.x === b.x) {
+      return a.y - b.y; // when x is the same, sort by y
+    }
+    return a.x - b.x; // otherwise, sort by x
+  });
+
+  await db.worldMap.bulkAdd(sortedWorldMapData);
   console.info("World map generated successfully!");
 
   isGeneratingWorldMapLock = false;
