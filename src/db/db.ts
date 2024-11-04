@@ -75,17 +75,9 @@ export class GameDatabase extends Dexie {
   }
 }
 
-// TODO: revisit this logic as it is a little hacky, but it works for now
-export function setDb(): GameDatabase {
-  db = new GameDatabase();
-  return db;
-}
-
 export function getDb(): GameDatabase {
   if (!db) {
-    return setDb();
+    db = new GameDatabase();
   }
   return db;
 }
-
-setDb();

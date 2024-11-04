@@ -353,7 +353,6 @@ export async function generateWorldMap() {
   });
 
   await db.worldMap.bulkAdd(sortedWorldMapData);
-  console.info("World map generated successfully!");
 
   isGeneratingWorldMapLock = false;
 }
