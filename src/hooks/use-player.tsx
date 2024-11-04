@@ -3,8 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { defaultPlayer, setupDatabase, isDatabaseConfigured, Player, getDb } from "db";
-import { generateWorldMap } from "utils";
+import { defaultPlayer, setupDatabase, isDatabaseConfigured, Player, getDb, generateWorldMap } from "db";
 
 const db = getDb();
 

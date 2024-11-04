@@ -1,10 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { getDb, worldMapSize } from "db";
-
-import { generateWorldMap, getAllKeys, hasAllKeys, shuffleArray } from "./helpers";
-
-const db = getDb();
+import { getAllKeys, hasAllKeys, shuffleArray } from "./helpers";
 
 describe("getAllKeys", () => {
   it("should return all keys from a flat object", () => {
@@ -87,13 +83,5 @@ describe("shuffleArray", () => {
     const input = [1, 2, 3, 4, 5];
     const result = shuffleArray(input);
     expect(result.sort()).toEqual(input.sort());
-  });
-});
-
-describe("generateWorldMap", () => {
-  it("should generate a world map", async () => {
-    await generateWorldMap();
-    const worldMapData = await db.worldMap.toArray();
-    expect(worldMapData.length).toBe(worldMapSize * worldMapSize);
   });
 });
