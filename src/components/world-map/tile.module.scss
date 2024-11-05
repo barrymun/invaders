@@ -1,0 +1,6 @@
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border-radius: 50%;
+}

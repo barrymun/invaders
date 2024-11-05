@@ -30,3 +30,11 @@ export function hasAllKeys<T extends object>(obj: T, keys: string[]): boolean {
 export function shuffleArray<T>(array: T[]): T[] {
   return shuffle(array);
 }
+
+export function convertTo2DArray<T>(array: T[], size: number): T[][] {
+  const result = [];
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
+}

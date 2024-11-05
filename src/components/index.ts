@@ -9,3 +9,4 @@ export * from "components/settings";
 export * from "components/sidebar";
 export * from "components/town";
 export * from "components/troops";
+export * from "components/world-map";

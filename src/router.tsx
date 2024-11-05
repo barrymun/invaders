@@ -9,6 +9,7 @@ import { Resources } from "pages/resources";
 import { Settings } from "pages/settings";
 import { Town } from "pages/town";
 import { Troops } from "pages/troops";
+import { WorldMap } from "pages/world-map";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "/hero-gear",
         element: <HeroGear />,
+      },
+      {
+        path: "/world-map",
+        element: <WorldMap />,
       },
     ],
   },

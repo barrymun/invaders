@@ -1,0 +1,11 @@
+.worldMap {
+  width: calc(var(--tiles-per-row) * var(--tile-size));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .worldMapRow {
+    display: flex;
+    gap: 8px;
+  }
+}
