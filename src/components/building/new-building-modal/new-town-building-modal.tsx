@@ -1,10 +1,12 @@
 import { FC, useCallback, useMemo } from "react";
 
-import { townBuildingEmojiMap, canBuildTownBuilding, TownBuilding, maxTownBuildings, db } from "db";
+import { townBuildingEmojiMap, canBuildTownBuilding, TownBuilding, maxTownBuildings, getDb } from "db";
 import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
 import { FixedLengthArray, ZeroToNumberRange } from "utils";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
+
+const db = getDb();
 
 interface NewTownBuildingModalProps {
   setSelectedBuildingType: (type: TownBuilding["type"]) => void;

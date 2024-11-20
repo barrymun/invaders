@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { getAllKeys, hasAllKeys } from "./helpers";
+import { getAllKeys, hasAllKeys, shuffleArray } from "./helpers";
 
 describe("getAllKeys", () => {
   it("should return all keys from a flat object", () => {
@@ -63,5 +63,25 @@ describe("hasAllKeys", () => {
     const obj = { a: 1, b: 2 };
     const result = hasAllKeys(obj, []);
     expect(result).toBe(true);
+  });
+});
+
+describe("shuffleArray", () => {
+  it("should shuffle an array", () => {
+    const input = [1, 2, 3, 4, 5];
+    const result = shuffleArray(input);
+    expect(result).not.toEqual(input);
+  });
+
+  it("should not change the length of the array", () => {
+    const input = [1, 2, 3, 4, 5];
+    const result = shuffleArray(input);
+    expect(result.length).toBe(input.length);
+  });
+
+  it("should not change the elements of the array", () => {
+    const input = [1, 2, 3, 4, 5];
+    const result = shuffleArray(input);
+    expect(result.sort()).toEqual(input.sort());
   });
 });

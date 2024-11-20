@@ -1,15 +1,34 @@
 import Dexie, { type EntityTable } from "dexie";
 
-import { getAllKeys, hasAllKeys } from "utils";
+import {
+  City,
+  CountyBuilding,
+  Desert,
+  Flat,
+  Forest,
+  Hero,
+  HeroGear,
+  HirableHero,
+  Lake,
+  Mountain,
+  NPC,
+  Player,
+  TownBuilding,
+  WorldMap,
+} from "./models";
 
-import { defaultCity, defaultHeroGear, defaultPlayer } from "./consts";
-import { City, CountyBuilding, Hero, HeroGear, HirableHero, Player, TownBuilding } from "./models";
-
-let isInitializingDatabaseLock = false;
+let db: GameDatabase | undefined;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-class GameDatabase extends Dexie {
+export class GameDatabase extends Dexie {
+  worldMap: EntityTable<WorldMap, "id">;
+  flats: EntityTable<Flat, "id">;
+  lakes: EntityTable<Lake, "id">;
+  forests: EntityTable<Forest, "id">;
+  deserts: EntityTable<Desert, "id">;
+  mountains: EntityTable<Mountain, "id">;
+  npcs: EntityTable<NPC, "id">;
   players: EntityTable<Player, "id">;
   cities: EntityTable<City, "id">;
   townBuildings: EntityTable<TownBuilding, "id">;
@@ -23,6 +42,13 @@ class GameDatabase extends Dexie {
 
     // Schema declaration: (any updates to the schema should increment the schema version)
     this.version(1).stores({
+      worldMap: "++id",
+      flats: "++id",
+      lakes: "++id",
+      forests: "++id",
+      deserts: "++id",
+      mountains: "++id",
+      npcs: "++id",
       players: "++id",
       cities: "++id, playerId",
       townBuildings: "++id, playerId, cityId, [playerId+cityId]",
@@ -32,6 +58,13 @@ class GameDatabase extends Dexie {
       heroGear: "++id, playerId",
     });
 
+    this.worldMap = this.table("worldMap");
+    this.flats = this.table("flats");
+    this.lakes = this.table("lakes");
+    this.forests = this.table("forests");
+    this.deserts = this.table("deserts");
+    this.mountains = this.table("mountains");
+    this.npcs = this.table("npcs");
     this.players = this.table("players");
     this.cities = this.table("cities");
     this.townBuildings = this.table("townBuildings");
@@ -42,43 +75,9 @@ class GameDatabase extends Dexie {
   }
 }
 
-export const db = new GameDatabase();
-
-export async function isDatabaseInitialized(): Promise<boolean> {
-  const playerCount = await db.table("players").count();
-  return playerCount > 0;
-}
-
-export async function initDatabase() {
-  if (isInitializingDatabaseLock) {
-    return;
+export function getDb(): GameDatabase {
+  if (!db) {
+    db = new GameDatabase();
   }
-  isInitializingDatabaseLock = true;
-
-  const dbInitializedSuccessfully = await isDatabaseInitialized();
-  if (dbInitializedSuccessfully) {
-    return;
-  }
-
-  const allPlayerKeys = getAllKeys<Omit<Player, "id">>(defaultPlayer);
-  if (!hasAllKeys<Omit<Player, "id">>(defaultPlayer, allPlayerKeys)) {
-    throw new Error("Default player object is missing keys");
-  }
-  const playerId = (await db.table("players").add(defaultPlayer)) as number;
-
-  const cityObject = { ...defaultCity, playerId } satisfies Omit<City, "id">;
-  const allCityKeys = getAllKeys<Omit<City, "id">>(cityObject);
-  if (!hasAllKeys<Omit<City, "id">>(cityObject, allCityKeys)) {
-    throw new Error("Default city object is missing keys");
-  }
-  await db.table("cities").add(cityObject);
-
-  const heroGearObject = { ...defaultHeroGear, playerId } satisfies Omit<HeroGear, "id">;
-  const allHeroGearKeys = getAllKeys<Omit<HeroGear, "id">>(heroGearObject);
-  if (!hasAllKeys<Omit<HeroGear, "id">>(heroGearObject, allHeroGearKeys)) {
-    throw new Error("Default hero gear object is missing keys");
-  }
-  await db.table("heroGear").add(heroGearObject);
-
-  isInitializingDatabaseLock = false;
+  return db;
 }

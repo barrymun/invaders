@@ -1,9 +1,10 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 
-import { City, CountyBuilding, db, Hero, TownBuilding } from "db";
+import { City, CountyBuilding, getDb, Hero, TownBuilding } from "db";
 import { useCities, usePlayer } from "hooks";
 
+const db = getDb();
 const defaultIndex = 0;
 
 interface SelectedCityContextProps {

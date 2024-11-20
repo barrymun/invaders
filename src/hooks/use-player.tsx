@@ -3,7 +3,9 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { db, defaultPlayer, initDatabase, isDatabaseInitialized, Player } from "db";
+import { defaultPlayer, initializeDatabase, isGameReady, Player, getDb } from "db";
+
+const db = getDb();
 
 interface PlayerContextProps {
   player: Player;
@@ -25,10 +27,10 @@ const PlayerProvider: FC<PlayerProviderProps> = ({ children }) => {
   const [player, setPlayer] = useState<Player | null>(null);
 
   const handleInitDatabase = async () => {
-    const r = await isDatabaseInitialized();
+    const r = await isGameReady();
     console.log({ r });
     if (!r) {
-      await initDatabase();
+      await initializeDatabase();
     }
   };
 

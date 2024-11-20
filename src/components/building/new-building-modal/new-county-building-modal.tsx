@@ -4,7 +4,7 @@ import {
   canBuildCountyBuilding,
   CountyBuilding,
   countyBuildingEmojiMap,
-  db,
+  getDb,
   maxCountyBuildings,
   maxTownBuildings,
 } from "db";
@@ -12,6 +12,8 @@ import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
 import { FixedLengthArray, ZeroToNumberRange } from "utils";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
+
+const db = getDb();
 
 interface NewCountyBuildingModalProps {
   setSelectedBuildingType: (type: CountyBuilding["type"]) => void;

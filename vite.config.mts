@@ -15,6 +15,7 @@ export default defineConfig({
     'import.meta.env.APP_VERSION': JSON.stringify(version),
   },
   test: {
+    setupFiles: ['/tests/setup.ts'],
     coverage: {
       provider: 'istanbul',
     },

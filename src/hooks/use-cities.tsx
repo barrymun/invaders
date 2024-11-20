@@ -3,9 +3,11 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useCallback, useContext, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { db, resourceUpdateTimeout, updateCitiesResources } from "db";
+import { getDb, resourceUpdateTimeout, updateCitiesResources } from "db";
 import { City } from "db";
 import { usePlayer } from "hooks";
+
+const db = getDb();
 
 interface CitiesContextProps {
   cities: City[];

@@ -1,6 +1,7 @@
 import forOwn from "lodash/forOwn";
 import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
+import shuffle from "lodash/shuffle";
 import uniq from "lodash/uniq";
 
 function collectAllKeys<T extends object>(obj: T): string[] {
@@ -24,4 +25,16 @@ export function getAllKeys<T extends object>(obj: T): string[] {
 export function hasAllKeys<T extends object>(obj: T, keys: string[]): boolean {
   const foundKeys = collectAllKeys(obj);
   return keys.every((key) => foundKeys.includes(key));
+}
+
+export function shuffleArray<T>(array: T[]): T[] {
+  return shuffle(array);
+}
+
+export function convertTo2DArray<T>(array: T[], size: number): T[][] {
+  const result = [];
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
 }

@@ -4,3 +4,5 @@ cataphract
 dexie
 colour
 spaulders
+npcs
+indexeddb
