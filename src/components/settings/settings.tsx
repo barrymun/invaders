@@ -12,9 +12,9 @@ import {
   defaultCountrySelectData,
   defaultCountryFlag,
   defaultCountryData,
-  getFlagEmoji,
   playerNameMaxLength,
   getDb,
+  getEmojiFlagExtended,
 } from "db";
 import { SettingsForm } from "forms";
 import { usePlayer } from "hooks";
@@ -76,7 +76,7 @@ const Settings: FC<SettingsProps> = () => {
       setFlag(defaultCountryFlag);
       return;
     }
-    const newFlag = getFlagEmoji(countryCode);
+    const newFlag = getEmojiFlagExtended(countryCode);
     setFlag(newFlag);
   }, [formMethods.getValues("countryName")]);
 

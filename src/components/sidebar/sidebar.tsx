@@ -1,16 +1,16 @@
 import { Group, Code, Box } from "@mantine/core";
-import {
-  IconBuildingFactory,
-  IconBuildingCastle,
-  IconSwords,
-  IconShovelPitchforks,
-  IconSettings,
-  IconProps,
-  Icon,
-  IconUserShield,
-  IconWorld,
-} from "@tabler/icons-react";
-import { FC, ForwardRefExoticComponent, RefAttributes, useState } from "react";
+// import {
+//   IconBuildingFactory,
+//   IconBuildingCastle,
+//   IconSwords,
+//   IconShovelPitchforks,
+//   IconSettings,
+//   IconProps,
+//   Icon,
+//   IconUserShield,
+//   IconWorld,
+// } from "@tabler/icons-react";
+import { FC, /* ForwardRefExoticComponent, RefAttributes, */ useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
@@ -19,7 +19,7 @@ import classes from "./sidebar.module.scss";
 interface SidebarLinkDataProps {
   link: string;
   label: string;
-  icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>;
+  // icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>;
 }
 
 interface SidebarLinkProps {
@@ -37,7 +37,7 @@ const SidebarLink: FC<SidebarLinkProps> = ({ item, active, setActive }) => (
       setActive(item.label);
     }}
   >
-    <item.icon className={classes.linkIcon} stroke={1.5} />
+    {/* <item.icon className={classes.linkIcon} stroke={1.5} /> */}
     <span>{item.label}</span>
   </Link>
 );
@@ -49,16 +49,23 @@ const Sidebar: FC<SidebarProps> = () => {
   const location = useLocation();
 
   const linksData: SidebarLinkDataProps[] = [
-    { link: "/town", label: t("sidebar.links.town"), icon: IconBuildingCastle },
-    { link: "/county", label: t("sidebar.links.county"), icon: IconShovelPitchforks },
-    { link: "/resources", label: t("sidebar.links.resources"), icon: IconBuildingFactory },
-    { link: "/troops", label: t("sidebar.links.troops"), icon: IconSwords },
-    { link: "/hero-gear", label: t("sidebar.links.hero-gear"), icon: IconUserShield },
-    { link: "/world-map", label: t("sidebar.links.world-map"), icon: IconWorld },
+    // { link: "/town", label: t("sidebar.links.town"), icon: IconBuildingCastle },
+    // { link: "/county", label: t("sidebar.links.county"), icon: IconShovelPitchforks },
+    // { link: "/resources", label: t("sidebar.links.resources"), icon: IconBuildingFactory },
+    // { link: "/troops", label: t("sidebar.links.troops"), icon: IconSwords },
+    // { link: "/hero-gear", label: t("sidebar.links.hero-gear"), icon: IconUserShield },
+    // { link: "/world-map", label: t("sidebar.links.world-map"), icon: IconWorld },
+    { link: "/town", label: t("sidebar.links.town") },
+    { link: "/county", label: t("sidebar.links.county") },
+    { link: "/resources", label: t("sidebar.links.resources") },
+    { link: "/troops", label: t("sidebar.links.troops") },
+    { link: "/hero-gear", label: t("sidebar.links.hero-gear") },
+    { link: "/world-map", label: t("sidebar.links.world-map") },
   ];
 
   const footerLinksData: SidebarLinkDataProps[] = [
-    { link: "/settings", label: t("sidebar.links.settings"), icon: IconSettings },
+    // { link: "/settings", label: t("sidebar.links.settings"), icon: IconSettings },
+    { link: "/settings", label: t("sidebar.links.settings") },
   ];
 
   const [active, setActive] = useState<string>(

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker/locale/en";
+import { getEmojiFlag, TCountryCode } from "countries-list";
 
 import { OneToFifteen, OneToOneHundred, shuffleArray } from "utils";
 
@@ -59,15 +60,11 @@ export async function updateCitiesResources(cities: City[]) {
   await db.cities.bulkPut(res);
 }
 
-export function getFlagEmoji(countryCode: string | null) {
+export function getEmojiFlagExtended(countryCode: TCountryCode | null) {
   if (!countryCode) {
     return defaultCountryFlag;
   }
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt(0));
-  return String.fromCodePoint(...codePoints);
+  return getEmojiFlag(countryCode);
 }
 
 export function canBuildTownBuilding({

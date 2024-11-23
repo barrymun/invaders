@@ -1,6 +1,6 @@
 import { countries, getCountryCode, ICountry } from "countries-list";
 
-import { getFlagEmoji } from "./helpers";
+import { getEmojiFlagExtended } from "./helpers";
 import { City, CountyBuilding, HeroGear, Player, TownBuilding } from "./models";
 import { ResourceType, TroopType } from "./types";
 
@@ -95,7 +95,7 @@ export const defaultCountryData = { defaultCountry, ...countries };
 
 export const defaultCountrySelectData = Object.values(defaultCountryData).map((c) => ({
   value: c.name,
-  label: `${c.name} ${getFlagEmoji(getCountryCode(c.name) || null)}`,
+  label: `${c.name} ${getEmojiFlagExtended(getCountryCode(c.name) || null)}`,
 }));
 
 export const defaultCity: Omit<City, "id" | "playerId"> = {
