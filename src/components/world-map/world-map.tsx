@@ -28,6 +28,7 @@ const WorldMap: FC<WorldMapProps> = () => {
   const [scrollTop, setScrollTop] = useState<number>(0);
   const [cursor, setCursor] = useState<"grab" | "grabbing">("grab");
 
+  const worldMapContainerTarget = useRef<HTMLDivElement | null>(null);
   const worldMapTarget = useRef<HTMLDivElement | null>(null);
 
   const worldMap2D = useMemo(() => convertTo2DArray(worldMapData, worldMapSize), [worldMapData]);
@@ -48,16 +49,36 @@ const WorldMap: FC<WorldMapProps> = () => {
     if (!isDragging) {
       return;
     }
-    if (!worldMapTarget?.current) {
+
+    if (!worldMapContainerTarget?.current || !worldMapTarget?.current) {
       return;
     }
+
     e.preventDefault(); // prevent text selection while dragging
+
+    const maxScrollLeft = worldMapTarget.current.clientWidth - worldMapContainerTarget.current.clientWidth;
+    const maxScrollTop = worldMapTarget.current.clientHeight - worldMapContainerTarget.current.clientHeight;
 
     const deltaX = e.clientX - startX;
     const deltaY = e.clientY - startY;
 
-    setScrollLeft(initialScrollLeft + deltaX);
-    setScrollTop(initialScrollTop + deltaY);
+    let newScrollLeft = initialScrollLeft + deltaX;
+    console.log(newScrollLeft);
+    if (newScrollLeft > 0) {
+      newScrollLeft = 0;
+    } else if (Math.abs(newScrollLeft) > maxScrollLeft) {
+      newScrollLeft = Math.abs(maxScrollLeft) * -1;
+    }
+
+    let newScrollTop = initialScrollTop + deltaY;
+    if (newScrollTop > 0) {
+      newScrollTop = 0;
+    } else if (Math.abs(newScrollTop) > maxScrollTop) {
+      newScrollTop = Math.abs(maxScrollTop) * -1;
+    }
+
+    setScrollLeft(newScrollLeft);
+    setScrollTop(newScrollTop);
   };
 
   const handleMouseUp = (_event: MouseEvent) => {
@@ -79,7 +100,7 @@ const WorldMap: FC<WorldMapProps> = () => {
   }
 
   return (
-    <Box className={classes.worldMapContainer}>
+    <Box ref={worldMapContainerTarget} className={classes.worldMapContainer}>
       <Box
         ref={worldMapTarget}
         style={{
