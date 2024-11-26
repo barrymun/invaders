@@ -26,7 +26,7 @@ const WorldMap: FC<WorldMapProps> = () => {
 
   const [scrollLeft, setScrollLeft] = useState<number>(0);
   const [scrollTop, setScrollTop] = useState<number>(0);
-  const [cursor, setCursor] = useState<"default" | "grabbing">("default");
+  const [cursor, setCursor] = useState<"grab" | "grabbing">("grab");
 
   const worldMapTarget = useRef<HTMLDivElement | null>(null);
 
@@ -62,7 +62,7 @@ const WorldMap: FC<WorldMapProps> = () => {
 
   const handleMouseUp = (_event: MouseEvent) => {
     isDragging = false;
-    setCursor("default");
+    setCursor("grab");
   };
 
   useEffect(() => {
