@@ -33,19 +33,31 @@ const WorldMap: FC<WorldMapProps> = () => {
 
   const worldMap2D = useMemo(() => convertTo2DArray(worldMapData, worldMapSize), [worldMapData]);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleDownStartEvent = ({ x, y }: { x: number; y: number }) => {
     if (!worldMapTarget?.current) {
       return;
     }
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    startX = x;
+    startY = y;
     initialScrollLeft = worldMapTarget.current.offsetLeft;
     initialScrollTop = worldMapTarget.current.offsetTop;
     setCursor("grabbing");
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    // ignore right click or 2 finger click on trackpad
+    if (e.button === 2 || e.buttons === 2) {
+      return;
+    }
+    handleDownStartEvent({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    handleDownStartEvent({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+  };
+
+  const handleMoveEvent = ({ x, y }: { x: number; y: number }) => {
     if (!isDragging) {
       return;
     }
@@ -54,16 +66,13 @@ const WorldMap: FC<WorldMapProps> = () => {
       return;
     }
 
-    e.preventDefault(); // prevent text selection while dragging
-
     const maxScrollLeft = worldMapTarget.current.clientWidth - worldMapContainerTarget.current.clientWidth;
     const maxScrollTop = worldMapTarget.current.clientHeight - worldMapContainerTarget.current.clientHeight;
 
-    const deltaX = e.clientX - startX;
-    const deltaY = e.clientY - startY;
+    const deltaX = x - startX;
+    const deltaY = y - startY;
 
     let newScrollLeft = initialScrollLeft + deltaX;
-    console.log(newScrollLeft);
     if (newScrollLeft > 0) {
       newScrollLeft = 0;
     } else if (Math.abs(newScrollLeft) > maxScrollLeft) {
@@ -81,17 +90,39 @@ const WorldMap: FC<WorldMapProps> = () => {
     setScrollTop(newScrollTop);
   };
 
-  const handleMouseUp = (_event: MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent) => {
+    e.preventDefault(); // prevent text selection while dragging
+    handleMoveEvent({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault(); // prevent text selection while dragging
+    handleMoveEvent({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+  };
+
+  const handleUpEvent = () => {
     isDragging = false;
     setCursor("grab");
+  };
+
+  const handleMouseUp = (_e: MouseEvent) => {
+    handleUpEvent();
+  };
+
+  const handleTouchUp = (_e: TouchEvent) => {
+    handleUpEvent();
   };
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchUp);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchUp);
     };
   }, []);
 
@@ -109,6 +140,7 @@ const WorldMap: FC<WorldMapProps> = () => {
           cursor,
         }}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         className={classes.worldMap}
       >
         {worldMap2D.map((worldMapRow, index) => (

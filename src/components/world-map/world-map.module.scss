@@ -11,6 +11,10 @@
     gap: 8px;
     overflow: auto;
     position: absolute;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Standard syntax */
   
     .worldMapRow {
       display: flex;

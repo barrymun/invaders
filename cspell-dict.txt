@@ -6,3 +6,4 @@ colour
 spaulders
 npcs
 indexeddb
+trackpad
