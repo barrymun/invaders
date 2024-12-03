@@ -2,8 +2,9 @@ import { Box, Text } from "@mantine/core";
 import { useLiveQuery } from "dexie-react-hooks";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 
-import { getDb, worldMapSize } from "db";
+import { getDb, TileType, worldMapSize } from "db";
 import { convertTo2DArray } from "utils";
 
 import { Tile } from "./tile";
@@ -22,6 +23,7 @@ interface WorldMapProps {}
 const WorldMap: FC<WorldMapProps> = () => {
   const { t } = useTranslation("translation");
 
+  const [searchParams, _setSearchParams] = useSearchParams();
   const worldMapData = useLiveQuery(() => db.worldMap.toArray()) ?? [];
 
   const [scrollLeft, setScrollLeft] = useState<number>(0);
@@ -125,6 +127,47 @@ const WorldMap: FC<WorldMapProps> = () => {
       window.removeEventListener("touchend", handleTouchUp);
     };
   }, []);
+
+  /**
+   * if the x and y query params are present, scroll to the target tile
+   * otherwise scroll to the player's city
+   */
+  useEffect(() => {
+    let targetTile: HTMLElement | null = null;
+    if (searchParams.has("x") && searchParams.has("y")) {
+      targetTile = document.getElementById(`tile-${searchParams.get("x")}-${searchParams.get("y")}`);
+    } else {
+      const playerCity = worldMapData.find((tile) => tile.tileType === TileType.City);
+      if (playerCity) {
+        targetTile = document.getElementById(`tile-${playerCity.x}-${playerCity.y}`);
+      }
+    }
+
+    if (!targetTile) {
+      return;
+    }
+
+    initialScrollLeft = targetTile.offsetLeft;
+    initialScrollTop = targetTile.offsetTop;
+
+    if (!worldMapContainerTarget?.current || !worldMapTarget?.current) {
+      return;
+    }
+
+    const maxScrollLeft = worldMapTarget.current.clientWidth - worldMapContainerTarget.current.clientWidth;
+    const maxScrollTop = worldMapTarget.current.clientHeight - worldMapContainerTarget.current.clientHeight;
+
+    if (initialScrollLeft > maxScrollLeft) {
+      initialScrollLeft = maxScrollLeft;
+    }
+
+    if (initialScrollTop > maxScrollTop) {
+      initialScrollTop = maxScrollTop;
+    }
+
+    setScrollLeft(-initialScrollLeft);
+    setScrollTop(-initialScrollTop);
+  }, [worldMapData]);
 
   if (worldMapData.length === 0) {
     return <Text>{t("loading")}</Text>;

@@ -35,9 +35,13 @@ const Tile: FC<TileProps> = (props) => {
   };
 
   return (
-    <Box className={classes.tile}>
-      {/* {tile.x}, {tile.y} */}
-      <Image src={getImageSrc()} alt={`Tile ${tile.x}, ${tile.y}`} draggable={false} />
+    <Box className={classes.tileContainer}>
+      <Box className={classes.tile} id={`tile-${tile.x}-${tile.y}`}>
+        <Image src={getImageSrc()} alt={`Tile ${tile.x}, ${tile.y}`} draggable={false} />
+      </Box>
+      <Box className={classes.coordinates}>
+        {tile.x}, {tile.y}
+      </Box>
     </Box>
   );
 };

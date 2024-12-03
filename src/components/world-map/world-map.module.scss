@@ -5,10 +5,10 @@
   position: relative;
 
   .worldMap {
-    width: calc(var(--tiles-per-row) * var(--tile-size));
+    width: calc(var(--tiles-per-row) * calc((var(--tile-gap) + var(--tile-size)) - 1));
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--tile-gap);
     overflow: auto;
     position: absolute;
     -webkit-user-select: none; /* Safari */
@@ -18,7 +18,7 @@
   
     .worldMapRow {
       display: flex;
-      gap: 8px;
+      gap: var(--tile-gap);
     }
   }
 }
