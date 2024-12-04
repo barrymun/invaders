@@ -88,6 +88,14 @@ const WorldMap: FC<WorldMapProps> = () => {
       newScrollTop = Math.abs(maxScrollTop) * -1;
     }
 
+    // handle case where the width or height of the world map is smaller than the container
+    if (worldMapTarget.current.clientWidth <= worldMapContainerTarget.current.clientWidth) {
+      newScrollLeft = 0;
+    }
+    if (worldMapTarget.current.clientHeight <= worldMapContainerTarget.current.clientHeight) {
+      newScrollTop = 0;
+    }
+
     setScrollLeft(newScrollLeft);
     setScrollTop(newScrollTop);
   };
@@ -98,7 +106,6 @@ const WorldMap: FC<WorldMapProps> = () => {
   };
 
   const handleTouchMove = (e: TouchEvent) => {
-    e.preventDefault(); // prevent text selection while dragging
     handleMoveEvent({ x: e.touches[0].clientX, y: e.touches[0].clientY });
   };
 
@@ -115,16 +122,25 @@ const WorldMap: FC<WorldMapProps> = () => {
     handleUpEvent();
   };
 
+  const handleResize = () => {
+    setScrollLeft(0);
+    setScrollTop(0);
+  };
+
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("touchmove", handleTouchMove);
     window.addEventListener("touchend", handleTouchUp);
+    window.addEventListener("touchcancel", handleTouchUp);
+    window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchUp);
+      window.removeEventListener("touchcancel", handleTouchUp);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 

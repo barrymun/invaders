@@ -1,11 +1,15 @@
 .sidebar {
-  min-width: var(--sidebar-width);
+  width: var(--sidebar-width);
   height: calc(100vh - var(--navbar-height));
   padding: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;
   border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   overflow-y: auto;
+
+  @include smaller-than($mantine-breakpoint-xs) {
+    width: 200px;
+  }
 
   .sidebarMain {
     flex: 1;
