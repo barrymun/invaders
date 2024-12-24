@@ -1,3 +1,5 @@
+@import '../../_mantine.scss';
+
 .sidebar {
   width: var(--sidebar-width);
   height: calc(100vh - var(--navbar-height));
@@ -9,6 +11,7 @@
 
   @include smaller-than($mantine-breakpoint-xs) {
     width: rem(80px);
+    padding: var(--mantine-spacing-xs);
   }
 
   .sidebarMain {
@@ -39,6 +42,10 @@
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
       border-radius: var(--mantine-radius-sm);
       font-weight: 500;
+
+      @include smaller-than($mantine-breakpoint-xs) {
+        justify-content: center;
+      }
     
       @mixin hover {
         background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
@@ -64,9 +71,16 @@
     
     .linkIcon {
       color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
-      margin-right: var(--mantine-spacing-sm);
       width: rem(25px);
       height: rem(25px);
+    }
+
+    .linkLabel {
+      margin-left: var(--mantine-spacing-sm);
+
+      @include smaller-than($mantine-breakpoint-xs) {
+        display: none;
+      }
     }
   }
 }

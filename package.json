@@ -24,7 +24,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@mantine/core": "^7.13.2",
     "@mantine/hooks": "^7.13.2",
-    "@tabler/icons-react": "^3.19.0",
+    "@tabler/icons-react": "^3.26.0",
     "classnames": "^2.5.1",
     "countries-list": "^3.1.1",
     "dexie": "^4.0.8",
