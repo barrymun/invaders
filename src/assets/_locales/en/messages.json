@@ -2,6 +2,9 @@
   "home": "Home",
   "loading": "Loading...",
   "navbar": {
+    "smallMenu": {
+      "title": "Menu"
+    },
     "citySelect": {
       "placeholder": "Choose your city"
     }

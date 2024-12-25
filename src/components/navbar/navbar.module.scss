@@ -7,5 +7,21 @@
 
   .navbarEnd {
     margin-left: auto;
+    
+    .largeMenu {
+      @include smaller-than($mantine-breakpoint-xs) {
+        display: none;
+      }
+    }
+
+    .smallMenu {
+      display: block;
+      color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+      width: rem(25px);
+  
+      @include larger-than($mantine-breakpoint-xs) {
+        display: none;
+      }
+    }
   }
 }

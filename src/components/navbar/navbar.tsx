@@ -1,44 +1,53 @@
-import { Box, Card, Group, Text } from "@mantine/core";
-import { abbreviateNumber } from "js-abbreviation-number";
-import { FC } from "react";
+import { ActionIcon, Box, Group, Modal, Stack } from "@mantine/core";
+import { IconMenu2 } from "@tabler/icons-react";
+import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { NavbarSelect } from "components";
-import { goldEmoji, resourceEmojiMap, ResourceType } from "db";
-import { usePlayer, useSelectedCity } from "hooks";
+import { NavbarGold, NavbarResources, NavbarSelect } from "components";
 
 import classes from "./navbar.module.scss";
 
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = () => {
-  const { player } = usePlayer();
-  const { selectedCity } = useSelectedCity();
+  const { t } = useTranslation("translation", { keyPrefix: "navbar" });
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
     <Box className={classes.navbar}>
       <Box className={classes.navbarEnd}>
-        <Group>
-          <Card padding="xs">
-            <Group gap="xs">
-              <Text>{goldEmoji}</Text>
-              <Text>{abbreviateNumber(player.gold, 1, { padding: false })}</Text>
-            </Group>
-          </Card>
-          <Card padding="xs">
-            <Group>
-              {Object.entries(selectedCity.resources).map(([resource, amount], index) => {
-                return (
-                  <Group key={index} gap="xs">
-                    <Text>{resourceEmojiMap[resource as ResourceType]}</Text>
-                    <Text>{abbreviateNumber(amount, 1, { padding: false })}</Text>
-                  </Group>
-                );
-              })}
-            </Group>
-          </Card>
-          <NavbarSelect />
-        </Group>
+        <Box className={classes.largeMenu}>
+          <Group>
+            <NavbarGold />
+            <NavbarResources />
+            <NavbarSelect />
+          </Group>
+        </Box>
+
+        <Box className={classes.smallMenu}>
+          <ActionIcon onClick={() => setMobileMenuOpen(true)}>
+            <IconMenu2 />
+          </ActionIcon>
+        </Box>
       </Box>
+
+      <Modal
+        opened={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        title={t("smallMenu.title")}
+        fullScreen
+        radius={0}
+        transitionProps={{ transition: "fade", duration: 200 }}
+      >
+        <Modal.Body>
+          <Stack>
+            <NavbarSelect />
+            <NavbarGold />
+            <NavbarResources />
+          </Stack>
+        </Modal.Body>
+      </Modal>
     </Box>
   );
 };
