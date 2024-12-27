@@ -1,1 +1,2 @@
-export * from "forms/settings-form";
+export * from "forms/settings";
+export * from "forms/town-hall";

@@ -12,3 +12,5 @@ export const heroGearLevelColourMap: Record<OneToTen, string> = {
   9: "#F61067",
   10: "#E3C16F",
 };
+
+export const noneSelected: string = "None";

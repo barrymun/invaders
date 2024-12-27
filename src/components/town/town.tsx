@@ -1,11 +1,10 @@
-import { Box, Card, Divider, Group, Text, Title } from "@mantine/core";
+import { Box, Divider, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 
-import { Building } from "components";
+import { Building, TownHall, Walls } from "components";
 import { NewTownBuildingModal, TownBuildingInfoModal } from "components/building";
-import { maxTownBuildings, TownBuilding, townHallEmoji, wallsEmoji } from "db";
+import { maxTownBuildings, TownBuilding } from "db";
 import { BuildingModalProvider, useSelectedCity } from "hooks";
 import { FixedLengthArray } from "utils";
 
@@ -14,8 +13,6 @@ import classes from "./town.module.scss";
 interface TownProps {}
 
 export const Town: FC<TownProps> = () => {
-  const { t } = useTranslation("translation", { keyPrefix: "town" });
-
   const [buildModalOpened, { open: openBuildModal, close: closeBuildModal }] = useDisclosure(false);
   const [infoModalOpened, { open: openInfoModal, close: closeInfoModal }] = useDisclosure(false);
 
@@ -68,22 +65,12 @@ export const Town: FC<TownProps> = () => {
     <>
       <Box className={classes.town}>
         <Group>
-          <Box className={classes.townHall}>
-            <Card className={classes.townHallCard}>
-              <Title className={classes.largeTitle}>{townHallEmoji}</Title>
-              <Text>{t("townHall")}</Text>
-              <Text>{selectedCity.townHall.level}</Text>
-            </Card>
-          </Box>
-          <Box className={classes.walls}>
-            <Card className={classes.wallsCard}>
-              <Title className={classes.largeTitle}>{wallsEmoji}</Title>
-              <Text>{t("walls")}</Text>
-              <Text>{selectedCity.walls.level}</Text>
-            </Card>
-          </Box>
+          <TownHall />
+          <Walls />
         </Group>
+
         <Divider my="md" />
+
         <Group>
           {mergedTownBuildings.map((building, index) => (
             <Building

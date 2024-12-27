@@ -1,20 +1,20 @@
 import { Box, Card, Divider } from "@mantine/core";
-// import {
-//   IconBrandBootstrap,
-//   IconDeviceWatch,
-//   IconDiamond,
-//   IconHandStop,
-//   IconHelmet,
-//   IconHorse,
-//   IconRings,
-//   IconShield,
-//   IconShieldChevron,
-//   IconShieldDown,
-//   IconShieldUp,
-//   IconShoe,
-//   IconSock,
-//   IconSword,
-// } from "@tabler/icons-react";
+import {
+  IconBrandBootstrap,
+  IconDeviceWatch,
+  IconDiamond,
+  IconHandStop,
+  IconHelmet,
+  IconHorse,
+  IconRings,
+  IconShield,
+  IconShieldChevron,
+  IconShieldDown,
+  IconShieldUp,
+  IconShoe,
+  IconSock,
+  IconSword,
+} from "@tabler/icons-react";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +26,7 @@ import classes from "./hero-gear.module.scss";
 interface GearDetails {
   name: string;
   level: keyof typeof heroGearLevelColourMap;
-  // icon: React.ReactNode;
+  icon: React.ReactNode;
 }
 
 interface GearItemProps {
@@ -36,14 +36,18 @@ interface GearItemProps {
 const GearItem: FC<GearItemProps> = (props) => {
   const { details } = props;
 
+  const { t } = useTranslation("translation");
+
   return (
     <Card className={classes.gearItem}>
       <Card.Section className={classes.gearItemIcon} style={{ backgroundColor: heroGearLevelColourMap[details.level] }}>
-        {/* {details.icon} */}
+        {details.icon}
       </Card.Section>
       <Divider />
       <Card.Section className={classes.gearItemName}>{details.name}</Card.Section>
-      <Card.Section className={classes.gearItemName}>{details.level}</Card.Section>
+      <Card.Section className={classes.gearItemName}>
+        {t("general.lvl")} {details.level}
+      </Card.Section>
     </Card>
   );
 };
@@ -59,72 +63,72 @@ const HeroGear: FC<HeroGearProps> = () => {
     {
       name: t("gear-items.weaponry"),
       level: heroGear.weaponryLevel,
-      // icon: <IconSword color="white" />,
+      icon: <IconSword color="white" />,
     },
     {
       name: t("gear-items.mountTraining"),
       level: heroGear.mountTrainingLevel,
-      // icon: <IconHorse color="white" />,
+      icon: <IconHorse color="white" />,
     },
     {
       name: t("gear-items.charm"),
       level: heroGear.charmLevel,
-      // icon: <IconDeviceWatch color="white" />,
+      icon: <IconDeviceWatch color="white" />,
     },
     {
       name: t("gear-items.helmet"),
       level: heroGear.helmetLevel,
-      // icon: <IconHelmet color="white" />,
+      icon: <IconHelmet color="white" />,
     },
     {
       name: t("gear-items.chestArmor"),
       level: heroGear.chestArmorLevel,
-      // icon: <IconShieldUp color="white" />,
+      icon: <IconShieldUp color="white" />,
     },
     {
       name: t("gear-items.gauntlets"),
       level: heroGear.gauntletsLevel,
-      // icon: <IconHandStop color="white" />,
+      icon: <IconHandStop color="white" />,
     },
     {
       name: t("gear-items.legsArmor"),
       level: heroGear.legsArmorLevel,
-      // icon: <IconSock color="white" />,
+      icon: <IconSock color="white" />,
     },
     {
       name: t("gear-items.shield"),
       level: heroGear.shieldLevel,
-      // icon: <IconShield color="white" />,
+      icon: <IconShield color="white" />,
     },
     {
       name: t("gear-items.necklace"),
       level: heroGear.necklaceLevel,
-      // icon: <IconDiamond color="white" />,
+      icon: <IconDiamond color="white" />,
     },
     {
       name: t("gear-items.ring"),
       level: heroGear.ringLevel,
-      // icon: <IconRings color="white" />,
+      icon: <IconRings color="white" />,
     },
     {
       name: t("gear-items.spaulders"),
       level: heroGear.spauldersLevel,
-      // icon: <IconShieldChevron color="white" />,
+      icon: <IconShieldChevron color="white" />,
     },
     {
       name: t("gear-items.backArmor"),
       level: heroGear.backArmorLevel,
-      // icon: <IconShieldDown color="white" />,
+      icon: <IconShieldDown color="white" />,
     },
     {
       name: t("gear-items.belt"),
       level: heroGear.beltLevel,
-      // icon: <IconBrandBootstrap color="white" />,
+      icon: <IconBrandBootstrap color="white" />,
     },
     {
       name: t("gear-items.boots"),
       level: heroGear.bootsLevel,
-      // icon: <IconShoe color="white" />,
+      icon: <IconShoe color="white" />,
     },
   ];
 

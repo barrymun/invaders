@@ -21,8 +21,6 @@ export interface Hero extends DatabaseRequiredFields {
   attack: number;
 }
 
-export interface HirableHero extends Hero {}
-
 export interface HeroGear extends DatabaseRequiredFields {
   playerId: number;
   weaponryLevel: OneToTen;
@@ -119,6 +117,7 @@ export interface NPC extends Flat {
 
 export interface City extends NPC {
   playerId: number;
+  mayorId: number | null; // a city may not have a mayor
   index: ZeroToNumberRange<typeof maxCities>;
 }
 

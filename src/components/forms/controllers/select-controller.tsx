@@ -30,7 +30,19 @@ const SelectController = <T extends FieldValues>(props: SelectControllerProps<T>
       control={control}
       render={({ field: { onChange } }) => (
         <Box>
-          <Select label={label} onChange={onChange} value={value} data={data} searchable={searchable} />
+          <Select
+            label={label}
+            onChange={(value) => {
+              if (value === "") {
+                onChange(null);
+              } else {
+                onChange(value);
+              }
+            }}
+            value={value}
+            data={data}
+            searchable={searchable}
+          />
           <FormError name={name} errors={errors} />
         </Box>
       )}

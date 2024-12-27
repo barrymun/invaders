@@ -100,6 +100,7 @@ export const defaultCountrySelectData = Object.values(defaultCountryData).map((c
 
 export const defaultCity: Omit<City, "id" | "playerId"> = {
   index: 0,
+  mayorId: null,
   name: "City 1",
   townHall: {
     level: 1,

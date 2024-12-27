@@ -3,7 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { FC, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { canRecruitHero, generateRandomHeroes, getDb, HirableHero, recruitHero } from "db";
+import { canRecruitHero, generateRandomHeroes, getDb, Hero, recruitHero } from "db";
 import { usePlayer, useSelectedCity } from "hooks";
 
 const db = getDb();
@@ -20,7 +20,7 @@ const Inn: FC<InnProps> = () => {
 
   const canRecruit = useMemo(() => canRecruitHero({ townBuildings, heroes }), [townBuildings, heroes]);
 
-  const handleRecruitment = (hireableHero: HirableHero) => async () => {
+  const handleRecruitment = (hireableHero: Hero) => async () => {
     await recruitHero({ townBuildings, heroes, hireableHero, playerId: player.id, cityId: selectedCity.id });
   };
 

@@ -26,7 +26,7 @@ const db = getDb();
 interface SettingsProps {}
 
 const Settings: FC<SettingsProps> = () => {
-  const { t } = useTranslation("translation", { keyPrefix: "settings" });
+  const { t } = useTranslation("translation");
 
   const { player } = usePlayer();
 
@@ -85,11 +85,11 @@ const Settings: FC<SettingsProps> = () => {
       <form onSubmit={handleSubmit(handleSave)}>
         <Card padding="xs">
           <Card.Section withBorder inheritPadding py="xs">
-            <Text size="xl">{t("title")}</Text>
+            <Text size="xl">{t("settings.title")}</Text>
           </Card.Section>
 
           <Group gap="xs">
-            <InputController name="name" formMethods={formMethods} label={t("form.name")} />
+            <InputController name="name" formMethods={formMethods} label={t("settings.form.name")} />
           </Group>
 
           <Box className={classes.flag}>{flag}</Box>
@@ -97,7 +97,7 @@ const Settings: FC<SettingsProps> = () => {
             <SelectController
               name="countryName"
               formMethods={formMethods}
-              label={t("form.countrySelect")}
+              label={t("settings.form.countrySelect")}
               data={defaultCountrySelectData}
               searchable
             />
@@ -105,10 +105,10 @@ const Settings: FC<SettingsProps> = () => {
 
           <Group gap="xs" className={classes.formButtons}>
             <Button size="compact-sm" variant="outline" disabled={!isDirty} onClick={handleReset}>
-              {t("form.reset")}
+              {t("general.form.reset")}
             </Button>
             <Button size="compact-sm" type="submit" disabled={!isDirty}>
-              {t("form.save")}
+              {t("general.form.save")}
             </Button>
           </Group>
         </Card>

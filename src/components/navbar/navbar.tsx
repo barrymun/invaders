@@ -35,7 +35,7 @@ const Navbar: FC<NavbarProps> = () => {
       <Modal
         opened={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        title={t("smallMenu.title")}
+        title={t("small-menu.title")}
         fullScreen
         radius={0}
         transitionProps={{ transition: "fade", duration: 200 }}

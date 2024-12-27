@@ -15,7 +15,7 @@ import {
 } from "./consts";
 import { getDb } from "./db";
 import { TileType } from "./enums";
-import { City, CountyBuilding, Hero, HirableHero, TownBuilding } from "./models";
+import { City, CountyBuilding, Hero, TownBuilding } from "./models";
 
 const db = getDb();
 
@@ -110,7 +110,7 @@ function generateRandomHeroStat(): number {
  * if a hero is level 1 generate stats for politics, intelligence, and attack between a min and max
  * any higher than level 1 should do the same, but then 1 for each level to all of these stats
  */
-function generateRandomHero(inn: TownBuilding): Omit<HirableHero, "id" | "playerId" | "cityId"> {
+function generateRandomHero(inn: TownBuilding): Omit<Hero, "id" | "playerId" | "cityId"> {
   const minHeroLevel = (inn.level - 1) * 10 + 1;
   const maxHeroLevel = inn.level * 10;
   const heroLevel = (Math.floor(Math.random() * (maxHeroLevel - minHeroLevel + 1)) + minHeroLevel) as OneToOneHundred;
@@ -178,7 +178,7 @@ export async function recruitHero({
 }: {
   townBuildings: TownBuilding[];
   heroes: Hero[];
-  hireableHero: HirableHero;
+  hireableHero: Hero;
   playerId: number;
   cityId: number;
 }): Promise<boolean> {

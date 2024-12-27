@@ -8,7 +8,6 @@ import {
   Forest,
   Hero,
   HeroGear,
-  HirableHero,
   Lake,
   Mountain,
   NPC,
@@ -34,7 +33,7 @@ export class GameDatabase extends Dexie {
   townBuildings: EntityTable<TownBuilding, "id">;
   countyBuildings: EntityTable<CountyBuilding, "id">;
   heroes: EntityTable<Hero, "id">;
-  hireableHeroes: EntityTable<HirableHero, "id">;
+  hireableHeroes: EntityTable<Hero, "id">;
   heroGear: EntityTable<HeroGear, "id">;
 
   constructor() {

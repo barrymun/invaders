@@ -45,9 +45,9 @@ const Building: FC<BuildingProps> = (props) => {
     return (
       <Container>
         <Title>{landEmoji}</Title>
-        <Text>{t("build.emptyLandPlot")}</Text>
+        <Text>{t("build.empty-land-plot")}</Text>
         <Button size="compact-sm" onClick={handleBuild} color="teal">
-          {t("build.openModal")}
+          {t("build.open-modal")}
         </Button>
       </Container>
     );
@@ -64,7 +64,7 @@ const Building: FC<BuildingProps> = (props) => {
       <Title>{buildingEmoji}</Title>
       <Text>{t(`build.modal.buildings.${building.type}`)}</Text>
       <Button size="compact-sm" onClick={handleInfo}>
-        {t("info.openModal")}
+        {t("info.open-modal")}
       </Button>
     </Container>
   );

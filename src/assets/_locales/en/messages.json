@@ -1,8 +1,17 @@
 {
+  "general": {
+    "form": {
+      "save": "Save",
+      "reset": "Reset"
+    },
+    "level": "Level",
+    "lvl": "Lvl",
+    "info": "Info"
+  },
   "home": "Home",
   "loading": "Loading...",
   "navbar": {
-    "smallMenu": {
+    "small-menu": {
       "title": "Menu"
     },
     "citySelect": {
@@ -29,15 +38,13 @@
     "title": "Settings",
     "form": {
       "name": "Name",
-      "countrySelect": "Choose your country",
-      "save": "Save",
-      "reset": "Reset"
+      "countrySelect": "Choose your country"
     }
   },
   "county": {
     "build": {
-      "openModal": "Build",
-      "emptyLandPlot": "Land",
+      "open-modal": "Build",
+      "empty-land-plot": "Land",
       "modal": {
         "title": "Build",
         "buildings": {
@@ -50,18 +57,22 @@
       }
     },
     "info": {
-      "openModal": "Info",
+      "open-modal": "Info",
       "modal": {
         "title": "County Info"
       }
     }
   },
   "town": {
-    "townHall": "Town Hall",
+    "town-hall": {
+      "name": "Town Hall",
+      "mayor": "Mayor",
+      "select-mayor": "Select Mayor"
+    },
     "walls": "Walls",
     "build": {
-      "openModal": "Build",
-      "emptyLandPlot": "Land",
+      "open-modal": "Build",
+      "empty-land-plot": "Land",
       "modal": {
         "title": "Build",
         "buildings": {
@@ -81,7 +92,7 @@
       }
     },
     "info": {
-      "openModal": "Info",
+      "open-modal": "Info",
       "modal": {
         "title": "Town Info",
         "inn": {
