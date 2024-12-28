@@ -1,4 +1,4 @@
-FROM node:18 as node
+FROM node:20.13.1 as node
 
 WORKDIR /usr/src
 COPY . /usr/src/
