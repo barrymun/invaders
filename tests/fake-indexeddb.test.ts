@@ -5,7 +5,6 @@ describe("IndexedDB operations", () => {
   let db: Dexie;
 
   beforeAll(() => {
-    // Initialize Dexie or your IndexedDB setup
     db = new Dexie("TestDatabase");
     db.version(1).stores({
       testStore: "++id,name,value",
@@ -13,12 +12,12 @@ describe("IndexedDB operations", () => {
   });
 
   afterEach(async () => {
-    // Clear data after each test
+    // clear data after each test
     await db.table("testStore").clear();
   });
 
   afterAll(async () => {
-    // Delete the database after all tests are complete
+    // delete the database after all tests are complete
     await db.delete();
   });
 

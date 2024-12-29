@@ -4,7 +4,7 @@ import enTranslation from "assets/_locales/en/messages.json";
 
 import i18n from "./config";
 
-describe("i18n configuration", () => {
+describe("i18n.config", () => {
   beforeAll(async () => {
     if (!i18n.isInitialized) {
       await i18n.init();
