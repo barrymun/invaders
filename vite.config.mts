@@ -23,7 +23,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "./src/_mantine";`,
+        additionalData: `@use "./src/_mantine" as *;`,
         silenceDeprecations: ["legacy-js-api"],
       },
     },
