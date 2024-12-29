@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 
-import { getAllKeys, hasAllKeys, shuffleArray } from "./helpers";
+import { convertTo2DArray, getAllKeys, hasAllKeys, shuffleArray } from "./helpers";
 
-describe("getAllKeys", () => {
+describe(getAllKeys.name, () => {
   it("should return all keys from a flat object", () => {
     const obj = { a: 1, b: 2, c: 3 };
     const result = getAllKeys(obj);
@@ -34,7 +34,7 @@ describe("getAllKeys", () => {
   });
 });
 
-describe("hasAllKeys", () => {
+describe(hasAllKeys.name, () => {
   it("should return true if object has all specified keys", () => {
     const obj = { a: 1, b: 2, c: 3 };
     const result = hasAllKeys(obj, ["a", "b"]);
@@ -66,7 +66,7 @@ describe("hasAllKeys", () => {
   });
 });
 
-describe("shuffleArray", () => {
+describe(shuffleArray.name, () => {
   it("should shuffle an array", () => {
     const input = [1, 2, 3, 4, 5];
     const result = shuffleArray(input);
@@ -83,5 +83,59 @@ describe("shuffleArray", () => {
     const input = [1, 2, 3, 4, 5];
     const result = shuffleArray(input);
     expect(result.sort()).toEqual(input.sort());
+  });
+});
+
+describe(convertTo2DArray.name, () => {
+  it("should divide an array into subarrays of specified size", () => {
+    const input = [1, 2, 3, 4, 5, 6];
+    const size = 2;
+    const result = convertTo2DArray(input, size);
+    expect(result).toEqual([
+      [1, 2],
+      [3, 4],
+      [5, 6],
+    ]);
+  });
+
+  it("should handle cases where the array length is not perfectly divisible by size", () => {
+    const input = [1, 2, 3, 4, 5];
+    const size = 2;
+    const result = convertTo2DArray(input, size);
+    expect(result).toEqual([[1, 2], [3, 4], [5]]);
+  });
+
+  it("should return an empty array when the input array is empty", () => {
+    const input: number[] = [];
+    const size = 2;
+    const result = convertTo2DArray(input, size);
+    expect(result).toEqual([]);
+  });
+
+  it("should return an array with one subarray if size is greater than the input array length", () => {
+    const input = [1, 2, 3];
+    const size = 5;
+    const result = convertTo2DArray(input, size);
+    expect(result).toEqual([[1, 2, 3]]);
+  });
+
+  it("should handle size of 1 correctly", () => {
+    const input = [1, 2, 3, 4];
+    const size = 1;
+    const result = convertTo2DArray(input, size);
+    expect(result).toEqual([[1], [2], [3], [4]]);
+  });
+
+  it("should throw an error when size is less than or equal to 0", () => {
+    const input = [1, 2, 3];
+    expect(() => convertTo2DArray(input, 0)).toThrow("Size must be greater than 0");
+    expect(() => convertTo2DArray(input, -1)).toThrow("Size must be greater than 0");
+  });
+
+  it("should work with non-numeric elements", () => {
+    const input = ["a", "b", "c", "d", "e"];
+    const size = 2;
+    const result = convertTo2DArray(input, size);
+    expect(result).toEqual([["a", "b"], ["c", "d"], ["e"]]);
   });
 });
