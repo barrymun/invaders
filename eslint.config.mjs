@@ -5,7 +5,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
-const project = "./tsconfig.json";
+const project = "./tsconfig.app.json";
 const compat = new FlatCompat({
   recommendedConfig: jseslint.configs.recommended,
 });
@@ -20,7 +20,7 @@ function legacyPlugin(name, alias = name) {
 
 export default tseslint.config(
   {
-    ignores: ['node_modules', 'dist', 'build'],
+    ignores: ['node_modules', 'dist', 'coverage'],
     extends: [
       jseslint.configs.recommended,
       ...tseslint.configs.recommended,

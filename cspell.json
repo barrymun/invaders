@@ -11,10 +11,8 @@
   "ignorePaths": [
     "node_modules",
     "public",
-    "build",
-    "coverage",
     "dist",
-    "test",
+    "coverage",
     "tests"
   ]
 }
