@@ -1,15 +1,13 @@
 import { FC, useCallback, useMemo } from "react";
 
-import {
-  canBuildCountyBuilding,
-  CountyBuilding,
-  countyBuildingEmojiMap,
-  getDb,
-  maxCountyBuildings,
-  maxTownBuildings,
-} from "db";
-import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
-import { FixedLengthArray, ZeroToNumberRange } from "utils";
+import { countyBuildingEmojiMap, maxCountyBuildings, maxTownBuildings } from "@db/consts";
+import { getDb } from "@db/db";
+import { canBuildCountyBuilding } from "@db/helpers";
+import { CountyBuilding } from "@db/models";
+import { useBuildingModal } from "@hooks/use-building-modal";
+import { usePlayer } from "@hooks/use-player";
+import { useSelectedCity } from "@hooks/use-selected-city";
+import { FixedLengthArray, ZeroToNumberRange } from "@utils/types";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
 

@@ -2,8 +2,8 @@ import { Card, Group, Text } from "@mantine/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { FC } from "react";
 
-import { goldEmoji } from "db";
-import { usePlayer } from "hooks";
+import { goldEmoji } from "@db/consts";
+import { usePlayer } from "@hooks/use-player";
 
 const NavbarGold: FC = () => {
   const { player } = usePlayer();

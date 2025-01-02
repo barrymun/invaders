@@ -2,14 +2,8 @@ import { Box, Button, Card, Text, Title } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  townBuildingEmojiMap,
-  emptyTownLandEmoji,
-  TownBuilding,
-  CountyBuilding,
-  emptyCountyLandEmoji,
-  countyBuildingEmojiMap,
-} from "db";
+import { countyBuildingEmojiMap, emptyCountyLandEmoji, emptyTownLandEmoji, townBuildingEmojiMap } from "@db/consts";
+import { CountyBuilding, TownBuilding } from "@db/models";
 
 import classes from "./building.module.scss";
 

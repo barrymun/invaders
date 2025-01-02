@@ -1,4 +1,4 @@
-import { getAllKeys, hasAllKeys } from "utils";
+import { getAllKeys, hasAllKeys } from "@utils/helpers";
 
 import { defaultCity, defaultHeroGear, defaultPlayer } from "./consts";
 import { getDb } from "./db";

@@ -1,8 +1,11 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 
-import { City, CountyBuilding, getDb, Hero, TownBuilding } from "db";
-import { useCities, usePlayer } from "hooks";
+import { getDb } from "@db/db";
+import { City, CountyBuilding, Hero, TownBuilding } from "@db/models";
+
+import { useCities } from "./use-cities";
+import { usePlayer } from "./use-player";
 
 const db = getDb();
 const defaultIndex = 0;
@@ -33,12 +36,15 @@ const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
 
   const [selectedCity, setSelectedCity] = useState<City>(cities[defaultIndex]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const townBuildings =
     useLiveQuery(() => db.townBuildings.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const countyBuildings =
     useLiveQuery(() => db.countyBuildings.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const heroes = useLiveQuery(() => db.heroes.where({ playerId: player.id, cityId: selectedCity.id }).toArray()) ?? [];
 
   const value = useMemo(
@@ -57,6 +63,7 @@ const SelectedCityProvider: FC<SelectedCityProviderProps> = ({ children }) => {
    */
   useEffect(() => {
     setSelectedCity(cities.find((city) => city.id === selectedCity.id) ?? cities[defaultIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cities]);
 
   return <SelectedCityContext.Provider value={value}>{children}</SelectedCityContext.Provider>;

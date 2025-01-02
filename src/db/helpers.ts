@@ -1,7 +1,8 @@
 import { faker } from "@faker-js/faker/locale/en";
 import { getEmojiFlag, TCountryCode } from "countries-list";
 
-import { OneToFifteen, OneToOneHundred, shuffleArray } from "utils";
+import { shuffleArray } from "@utils/helpers";
+import { OneToFifteen, OneToOneHundred } from "@utils/types";
 
 import {
   defaultCity,

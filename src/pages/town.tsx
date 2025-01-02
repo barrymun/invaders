@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Town as TownComponent } from "components";
+import { Town as TownComponent } from "@components/town";
 
 interface TownProps {}
 

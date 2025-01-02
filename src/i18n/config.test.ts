@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from "vitest";
 
-import enTranslation from "assets/_locales/en/messages.json";
+import enTranslation from "@assets/_locales/en/messages.json";
 
 import i18n from "./config";
 

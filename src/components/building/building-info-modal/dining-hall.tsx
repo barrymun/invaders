@@ -2,7 +2,7 @@ import { Box, Table } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useSelectedCity } from "hooks";
+import { useSelectedCity } from "@hooks/use-selected-city";
 
 interface DiningHallProps {}
 

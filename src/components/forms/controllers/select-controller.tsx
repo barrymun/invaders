@@ -1,7 +1,7 @@
 import { Box, Select, SelectProps } from "@mantine/core";
 import { Controller, FieldValues, UseControllerProps, UseFormReturn } from "react-hook-form";
 
-import { FormError } from "components";
+import { FormError } from "@components/forms/form-error";
 
 interface SelectControllerProps<T extends FieldValues>
   extends UseControllerProps<T>,

@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { WorldMap as WorldMapComponent } from "components";
+import { WorldMap as WorldMapComponent } from "@components/world-map";
 
 interface WorldMapProps {}
 

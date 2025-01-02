@@ -18,8 +18,8 @@ import {
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useHeroGear } from "hooks";
-import { heroGearLevelColourMap } from "utils";
+import { useHeroGear } from "@hooks/use-hero-gear";
+import { heroGearLevelColourMap } from "@utils/consts";
 
 import classes from "./hero-gear.module.scss";
 

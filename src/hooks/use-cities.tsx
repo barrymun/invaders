@@ -3,9 +3,12 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useCallback, useContext, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { getDb, resourceUpdateTimeout, updateCitiesResources } from "db";
-import { City } from "db";
-import { usePlayer } from "hooks";
+import { resourceUpdateTimeout } from "@db/consts";
+import { getDb } from "@db/db";
+import { updateCitiesResources } from "@db/helpers";
+import { City } from "@db/models";
+
+import { usePlayer } from "./use-player";
 
 const db = getDb();
 
@@ -26,6 +29,7 @@ const CitiesProvider: FC<CitiesProviderProps> = ({ children }) => {
 
   const { player } = usePlayer();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const cities = useLiveQuery(() => db.cities.where({ playerId: player.id }).toArray()) ?? [];
 
   const handleUpdateResources = useCallback(async () => {
@@ -50,6 +54,7 @@ const CitiesProvider: FC<CitiesProviderProps> = ({ children }) => {
     return () => {
       clearInterval(intervalId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cities]);
 
   if (cities.length === 0) {

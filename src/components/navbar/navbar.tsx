@@ -3,8 +3,9 @@ import { IconMenu2 } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { NavbarGold, NavbarResources, NavbarSelect } from "components";
-
+import { NavbarGold } from "./navbar-gold";
+import { NavbarResources } from "./navbar-resources";
+import { NavbarSelect } from "./navbar-select";
 import classes from "./navbar.module.scss";
 
 interface NavbarProps {}

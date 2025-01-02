@@ -3,8 +3,11 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { FC, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { canRecruitHero, generateRandomHeroes, getDb, Hero, recruitHero } from "db";
-import { usePlayer, useSelectedCity } from "hooks";
+import { getDb } from "@db/db";
+import { canRecruitHero, generateRandomHeroes, recruitHero } from "@db/helpers";
+import { Hero } from "@db/models";
+import { usePlayer } from "@hooks/use-player";
+import { useSelectedCity } from "@hooks/use-selected-city";
 
 const db = getDb();
 

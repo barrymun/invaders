@@ -3,7 +3,9 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { defaultHeroGear, getDb, HeroGear } from "db";
+import { defaultHeroGear } from "@db/consts";
+import { getDb } from "@db/db";
+import { HeroGear } from "@db/models";
 
 import { usePlayer } from "./use-player";
 
@@ -28,6 +30,7 @@ const HeroGearProvider: FC<HeroGearProviderProps> = ({ children }) => {
 
   const [heroGear, setHeroGear] = useState<HeroGear | null>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const heroGearData = useLiveQuery(() => db.heroGear.where({ playerId: player.id }).toArray()) ?? [];
 
   const value = useMemo(

@@ -2,13 +2,16 @@ import { Box, Divider, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useEffect, useMemo, useState } from "react";
 
-import { Building, TownHall, Walls } from "components";
-import { NewTownBuildingModal, TownBuildingInfoModal } from "components/building";
-import { maxTownBuildings, TownBuilding } from "db";
-import { BuildingModalProvider, useSelectedCity } from "hooks";
-import { FixedLengthArray } from "utils";
+import { Building, NewTownBuildingModal, TownBuildingInfoModal } from "@components/building";
+import { maxTownBuildings } from "@db/consts";
+import { TownBuilding } from "@db/models";
+import { BuildingModalProvider } from "@hooks/use-building-modal";
+import { useSelectedCity } from "@hooks/use-selected-city";
+import { FixedLengthArray } from "@utils/types";
 
+import { TownHall } from "./town-hall";
 import classes from "./town.module.scss";
+import { Walls } from "./walls";
 
 interface TownProps {}
 

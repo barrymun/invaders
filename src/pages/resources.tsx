@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Resources as ResourcesComponent } from "components";
+import { Resources as ResourcesComponent } from "@components/resources";
 
 interface ResourcesProps {}
 

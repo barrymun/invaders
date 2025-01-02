@@ -2,8 +2,9 @@ import { Card, Group, Text } from "@mantine/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { FC } from "react";
 
-import { resourceEmojiMap, ResourceType } from "db";
-import { useSelectedCity } from "hooks";
+import { resourceEmojiMap } from "@db/consts";
+import { ResourceType } from "@db/types";
+import { useSelectedCity } from "@hooks/use-selected-city";
 
 const NavbarResources: FC = () => {
   const { selectedCity } = useSelectedCity();

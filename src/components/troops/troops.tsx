@@ -2,8 +2,9 @@ import { Table, Card, Box, Text } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { troopEmojiMap, TroopType } from "db";
-import { useCities } from "hooks";
+import { troopEmojiMap } from "@db/consts";
+import { TroopType } from "@db/types";
+import { useCities } from "@hooks/use-cities";
 
 import classes from "./troops.module.scss";
 

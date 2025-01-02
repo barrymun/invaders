@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Settings as SettingsComponent } from "components";
+import { Settings as SettingsComponent } from "@components/settings";
 
 interface SettingsProps {}
 

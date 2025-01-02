@@ -1,12 +1,13 @@
 import { Box, Image } from "@mantine/core";
 import { FC } from "react";
 
-import desertImg from "assets/img/desert.png";
-import flatImg from "assets/img/flat.png";
-import forestImg from "assets/img/forest.png";
-import lakeImg from "assets/img/lake.png";
-import mountainImg from "assets/img/mountain.png";
-import { TileType, WorldMap } from "db";
+import desertImg from "@assets/img/desert.png";
+import flatImg from "@assets/img/flat.png";
+import forestImg from "@assets/img/forest.png";
+import lakeImg from "@assets/img/lake.png";
+import mountainImg from "@assets/img/mountain.png";
+import { TileType } from "@db/enums";
+import { WorldMap } from "@db/models";
 
 import classes from "./tile.module.scss";
 

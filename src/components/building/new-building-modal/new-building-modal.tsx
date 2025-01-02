@@ -3,8 +3,9 @@ import classNames from "classnames";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { townBuildingEmojiMap, TownBuilding, CountyBuilding, countyBuildingEmojiMap } from "db";
-import { useBuildingModal } from "hooks";
+import { countyBuildingEmojiMap, townBuildingEmojiMap } from "@db/consts";
+import { CountyBuilding, TownBuilding } from "@db/models";
+import { useBuildingModal } from "@hooks/use-building-modal";
 
 import classes from "./new-building-modal.module.scss";
 

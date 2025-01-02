@@ -4,8 +4,10 @@ import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
-import { getDb, TileType, worldMapSize } from "db";
-import { convertTo2DArray } from "utils";
+import { worldMapSize } from "@db/consts";
+import { getDb } from "@db/db";
+import { TileType } from "@db/enums";
+import { convertTo2DArray } from "@utils/helpers";
 
 import { Tile } from "./tile";
 import classes from "./world-map.module.scss";
@@ -24,6 +26,8 @@ const WorldMap: FC<WorldMapProps> = () => {
   const { t } = useTranslation("translation");
 
   const [searchParams, _setSearchParams] = useSearchParams();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const worldMapData = useLiveQuery(() => db.worldMap.toArray()) ?? [];
 
   const [scrollLeft, setScrollLeft] = useState<number>(0);
@@ -142,6 +146,7 @@ const WorldMap: FC<WorldMapProps> = () => {
       window.removeEventListener("touchcancel", handleTouchUp);
       window.removeEventListener("resize", handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
@@ -183,6 +188,7 @@ const WorldMap: FC<WorldMapProps> = () => {
 
     setScrollLeft(-initialScrollLeft);
     setScrollTop(-initialScrollTop);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [worldMapData]);
 
   if (worldMapData.length === 0) {

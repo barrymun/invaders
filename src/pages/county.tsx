@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { County as CountyComponent } from "components";
+import { County as CountyComponent } from "@components/county";
 
 interface CountyProps {}
 

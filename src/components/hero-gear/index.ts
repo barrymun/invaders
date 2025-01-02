@@ -1,1 +1,1 @@
-export * from "components/hero-gear/hero-gear";
+export * from "@components/hero-gear/hero-gear";

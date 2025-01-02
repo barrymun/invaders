@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 
 // TODO: lazy load pages
-import { Layout } from "components";
-import { County } from "pages/county";
-import { HeroGear } from "pages/hero-gear";
-import { Home } from "pages/home";
-import { Resources } from "pages/resources";
-import { Settings } from "pages/settings";
-import { Town } from "pages/town";
-import { Troops } from "pages/troops";
-import { WorldMap } from "pages/world-map";
+import { Layout } from "@components/layout";
+import { County } from "@pages/county";
+import { HeroGear } from "@pages/hero-gear";
+import { Home } from "@pages/home";
+import { Resources } from "@pages/resources";
+import { Settings } from "@pages/settings";
+import { Town } from "@pages/town";
+import { Troops } from "@pages/troops";
+import { WorldMap } from "@pages/world-map";
 
 export const router = createBrowserRouter([
   {

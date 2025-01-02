@@ -1,1 +1,1 @@
-export * from "components/resources/resources";
+export * from "@components/resources/resources";

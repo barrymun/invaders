@@ -1,6 +1,6 @@
 import { ICountry } from "countries-list";
 
-import { ZeroToNumberRange, OneToTen, OneToOneHundred, OneToFifteen } from "utils";
+import { OneToFifteen, OneToOneHundred, OneToTen, ZeroToNumberRange } from "@utils/types";
 
 import { maxCities, maxCountyBuildings, maxTownBuildings } from "./consts";
 import { TileType } from "./enums";

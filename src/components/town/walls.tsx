@@ -2,8 +2,8 @@ import { Box, Button, Card, Text, Title } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { wallsEmoji } from "db";
-import { useSelectedCity } from "hooks";
+import { wallsEmoji } from "@db/consts";
+import { useSelectedCity } from "@hooks/use-selected-city";
 
 import classes from "./town.module.scss";
 

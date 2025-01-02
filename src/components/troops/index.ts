@@ -1,1 +1,1 @@
-export * from "components/troops/troops";
+export * from "@components/troops/troops";

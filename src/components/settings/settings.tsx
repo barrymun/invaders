@@ -6,18 +6,18 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
-import { InputController, SelectController } from "components";
+import { InputController, SelectController } from "@components/forms/controllers";
 import {
   defaultCountry,
-  defaultCountrySelectData,
-  defaultCountryFlag,
   defaultCountryData,
+  defaultCountryFlag,
+  defaultCountrySelectData,
   playerNameMaxLength,
-  getDb,
-  getEmojiFlagExtended,
-} from "db";
-import { SettingsForm } from "forms";
-import { usePlayer } from "hooks";
+} from "@db/consts";
+import { getDb } from "@db/db";
+import { getEmojiFlagExtended } from "@db/helpers";
+import { SettingsForm } from "@forms/settings/types";
+import { usePlayer } from "@hooks/use-player";
 
 import classes from "./settings.module.scss";
 
@@ -78,6 +78,7 @@ const Settings: FC<SettingsProps> = () => {
     }
     const newFlag = getEmojiFlagExtended(countryCode);
     setFlag(newFlag);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formMethods.getValues("countryName")]);
 
   return (

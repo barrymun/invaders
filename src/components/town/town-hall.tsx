@@ -5,11 +5,13 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
-import { SelectController } from "components/forms";
-import { getDb, townHallEmoji } from "db";
-import { cleanFormData, TownHallForm } from "forms";
-import { useSelectedCity } from "hooks";
-import { noneSelected } from "utils";
+import { SelectController } from "@components/forms/controllers";
+import { townHallEmoji } from "@db/consts";
+import { getDb } from "@db/db";
+import { cleanFormData } from "@forms/town-hall/helpers";
+import { TownHallForm } from "@forms/town-hall/types";
+import { useSelectedCity } from "@hooks/use-selected-city";
+import { noneSelected } from "@utils/consts";
 
 import classes from "./town.module.scss";
 

@@ -1,8 +1,13 @@
 import { FC, useCallback, useMemo } from "react";
 
-import { townBuildingEmojiMap, canBuildTownBuilding, TownBuilding, maxTownBuildings, getDb } from "db";
-import { useBuildingModal, usePlayer, useSelectedCity } from "hooks";
-import { FixedLengthArray, ZeroToNumberRange } from "utils";
+import { maxTownBuildings, townBuildingEmojiMap } from "@db/consts";
+import { getDb } from "@db/db";
+import { canBuildTownBuilding } from "@db/helpers";
+import { TownBuilding } from "@db/models";
+import { useBuildingModal } from "@hooks/use-building-modal";
+import { usePlayer } from "@hooks/use-player";
+import { useSelectedCity } from "@hooks/use-selected-city";
+import { FixedLengthArray, ZeroToNumberRange } from "@utils/types";
 
 import { CanBuildNewBuildingProps, NewBuildingModal } from "./new-building-modal";
 

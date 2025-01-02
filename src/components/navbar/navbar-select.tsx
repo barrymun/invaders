@@ -2,7 +2,8 @@ import { Box, CheckIcon, Combobox, Group, Input, InputBase, Text, useCombobox } 
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useCities, useSelectedCity } from "hooks";
+import { useCities } from "@hooks/use-cities";
+import { useSelectedCity } from "@hooks/use-selected-city";
 
 import classes from "./navbar-select.module.scss";
 
@@ -42,6 +43,7 @@ const NavbarSelect: FC<NavbarSelectProps> = () => {
           </Group>
         </Combobox.Option>
       )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [cities]
   );
 

@@ -2,8 +2,9 @@ import { Table, Card, Box, Text } from "@mantine/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { resourceEmojiMap, ResourceType } from "db";
-import { useCities } from "hooks";
+import { resourceEmojiMap } from "@db/consts";
+import { ResourceType } from "@db/types";
+import { useCities } from "@hooks/use-cities";
 
 import classes from "./resources.module.scss";
 

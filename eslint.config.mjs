@@ -2,6 +2,9 @@ import { fixupPluginRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
 import jseslint from '@eslint/js';
 import globals from 'globals';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
@@ -26,6 +29,7 @@ export default tseslint.config(
       ...tseslint.configs.recommended,
       eslintPluginPrettierRecommended,
       ...compat.extends("plugin:import/typescript"),
+      reactPlugin.configs.flat.recommended,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -33,6 +37,8 @@ export default tseslint.config(
       globals: globals.browser,
     },
     plugins: {
+      "react-hooks": reactHooksPlugin,
+      "react-refresh": reactRefreshPlugin,
       import: legacyPlugin("eslint-plugin-import", "import"),
     },
     settings: {
@@ -44,8 +50,13 @@ export default tseslint.config(
       },
     },
     rules: {
+      ...reactHooksPlugin.configs.recommended.rules,
       "@typescript-eslint/no-empty-object-type": "off",
-      "semi": ["error", "always"],
+      "@typescript-eslint/no-unused-vars": ["error", {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }],
       "import/order": ["error", {
         "groups": [
           "builtin",
@@ -57,6 +68,14 @@ export default tseslint.config(
           "type",
           "unknown"
         ],
+        "pathGroups": [
+          {
+            "pattern": "@*",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin", "internal"],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
@@ -64,11 +83,8 @@ export default tseslint.config(
         }
       }],
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": ["error", {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_",
-        "caughtErrorsIgnorePattern": "^_"
-      }],
+      "react/react-in-jsx-scope": "off",
+      "semi": ["error", "always"],
     },
   },
 );

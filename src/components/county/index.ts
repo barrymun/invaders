@@ -1,1 +1,1 @@
-export * from "components/county/county";
+export * from "@components/county/county";

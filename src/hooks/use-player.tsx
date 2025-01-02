@@ -3,7 +3,10 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { defaultPlayer, initializeDatabase, isGameReady, Player, getDb } from "db";
+import { defaultPlayer } from "@db/consts";
+import { getDb } from "@db/db";
+import { Player } from "@db/models";
+import { initializeDatabase, isGameReady } from "@db/utils";
 
 const db = getDb();
 
@@ -22,6 +25,7 @@ const PlayerContext = createContext<PlayerContextProps>({
 const PlayerProvider: FC<PlayerProviderProps> = ({ children }) => {
   const { t } = useTranslation();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const playersData = useLiveQuery(() => db.players.toArray()) ?? [];
 
   const [player, setPlayer] = useState<Player | null>(null);

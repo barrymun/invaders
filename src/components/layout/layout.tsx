@@ -2,7 +2,8 @@ import { Box } from "@mantine/core";
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
-import { Navbar, Sidebar } from "components";
+import { Navbar } from "@components/navbar";
+import { Sidebar } from "@components/sidebar";
 
 import classes from "./layout.module.scss";
 

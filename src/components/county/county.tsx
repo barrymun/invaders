@@ -2,11 +2,12 @@ import { Box, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useEffect, useMemo, useState } from "react";
 
-import { Building } from "components";
-import { CountyBuildingInfoModal, NewCountyBuildingModal } from "components/building";
-import { CountyBuilding, maxCountyBuildings } from "db";
-import { BuildingModalProvider, useSelectedCity } from "hooks";
-import { FixedLengthArray } from "utils";
+import { Building, CountyBuildingInfoModal, NewCountyBuildingModal } from "@components/building";
+import { maxCountyBuildings } from "@db/consts";
+import { CountyBuilding } from "@db/models";
+import { BuildingModalProvider } from "@hooks/use-building-modal";
+import { useSelectedCity } from "@hooks/use-selected-city";
+import { FixedLengthArray } from "@utils/types";
 
 import classes from "./county.module.scss";
 
