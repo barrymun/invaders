@@ -176,3 +176,7 @@ export const defaultHeroGear: Omit<HeroGear, "id" | "playerId"> = {
   bootsLevel: 1,
   bootsStarLevel: 1,
 };
+
+export const maxHeroGearLevel = 10;
+
+export const maxHeroGearStarLevel = 15;

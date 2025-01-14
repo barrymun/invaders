@@ -134,7 +134,11 @@
       "spaulders": "Spaulders",
       "backArmor": "Back Armor",
       "belt": "Belt",
-      "boots": "Boots"
+      "boots": "Boots",
+      "modal": {
+        "upgrade-level": "Upgrade level",
+        "upgrade-stars": "Upgrade stars"
+      }
     }
   }
 }

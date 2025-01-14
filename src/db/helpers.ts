@@ -8,6 +8,8 @@ import {
   defaultCity,
   defaultCountryFlag,
   maxHeroCount,
+  maxHeroGearLevel,
+  maxHeroGearStarLevel,
   maxHeroStat,
   maxNonCottageNonBarracksBuildings,
   minHeroStat,
@@ -16,7 +18,7 @@ import {
 } from "./consts";
 import { getDb } from "./db";
 import { TileType } from "./enums";
-import { City, CountyBuilding, Hero, TownBuilding } from "./models";
+import { City, CountyBuilding, Hero, HeroGear, TownBuilding } from "./models";
 
 const db = getDb();
 
@@ -353,4 +355,44 @@ export async function generateWorldMap() {
   await db.worldMap.bulkAdd(sortedWorldMapData);
 
   isGeneratingWorldMapLock = false;
+}
+
+export async function upgradeHeroGearLevel({
+  heroGear,
+  name,
+}: {
+  heroGear: HeroGear;
+  name: keyof Omit<HeroGear, "id" | "playerId">;
+}) {
+  try {
+    if (heroGear[name] >= maxHeroGearLevel) {
+      return;
+    }
+
+    await db.heroGear.update(heroGear.id, {
+      [name]: heroGear[name] + 1,
+    });
+  } catch (_error) {
+    // no op
+  }
+}
+
+export async function upgradeHeroGearStarLevel({
+  heroGear,
+  name,
+}: {
+  heroGear: HeroGear;
+  name: keyof Omit<HeroGear, "id" | "playerId">;
+}) {
+  try {
+    if (heroGear[name] >= maxHeroGearStarLevel) {
+      return;
+    }
+
+    await db.heroGear.update(heroGear.id, {
+      [name]: heroGear[name] + 1,
+    });
+  } catch (_error) {
+    // no op
+  }
 }
