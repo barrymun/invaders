@@ -1,4 +1,4 @@
-import translation from "assets/_locales/en/messages.json";
+import translation from "src/assets/_locales/en/messages.json";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const resources = {

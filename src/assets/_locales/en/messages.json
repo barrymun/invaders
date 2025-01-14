@@ -108,7 +108,9 @@
           "level": "Level",
           "politics": "Politics",
           "intelligence": "Intelligence",
-          "attack": "Attack"
+          "attack": "Attack",
+          "remove-mayor": "Remove Mayor",
+          "save-mayor": "Save Mayor"
         }
       }
     }
