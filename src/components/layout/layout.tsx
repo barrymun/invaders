@@ -15,9 +15,9 @@ export const Layout: FC<LayoutProps> = () => {
       <Navbar />
       <Box className={classes.layout}>
         <Sidebar />
-        <Box className={classes.outletContainer}>
+        <main className={classes.outletContainer}>
           <Outlet />
-        </Box>
+        </main>
       </Box>
     </>
   );

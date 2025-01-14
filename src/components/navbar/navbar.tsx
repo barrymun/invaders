@@ -16,7 +16,7 @@ const Navbar: FC<NavbarProps> = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
-    <Box className={classes.navbar}>
+    <nav className={classes.navbar}>
       <Box className={classes.navbarEnd}>
         <Box className={classes.largeMenu}>
           <Group>
@@ -49,7 +49,7 @@ const Navbar: FC<NavbarProps> = () => {
           </Stack>
         </Modal.Body>
       </Modal>
-    </Box>
+    </nav>
   );
 };
 

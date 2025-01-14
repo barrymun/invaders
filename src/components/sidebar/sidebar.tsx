@@ -74,7 +74,7 @@ const Sidebar: FC<SidebarProps> = () => {
   ));
 
   return (
-    <nav className={classes.sidebar}>
+    <aside className={classes.sidebar}>
       <Box className={classes.sidebarMain}>
         <Box>
           <Group className={classes.header} justify="space-between">
@@ -85,7 +85,7 @@ const Sidebar: FC<SidebarProps> = () => {
         {/* <Group className={classes.footer}>{footerLinks}</Group> */}
         <Box className={classes.footer}>{footerLinks}</Box>
       </Box>
-    </nav>
+    </aside>
   );
 };
 
