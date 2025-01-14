@@ -16,15 +16,23 @@ const DiningHall: FC<DiningHallProps> = () => {
   const { heroes, selectedCity } = useSelectedCity();
 
   const handleRemoveMayor = async () => {
-    await db.cities.update(selectedCity.id, {
-      mayorId: null,
-    });
+    try {
+      await db.cities.update(selectedCity.id, {
+        mayorId: null,
+      });
+    } catch (_error) {
+      // no op
+    }
   };
 
   const handleSaveMayor = (mayorId: City["mayorId"]) => async () => {
-    await db.cities.update(selectedCity.id, {
-      mayorId,
-    });
+    try {
+      await db.cities.update(selectedCity.id, {
+        mayorId,
+      });
+    } catch (_error) {
+      // no op
+    }
   };
 
   const tableRows = heroes.map((hero, index) => {

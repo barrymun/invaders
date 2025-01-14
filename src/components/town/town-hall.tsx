@@ -35,12 +35,12 @@ const TownHall: FC<TownHallProps> = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const validationSchema = Yup.object().shape({
-    mayorId: Yup.number().nullable().defined(),
+    mayorId: Yup.string().nullable().defined(),
   });
 
   const formMethods = useForm<TownHallForm>({
     values: {
-      mayorId: selectedCity.mayorId,
+      mayorId: selectedCity.mayorId?.toString() || "",
     },
     resolver: yupResolver(validationSchema),
   });
@@ -60,8 +60,8 @@ const TownHall: FC<TownHallProps> = () => {
     try {
       const { mayorId } = cleanFormData(getValues());
       await db.cities.update(selectedCity.id, { mayorId });
-      reset({ mayorId });
-    } catch (_err) {
+      reset({ mayorId: mayorId?.toString() ?? null });
+    } catch (_error) {
       // no op
     }
   };

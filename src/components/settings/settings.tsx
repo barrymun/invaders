@@ -65,7 +65,7 @@ const Settings: FC<SettingsProps> = () => {
           defaultCountry,
       });
       reset({ name: getValues("name"), countryName: getValues("countryName") });
-    } catch (_err) {
+    } catch (_error) {
       // no op
     }
   };
